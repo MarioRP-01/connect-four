@@ -7,25 +7,45 @@ export class Game {
   private readonly reader: Interface
 
   private readonly board: StringBoard
-  private readonly turn: TurnManager
+  private readonly turnManager: TurnManager
 
   constructor (
     readLineOptions: ReadLineOptions,
-    private readonly players: { player1: Player, player2: Player }
+    players: { player1: Player, player2: Player }
   ) {
     this.board = new StringBoard(6, 7)
-    this.turn = new TurnManager(players)
+    this.turnManager = new TurnManager(players)
     this.reader = createInterface(readLineOptions)
   }
 
   start (): void {
     this.reader.write('Welcome to Connect Four!\n')
+    this.board.draw()
+
     do {
-      this.reader.question(this.turn.getCurrentPlayer().renderPrompt(), (text) => {
-        console.log(`Text: ${text}`)
-        this.reader.close()
+      this.turnManager.switchPlayer()
+      this.reader.question(this.turnManager.getCurrentPlayer().renderPrompt(), (text) => {
+        this.board.put(parseInt(text, 10), this.turnManager.getCurrentPlayer().symbol)
+        this.board.draw()
       })
-      this.turn.switchPlayer()
-    } while (true)
+    } while (this.canContinue())
+
+    if (this.getWinner() === null) {
+      this.reader.write('It\'s a tie!\n')
+    } else {
+      this.reader.write(`Congratulations, ${this.getWinner()?.name}! You won!\n`)
+    }
+  }
+
+  private canContinue (): boolean {
+    return this.board.isWinnable() && !this.board.hasWinner()
+  }
+
+  private getWinner (): Player | null {
+    if (!this.board.hasWinner()) {
+      return null
+    }
+
+    return this.turnManager.getCurrentPlayer()
   }
 }
