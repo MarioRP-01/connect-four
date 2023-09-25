@@ -1,17 +1,16 @@
-import { Interface, ReadLineOptions, createInterface } from "node:readline";
+import { createInterface, type Interface, type ReadLineOptions } from 'node:readline'
 
 export class ConnectFour {
+  private readonly reader: Interface
 
-    private reader: Interface;
+  constructor (readLineOptions: ReadLineOptions) {
+    this.reader = createInterface(readLineOptions)
+  }
 
-    constructor(readLineOptions: ReadLineOptions) {
-        this.reader = createInterface(readLineOptions);
-    }
-
-    start() {
-        this.reader.question('Enter some text: ', (text) => {
-            console.log(`Text: ${text}`);
-            this.reader.close();
-        });
-    }
+  start (): void {
+    this.reader.question('Enter some text: ', (text) => {
+      console.log(`Text: ${text}`)
+      this.reader.close()
+    })
+  }
 }
