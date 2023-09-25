@@ -2,21 +2,21 @@ import { type Player } from './Player.js'
 
 export class TurnManager {
   private readonly turns: Record<number, Player>
-  private current_turn: number
+  private currentTurn: number
 
   constructor ({ player1, player2 }: { player1: Player, player2: Player }) {
-    this.current_turn = 0
+    this.currentTurn = 0
     this.turns = {
       0: player1,
       1: player2
     }
   }
 
-  get_current_player (): Player {
-    return this.turns[this.current_turn]
+  getCurrentPlayer (): Player {
+    return this.turns[this.currentTurn]
   }
 
-  forward (): void {
-    this.current_turn = (this.current_turn + 1) % 2
+  switchPlayer (): void {
+    this.currentTurn = (this.currentTurn + 1) % 2
   }
 }

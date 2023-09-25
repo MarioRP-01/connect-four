@@ -21,11 +21,11 @@ export class Game {
   start (): void {
     this.reader.write('Welcome to Connect Four!\n')
     do {
-      this.reader.question(this.turn.get_current_player().render_prompt(), (text) => {
+      this.reader.question(this.turn.getCurrentPlayer().renderPrompt(), (text) => {
         console.log(`Text: ${text}`)
         this.reader.close()
       })
-      this.turn.forward()
+      this.turn.switchPlayer()
     } while (true)
   }
 }
