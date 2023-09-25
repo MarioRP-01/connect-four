@@ -2,7 +2,7 @@ import { createInterface, type Interface, type ReadLineOptions } from 'node:read
 import { type Player } from './Player'
 import { Turn } from './Turn.ts'
 
-export class ConnectFour {
+export class Game {
   private readonly reader: Interface
 
   constructor (readLineOptions: ReadLineOptions) {
