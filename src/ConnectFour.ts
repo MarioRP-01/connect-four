@@ -1,4 +1,6 @@
 import { createInterface, type Interface, type ReadLineOptions } from 'node:readline'
+import { type Player } from './Player'
+import { Turn } from './Turn.ts'
 
 export class ConnectFour {
   private readonly reader: Interface
@@ -7,10 +9,17 @@ export class ConnectFour {
     this.reader = createInterface(readLineOptions)
   }
 
-  start (): void {
-    this.reader.question('Enter some text: ', (text) => {
-      console.log(`Text: ${text}`)
-      this.reader.close()
-    })
+  start (players: { player1: Player, player2: Player }): void {
+    const turn = new Turn(players)
+
+    this.reader.write('Welcome to Connect Four!\n')
+
+    do {
+      this.reader.question(turn.get_current().render_prompt(), (text) => {
+        console.log(`Text: ${text}`)
+        this.reader.close()
+      })
+      turn.next()
+    } while (true)
   }
 }
