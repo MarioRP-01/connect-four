@@ -1,6 +1,6 @@
-import readline from 'readline';
+import { createInterface } from 'node:readline';
 
-const reader = readline.createInterface({
+const reader = createInterface({
   input: process.stdin,
   output: process.stdout,
 });

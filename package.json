@@ -2,10 +2,11 @@
   "name": "connect-four",
   "version": "1.0.0",
   "description": "## References",
-  "main": "index.ts",
+  "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node --esm src/index.ts"
   },
   "repository": {
     "type": "git",
