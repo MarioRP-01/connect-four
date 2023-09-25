@@ -1,25 +1,31 @@
-import { createInterface, type Interface, type ReadLineOptions } from 'node:readline'
+import { createInterface, type Interface, type ReadLineOptions } from 'readline'
 import { type Player } from './Player'
-import { Turn } from './Turn.ts'
+import { StringBoard } from './StringBoard'
+import { TurnManager } from './TurnManager'
 
 export class Game {
   private readonly reader: Interface
 
-  constructor (readLineOptions: ReadLineOptions) {
+  private readonly board: StringBoard
+  private readonly turn: TurnManager
+
+  constructor (
+    readLineOptions: ReadLineOptions,
+    private readonly players: { player1: Player, player2: Player }
+  ) {
+    this.board = new StringBoard(6, 7)
+    this.turn = new TurnManager(players)
     this.reader = createInterface(readLineOptions)
   }
 
-  start (players: { player1: Player, player2: Player }): void {
-    const turn = new Turn(players)
-
+  start (): void {
     this.reader.write('Welcome to Connect Four!\n')
-
     do {
-      this.reader.question(turn.get_current().render_prompt(), (text) => {
+      this.reader.question(this.turn.get_current_player().render_prompt(), (text) => {
         console.log(`Text: ${text}`)
         this.reader.close()
       })
-      turn.next()
+      this.turn.forward()
     } while (true)
   }
 }
