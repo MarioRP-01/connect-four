@@ -1,0 +1,22 @@
+{
+  "name": "connect-four",
+  "version": "1.0.0",
+  "description": "## References",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-personal:MarioRP-01/connect-four.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.6.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
