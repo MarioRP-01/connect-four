@@ -1,0 +1,61 @@
+@startuml
+!theme amiga
+
+skin rose
+
+title Connect4
+
+class Game
+class Player
+class Board
+class Hole
+class Turn
+class Token
+class Column
+class Put
+
+class Result
+class Draw
+class Victory
+class FourInRow
+class FourInColumn
+class FourInDiagonal
+class FourInInverseDiagonal
+
+Result <|-- Victory
+Result <|-- Draw
+
+Victory o--> Hole : 4
+
+Victory <|-- FourInRow
+Victory <|-- FourInColumn
+Victory <|-- FourInDiagonal
+Victory <|-- FourInInverseDiagonal
+
+Put ..> Column
+Put ..> Token
+
+Hole "0..1" o-- "0..1" Token
+
+Game *--> "0..1" Result
+Game *--> Board : 1
+Game *--> Turn
+Game o--> Player : 2
+
+Board *--> "7" Column
+Column *--> "6" Hole
+
+Player ..> Board
+Player ..> Put
+Player o--> Token : 21
+Player --> Color
+
+Turn o--> Player
+Token --> Color
+
+enum Color {
+  RED
+  YELLOW
+}
+
+@enduml
