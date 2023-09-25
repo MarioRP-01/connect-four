@@ -1,11 +1,9 @@
-import { createInterface } from 'node:readline';
+import { ConnectFour } from './ConnectFour.ts';
 
-const reader = createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-reader.question('Enter some text: ', (text) => {
-  console.log(`Text: ${text}`);
-  reader.close();
-});
+(function main() {
+  const game = new ConnectFour({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  game.start();
+}());
