@@ -1,15 +1,13 @@
+import { type Players } from './Game.js'
 import { type Player } from './Player.js'
 
 export class TurnManager {
   private readonly turns: Record<number, Player>
   private currentTurn: number
 
-  constructor ({ player1, player2 }: { player1: Player, player2: Player }) {
+  constructor (players: Players) {
     this.currentTurn = 0
-    this.turns = {
-      0: player1,
-      1: player2
-    }
+    this.turns = players
   }
 
   getCurrentPlayer (): Player {

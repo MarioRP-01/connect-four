@@ -3,6 +3,8 @@ import { type Player } from './Player'
 import { StringBoard } from './StringBoard'
 import { TurnManager } from './TurnManager'
 
+export type Players = [ player1: Player, player2: Player ]
+
 export class Game {
   private readonly reader: Interface
 
@@ -11,7 +13,7 @@ export class Game {
 
   constructor (
     readLineOptions: ReadLineOptions,
-    players: { player1: Player, player2: Player }
+    players: Players
   ) {
     this.board = new StringBoard(6, 7)
     this.turnManager = new TurnManager(players)
