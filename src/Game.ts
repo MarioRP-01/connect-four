@@ -1,7 +1,7 @@
 import { createInterface, type Interface, type ReadLineOptions } from 'readline'
-import { type Player } from './Player'
-import { StringBoard } from './StringBoard'
-import { TurnManager } from './TurnManager'
+import { type Player } from './Player.ts'
+import { StringBoard } from './StringBoard.ts'
+import { TurnManager } from './TurnManager.ts'
 
 export type Players = [ player1: Player, player2: Player ]
 
