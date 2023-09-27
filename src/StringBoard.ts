@@ -1,4 +1,5 @@
 import { type Board } from './Board.ts'
+import { type Token } from './Token.ts'
 
 export class StringBoard implements Board {
   private readonly board: string[][]
@@ -28,7 +29,7 @@ export class StringBoard implements Board {
     throw new Error('Method not implemented.')
   }
 
-  put (column: number, symbol: string): boolean {
+  put (column: number, token: Token): boolean {
     throw new Error('Method not implemented.')
   }
 
@@ -36,11 +37,15 @@ export class StringBoard implements Board {
     throw new Error('Method not implemented.')
   }
 
-  isValidColumn (column: number): boolean {
+  private isValidColumn (column: number): boolean {
     return column >= 0 && column < this.columns
   }
 
-  isValidRow (row: number): boolean {
+  private isValidRow (row: number): boolean {
     return row >= 0 && row < this.rows
+  }
+
+  private getColumn (column: number): string[] {
+    throw new Error('Method not implemented.')
   }
 }

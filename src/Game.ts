@@ -27,7 +27,7 @@ export class Game {
     do {
       this.turnManager.switchPlayer()
       this.reader.question(this.turnManager.getCurrentPlayer().renderPrompt(), (text) => {
-        this.board.put(parseInt(text, 10), this.turnManager.getCurrentPlayer().symbol)
+        this.board.put(parseInt(text, 10), this.turnManager.getCurrentPlayer().token)
         this.board.draw()
       })
     } while (this.canContinue())
