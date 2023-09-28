@@ -2,7 +2,7 @@ import { type Players } from './Game.js'
 import { type Player } from './Player.js'
 
 export class TurnManager {
-  private readonly turns: Record<number, Player>
+  private readonly turns: Players
   private currentTurn: number
 
   constructor (players: Players) {
@@ -15,6 +15,6 @@ export class TurnManager {
   }
 
   switchPlayer (): void {
-    this.currentTurn = (this.currentTurn + 1) % 2
+    this.currentTurn = (this.currentTurn + 1) % this.turns.length
   }
 }
