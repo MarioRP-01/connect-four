@@ -11,20 +11,20 @@ export class StringBoard implements Board {
   private readonly board: Array<Array<Token | null>>
 
   constructor (
-    private readonly size_rows: number,
-    private readonly size_columns: number
+    private readonly sizeRows: number,
+    private readonly sizeColumns: number
   ) {
-    if (size_rows < 1 || size_columns < 1) {
+    if (sizeRows < 1 || sizeColumns < 1) {
       throw new Error('Board must have at least 1 row and 1 column')
     }
 
-    this.board = Array.from({ length: this.size_rows }, () =>
-      Array(this.size_columns).fill(null)
+    this.board = Array.from({ length: this.sizeRows }, () =>
+      Array(this.sizeColumns).fill(null)
     )
   }
 
   isWinnable (): boolean {
-    return this.board[this.size_rows - 1]
+    return this.board[this.sizeRows - 1]
       .some((lastColumnValue) => {
         return lastColumnValue === null
       })
@@ -33,7 +33,7 @@ export class StringBoard implements Board {
   hasWinner (): boolean {
     let column = 0
     let foundWinnerCombination = false
-    while (column < this.size_columns && !foundWinnerCombination) {
+    while (column < this.sizeColumns && !foundWinnerCombination) {
       let row = 0
 
       while (
@@ -75,9 +75,9 @@ export class StringBoard implements Board {
 
   draw (): string {
     let result = ''
-    for (let row = 0; row < this.size_rows; row++) {
+    for (let row = 0; row < this.sizeRows; row++) {
       let line = ''
-      for (let column = 0; column < this.size_columns; column++) {
+      for (let column = 0; column < this.sizeColumns; column++) {
         line += this.board[row][column]?.toString() ?? TOKEN_SYMBOLS.WHITE_TOKEN
       }
       result = `${line}\n${result}`
@@ -87,11 +87,11 @@ export class StringBoard implements Board {
   }
 
   private isValidColumn (column: number): boolean {
-    return column >= 0 && column < this.size_columns
+    return column >= 0 && column < this.sizeColumns
   }
 
   private isValidRow (row: number): boolean {
-    return row >= 0 && row < this.size_rows
+    return row >= 0 && row < this.sizeRows
   }
 
   private isTokenInWinnerCombination (row: number, column: number): boolean {
