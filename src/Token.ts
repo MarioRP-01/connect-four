@@ -9,6 +9,10 @@ export type TokenSymbol = keyof typeof TOKEN_SYMBOLS
 export class Token {
   constructor (readonly symbol: TokenSymbol) { }
 
+  equals (token: Token): boolean {
+    return this.symbol === token.symbol
+  }
+
   toString (): string {
     return TOKEN_SYMBOLS[this.symbol]
   }
