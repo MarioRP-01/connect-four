@@ -1,42 +1,61 @@
-import { createInterface, type Interface, type ReadLineOptions } from 'readline'
+import inquirer from 'inquirer'
+import { fromPromise, type Result } from 'neverthrow'
+import { type BoardError } from './errors.ts'
 import { type Player } from './Player.ts'
 import { StringBoard } from './StringBoard.ts'
+import { type Token } from './Token.ts'
 import { TurnManager } from './TurnManager.ts'
 
 export type Players = [ player1: Player, player2: Player ]
 
 export class Game {
-  private readonly reader: Interface
-
   private readonly board: StringBoard
   private readonly turnManager: TurnManager
 
   constructor (
-    readLineOptions: ReadLineOptions,
     players: Players
   ) {
     this.board = new StringBoard(6, 7)
     this.turnManager = new TurnManager(players)
-    this.reader = createInterface(readLineOptions)
   }
 
-  start (): void {
-    this.reader.write('Welcome to Connect Four!\n')
-    this.board.draw()
+  async start (): Promise<void> {
+    console.info('Welcome to Connect Four!\n')
 
     do {
-      this.turnManager.switchPlayer()
-      this.reader.question(this.turnManager.getCurrentPlayer().renderPrompt(), (text) => {
-        this.board.put(parseInt(text, 10), this.turnManager.getCurrentPlayer().token)
-        this.board.draw()
-      })
+      await this.turnStage()
     } while (this.canContinue())
 
-    if (this.getWinner() === null) {
-      this.reader.write('It\'s a tie!\n')
+    if ((this.getWinner()) === null) {
+      console.info('It\'s a tie!')
     } else {
-      this.reader.write(`Congratulations, ${this.getWinner()?.name}! You won!\n`)
+      console.info(`Congratulations, ${this.getWinner()?.name}! You won!`)
     }
+  }
+
+  private async turnStage (): Promise<void> {
+    const result = fromPromise(
+      inquirer
+        .prompt([{
+          name: 'selectColumn',
+          message: this.turnManager.getCurrentPlayer().renderPrompt()
+        }]),
+      (error) => ({ type: 'Other', context: error })
+    )
+
+    await result
+      .andThen(({ selectColumn }: { selectColumn: number }): Result<Token, BoardError> => {
+        return this.board.put(selectColumn, this.turnManager.getCurrentPlayer().token)
+      })
+      .match(
+        () => {
+          console.info(this.board.draw())
+          this.turnManager.switchPlayer()
+        },
+        (error) => {
+          console.error(error.type)
+        }
+      )
   }
 
   private canContinue (): boolean {
