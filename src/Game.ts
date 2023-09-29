@@ -3,8 +3,8 @@ import { fromPromise, type Result } from 'neverthrow'
 import { type BoardError } from './errors.ts'
 import { type Player } from './Player.ts'
 import { StringBoard } from './StringBoard.ts'
-import { type Token } from './Token.ts'
 import { TurnManager } from './TurnManager.ts'
+import * as Errors from './errors.ts'
 
 export type Players = [ player1: Player, player2: Player ]
 
@@ -40,11 +40,11 @@ export class Game {
           name: 'selectColumn',
           message: this.turnManager.getCurrentPlayer().renderPrompt()
         }]),
-      (error) => ({ type: 'Other', context: error })
+      (error) => (Errors.other('inquired failed', error as Error))
     )
 
     await result
-      .andThen(({ selectColumn }: { selectColumn: number }): Result<Token, BoardError> => {
+      .andThen(({ selectColumn }: { selectColumn: number }): Result<null, BoardError> => {
         return this.board.put(selectColumn, this.turnManager.getCurrentPlayer().token)
       })
       .match(

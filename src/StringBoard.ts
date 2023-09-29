@@ -31,8 +31,8 @@ export class StringBoard implements Board {
     return false
   }
 
-  put (column: number, token: Token): Result<Token, Errors.BoardError> {
-    column--
+  put (column: number, token: Token): Result<null, Errors.BoardError> {
+    column-- // make columns start point at 1
 
     if (!this.isValidColumn(column)) {
       return new Err(Errors.invalidColumn())
@@ -48,7 +48,7 @@ export class StringBoard implements Board {
     }
 
     this.board[row][column] = token
-    return new Ok(token)
+    return new Ok(null)
   }
 
   draw (): string {
