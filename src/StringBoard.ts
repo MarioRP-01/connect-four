@@ -32,6 +32,8 @@ export class StringBoard implements Board {
   }
 
   put (column: number, token: Token): Result<Token, Errors.BoardError> {
+    column--
+
     if (!this.isValidColumn(column)) {
       return new Err(Errors.invalidColumn())
     }
