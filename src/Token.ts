@@ -1,6 +1,7 @@
 export const TOKEN_SYMBOLS = {
   RED_TOKEN: '🔴',
-  BLUE_TOKEN: '🔵'
+  BLUE_TOKEN: '🔵',
+  WHITE_TOKEN: '⚪'
 } as const
 
 export type TokenSymbol = keyof typeof TOKEN_SYMBOLS
