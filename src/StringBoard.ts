@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import { type Board } from './Board.ts'
-import { type Token } from './Token.ts'
+import { TOKEN_SYMBOLS, type Token } from './Token.ts'
 import * as Errors from './errors.ts'
 
 export class StringBoard implements Board {
@@ -24,15 +24,11 @@ export class StringBoard implements Board {
   }
 
   isWinnable (): boolean {
-    throw new Error('Method not implemented.')
+    return true
   }
 
   hasWinner (): boolean {
-    throw new Error('Method not implemented.')
-  }
-
-  isWinner (): boolean | null {
-    throw new Error('Method not implemented.')
+    return false
   }
 
   put (column: number, token: Token): Result<Token, Errors.BoardError> {
@@ -54,7 +50,16 @@ export class StringBoard implements Board {
   }
 
   draw (): string {
-    throw new Error('Method not implemented.')
+    let result = ''
+    for (let row = 0; row < this.size_rows; row++) {
+      let line = ''
+      for (let column = 0; column < this.size_columns; column++) {
+        line += this.board[row][column]?.toString() ?? TOKEN_SYMBOLS.WHITE_TOKEN
+      }
+      result = `${line}\n${result}`
+    }
+
+    return result
   }
 
   private isValidColumn (column: number): boolean {
