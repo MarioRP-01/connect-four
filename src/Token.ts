@@ -7,7 +7,11 @@ export const TOKEN_SYMBOLS = {
 export type TokenSymbol = keyof typeof TOKEN_SYMBOLS
 
 export class Token {
-  constructor (readonly symbol: TokenSymbol) { }
+  constructor (readonly symbol: TokenSymbol) {
+    if (!(symbol in TOKEN_SYMBOLS)) {
+      throw new Error(`Invalid token symbol: ${symbol}`)
+    }
+  }
 
   equals (token: Token): boolean {
     return this.symbol === token.symbol
