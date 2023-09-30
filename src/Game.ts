@@ -1,7 +1,8 @@
 import inquirer from 'inquirer'
-import { fromPromise, type Result } from 'neverthrow'
+import { fromPromise, type Result, type ResultAsync } from 'neverthrow'
 import * as Errors from './errors.ts'
 import { type BoardError } from './errors.ts'
+import { type HumanPlayer } from './HumanPlayer.ts'
 import { type Player } from './Player.ts'
 import { StringBoard } from './StringBoard.ts'
 import { TurnManager } from './TurnManager.ts'
@@ -34,16 +35,7 @@ export class Game {
   }
 
   private async turnStage (): Promise<void> {
-    const result = fromPromise(
-      inquirer
-        .prompt([{
-          name: 'selectColumn',
-          message: this.turnManager.getCurrentPlayer().renderPrompt()
-        }]),
-      (error) => (Errors.other('inquired failed', error as Error))
-    )
-
-    await result
+    await this.turnManager.getCurrentPlayer().getMove(this)
       .andThen(({ selectColumn }: { selectColumn: number }): Result<null, BoardError> => {
         return this.board.put(selectColumn, this.turnManager.getCurrentPlayer().token)
       })
@@ -68,5 +60,27 @@ export class Game {
     }
 
     return this.turnManager.getCurrentPlayer()
+  }
+
+  getHumanMove (human: HumanPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
+    return fromPromise(
+      inquirer
+        .prompt([{
+          name: 'selectColumn',
+          message: human.renderPrompt()
+        }]),
+      (error) => (Errors.other('inquired failed', error as Error))
+    )
+  }
+
+  getBotMove (): ResultAsync<{ selectColumn: number }, BoardError> {
+    return fromPromise(new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          selectColumn: Math.floor(Math.random() * 6) + 1
+        })
+      }, 500)
+    }), (error) => (Errors.other('timer failed', error as Error))
+    )
   }
 }
