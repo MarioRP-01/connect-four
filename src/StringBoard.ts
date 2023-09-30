@@ -54,14 +54,14 @@ export class StringBoard implements Board {
   }
 
   put (column: number, token: Token): Result<null, Errors.BoardError> {
-    column-- // make columns start point at 1
+    const columnIndex = column - 1
 
-    if (!this.isValidColumn(column)) {
+    if (!this.isValidColumn(columnIndex)) {
       return new Err(Errors.invalidColumn())
     }
 
     let row = 0
-    while (this.isValidRow(row) && this.board[row][column] !== null) {
+    while (this.isValidRow(row) && this.board[row][columnIndex] !== null) {
       row++
     }
 
@@ -69,7 +69,7 @@ export class StringBoard implements Board {
       return new Err(Errors.fullColumn())
     }
 
-    this.board[row][column] = token
+    this.board[row][columnIndex] = token
     return new Ok(null)
   }
 
