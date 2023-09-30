@@ -1,10 +1,10 @@
 import inquirer from 'inquirer'
 import { fromPromise, type Result } from 'neverthrow'
+import * as Errors from './errors.ts'
 import { type BoardError } from './errors.ts'
 import { type Player } from './Player.ts'
 import { StringBoard } from './StringBoard.ts'
 import { TurnManager } from './TurnManager.ts'
-import * as Errors from './errors.ts'
 
 export type Players = [ player1: Player, player2: Player ]
 
@@ -49,7 +49,7 @@ export class Game {
       })
       .match(
         () => {
-          console.info(this.board.draw())
+          console.info(this.board.render())
           this.turnManager.switchPlayer()
         },
         (error) => {
