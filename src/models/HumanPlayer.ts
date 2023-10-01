@@ -8,7 +8,7 @@ export class HumanPlayer implements Player {
   constructor (readonly name: string, readonly token: Token) { }
 
   renderPrompt (): string {
-    return `${this.name} (${this.token.toString()}): `
+    return `${this.name} (${this.token.toString()}):`
   }
 
   getMove (turnView: TurnView): ResultAsync<{ selectColumn: number }, BoardError> {
