@@ -1,7 +1,7 @@
 import { type ResultAsync } from 'neverthrow'
-import { type Game } from './Game.ts'
 import { type Player } from './Player.ts'
 import { type Token } from './Token.ts'
+import { type TurnView } from './TurnView.ts'
 import { type BoardError } from './errors.ts'
 
 export class BotPlayer implements Player {
@@ -11,7 +11,7 @@ export class BotPlayer implements Player {
     return `${this.name} (${this.token.toString()}): `
   }
 
-  getMove (game: Game): ResultAsync<{ selectColumn: number }, BoardError> {
-    return game.getBotMove()
+  getMove (turnView: TurnView): ResultAsync<{ selectColumn: number }, BoardError> {
+    return turnView.askBotMove()
   }
 }
