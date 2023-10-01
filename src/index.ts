@@ -1,5 +1,5 @@
 import { BotPlayer } from './BotPlayer.ts'
-import { Game } from './Game.ts'
+import { Game } from './controllers/Game.ts'
 import { HumanPlayer } from './HumanPlayer.ts'
 import { Token } from './Token.ts'
 

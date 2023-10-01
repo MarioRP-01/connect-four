@@ -1,5 +1,6 @@
-import { type Players } from './Game.js'
 import { type Player } from './Player.js'
+
+export type Players = [ player1: Player, player2: Player ]
 
 export class Turn {
   private readonly turns: Players
