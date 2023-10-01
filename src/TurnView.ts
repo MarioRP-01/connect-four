@@ -1,12 +1,12 @@
-import inquirer from 'inquirer'
 import { fromPromise, type ResultAsync } from 'neverthrow'
 import { type BoardError } from './errors'
 import * as Errors from './errors.ts'
 import { type HumanPlayer } from './HumanPlayer'
+import { InquirerCli } from './InquirerCli.ts'
 import { type Player } from './Player.ts'
 
 export class TurnView {
-  // private readonly inquirerCli: InquirerCli = new InquirerCli()
+  private readonly inquirerCli: InquirerCli = new InquirerCli()
 
   askMove (player: Player): ResultAsync<{ selectColumn: number }, BoardError> {
     return player.getMove(this)
@@ -14,13 +14,13 @@ export class TurnView {
 
   askHumanMove (human: HumanPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
     return fromPromise(
-      inquirer
+      this.inquirerCli
         .prompt([{
           name: 'selectColumn',
           message: human.renderPrompt()
         }]),
       (error) => (Errors.other('inquired failed', error as Error))
-    )
+    ).map((answers) => ({ selectColumn: answers.selectColumn }))
   }
 
   askBotMove (): ResultAsync<{ selectColumn: number }, BoardError> {
