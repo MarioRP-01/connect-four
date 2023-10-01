@@ -1,7 +1,7 @@
 import { type Players } from './Game.js'
 import { type Player } from './Player.js'
 
-export class TurnManager {
+export class Turn {
   private readonly turns: Players
   private currentTurn: number
 

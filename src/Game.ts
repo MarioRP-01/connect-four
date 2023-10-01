@@ -1,7 +1,7 @@
 import { type Result } from 'neverthrow'
 import { type Player } from './Player.ts'
 import { StringBoard } from './StringBoard.ts'
-import { TurnManager } from './TurnManager.ts'
+import { Turn } from './Turn.ts'
 import { TurnView } from './TurnView.ts'
 import { type BoardError } from './errors.ts'
 
@@ -9,13 +9,13 @@ export type Players = [ player1: Player, player2: Player ]
 
 export class Game {
   private readonly board: StringBoard
-  private readonly turnManager: TurnManager
+  private readonly turn: Turn
 
   constructor (
     players: Players
   ) {
     this.board = new StringBoard(6, 7)
-    this.turnManager = new TurnManager(players)
+    this.turn = new Turn(players)
   }
 
   async start (): Promise<void> {
@@ -34,14 +34,14 @@ export class Game {
 
   private async turnStage (): Promise<void> {
     const turnView = new TurnView()
-    await turnView.askMove(this.turnManager.getCurrentPlayer())
+    await turnView.askMove(this.turn.getCurrentPlayer())
       .andThen(({ selectColumn }: { selectColumn: number }): Result<null, BoardError> => {
-        return this.board.put(selectColumn, this.turnManager.getCurrentPlayer().token)
+        return this.board.put(selectColumn, this.turn.getCurrentPlayer().token)
       })
       .match(
         () => {
           console.info(this.board.render())
-          this.turnManager.switchPlayer()
+          this.turn.switchPlayer()
         },
         (error) => {
           console.error(error.type)
@@ -58,6 +58,6 @@ export class Game {
       return null
     }
 
-    return this.turnManager.getCurrentPlayer()
+    return this.turn.getCurrentPlayer()
   }
 }
