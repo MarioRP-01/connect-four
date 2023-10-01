@@ -1,9 +1,9 @@
 import { fromPromise, type ResultAsync } from 'neverthrow'
-import { type BoardError } from './errors'
-import * as Errors from './errors.ts'
-import { type HumanPlayer } from './HumanPlayer'
-import { InquirerCli } from './InquirerCli.ts'
-import { type Player } from './Player.ts'
+import * as Errors from '../errors.ts'
+import { type BoardError } from '../errors.ts'
+import { type HumanPlayer } from '../HumanPlayer.ts'
+import { InquirerCli } from '../InquirerCli.ts'
+import { type Player } from '../Player.ts'
 
 export class TurnView {
   private readonly inquirerCli: InquirerCli = new InquirerCli()

@@ -2,8 +2,8 @@ import { type Result } from 'neverthrow'
 import { type Player } from './Player.ts'
 import { StringBoard } from './StringBoard.ts'
 import { Turn } from './Turn.ts'
-import { TurnView } from './TurnView.ts'
 import { type BoardError } from './errors.ts'
+import { TurnView } from './views/TurnView.ts'
 
 export type Players = [ player1: Player, player2: Player ]
 
