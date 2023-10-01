@@ -1,8 +1,8 @@
 import { type Result } from 'neverthrow'
-import { type Player } from '../Player.js'
-import { StringBoard } from '../StringBoard.js'
-import { Turn, type Players } from '../Turn.js'
 import { type BoardError } from '../errors.js'
+import { type Player } from '../models/Player.js'
+import { StringBoard } from '../models/StringBoard.js'
+import { Turn, type Players } from '../models/Turn.js'
 import { TurnView } from '../views/TurnView.js'
 
 export class Game {

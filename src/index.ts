@@ -1,7 +1,7 @@
-import { BotPlayer } from './BotPlayer.ts'
 import { Game } from './controllers/Game.ts'
-import { HumanPlayer } from './HumanPlayer.ts'
-import { Token } from './Token.ts'
+import { BotPlayer } from './models/BotPlayer.ts'
+import { HumanPlayer } from './models/HumanPlayer.ts'
+import { Token } from './models/Token.ts'
 
 function main (): void {
   const game = new Game(

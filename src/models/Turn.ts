@@ -1,4 +1,4 @@
-import { type Player } from './Player.js'
+import { type Player } from './Player.ts'
 
 export type Players = [ player1: Player, player2: Player ]
 

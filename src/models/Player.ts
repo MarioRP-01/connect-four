@@ -1,7 +1,7 @@
 import { type ResultAsync } from 'neverthrow'
+import { type BoardError } from '../errors.ts'
+import { type TurnView } from '../views/TurnView.ts'
 import { type Token } from './Token.ts'
-import { type BoardError } from './errors.ts'
-import { type TurnView } from './views/TurnView.ts'
 
 export interface Player {
   readonly name: string

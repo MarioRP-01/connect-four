@@ -1,4 +1,4 @@
-import { type Board } from '../Board.ts'
+import { type Board } from '../models/Board.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class BoardView {

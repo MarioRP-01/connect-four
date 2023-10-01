@@ -1,7 +1,7 @@
 import { Err, Ok, type Result } from 'neverthrow'
+import * as Errors from '../errors.ts'
 import { type Board } from './Board.ts'
 import { TOKEN_SYMBOLS, type Token } from './Token.ts'
-import * as Errors from './errors.ts'
 
 export class StringBoard implements Board {
   /**
