@@ -1,5 +1,5 @@
 import { type Board } from '../Board.ts'
-import { InquirerCli } from '../InquirerCli.ts'
+import { InquirerCli } from './InquirerCli.ts'
 
 export class BoardView {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
