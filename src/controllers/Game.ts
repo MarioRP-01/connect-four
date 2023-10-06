@@ -38,7 +38,7 @@ export class Game {
       })
       .match(
         () => {
-          console.info(this.board.render())
+          console.info(this.board.toString())
           if (!this.board.hasWinner()) {
             this.turn.switchPlayer()
           }

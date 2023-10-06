@@ -18,7 +18,7 @@ export class TurnView {
       this.inquirerCli
         .prompt([{
           name: 'selectColumn',
-          message: human.renderPrompt()
+          message: human.getPrompt()
         }]),
       (error) => (Errors.other('inquired failed', error as Error))
     ).map((answers) => ({ selectColumn: answers.selectColumn }))
@@ -28,7 +28,7 @@ export class TurnView {
     return fromPromise(new Promise((resolve) => {
       setTimeout(() => {
         const column = Math.floor(Math.random() * 6) + 1
-        this.inquirerCli.render(bot.renderPrompt() + ` ${column}`)
+        this.inquirerCli.render(bot.getPrompt() + ` ${column}`)
         resolve({
           selectColumn: column
         })

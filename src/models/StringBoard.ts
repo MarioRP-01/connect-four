@@ -73,7 +73,7 @@ export class StringBoard implements Board {
     return new Ok(null)
   }
 
-  render (): string {
+  toString (): string {
     let result = ''
     for (let row = 0; row < this.sizeRows; row++) {
       let line = ''

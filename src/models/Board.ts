@@ -6,5 +6,5 @@ export interface Board {
   isWinnable: () => boolean
   hasWinner: () => boolean
   put: (column: number, token: Token) => Result<null, BoardError>
-  render: () => string
+  toString: () => string
 }

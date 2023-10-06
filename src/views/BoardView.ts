@@ -7,6 +7,6 @@ export class BoardView {
   constructor (private readonly board: Board) {}
 
   render (): void {
-    this.inquirerCli.render(this.board.render())
+    this.inquirerCli.render(this.board.toString())
   }
 }
