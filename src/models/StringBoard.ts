@@ -1,14 +1,14 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
 import { type Board } from './Board.ts'
-import { TOKEN_SYMBOLS, type Token } from './Token.ts'
+import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 export class StringBoard implements Board {
   /**
    * @example
    * this.board[row][column]
    */
-  private readonly board: Array<Array<Token | null>>
+  private readonly board: Token[][]
 
   constructor (
     private readonly sizeRows: number,
@@ -19,14 +19,14 @@ export class StringBoard implements Board {
     }
 
     this.board = Array.from({ length: this.sizeRows }, () =>
-      Array(this.sizeColumns).fill(null)
+      Array(this.sizeColumns).fill(new Token(TOKEN_SYMBOLS.NULL))
     )
   }
 
   isWinnable (): boolean {
     return this.board[this.sizeRows - 1]
       .some((lastColumnValue) => {
-        return lastColumnValue === null
+        return lastColumnValue.isNull()
       })
   }
 
@@ -38,12 +38,12 @@ export class StringBoard implements Board {
 
       while (
         this.isValidRow(row + 1) &&
-        this.board[row + 1][column] !== null
+        !this.board[row + 1][column].isNull()
       ) {
         row++
       }
 
-      if (this.isValidRow(row) && !(this.board[row][column] === null)) {
+      if (this.isValidRow(row) && !(this.board[row][column].isNull())) {
         foundWinnerCombination = this.isTokenInWinnerCombination(row, column)
       }
 
@@ -61,7 +61,7 @@ export class StringBoard implements Board {
     }
 
     let row = 0
-    while (this.isValidRow(row) && this.board[row][columnIndex] !== null) {
+    while (this.isValidRow(row) && !this.board[row][columnIndex].isNull()) {
       row++
     }
 
@@ -78,7 +78,7 @@ export class StringBoard implements Board {
     for (let row = 0; row < this.sizeRows; row++) {
       let line = ''
       for (let column = 0; column < this.sizeColumns; column++) {
-        line += this.board[row][column]?.toString() ?? TOKEN_SYMBOLS.WHITE_TOKEN
+        line += this.board[row][column]?.toString() ?? TOKEN_SYMBOLS.NULL
       }
       result = `${line}\n${result}`
     }
@@ -96,7 +96,9 @@ export class StringBoard implements Board {
 
   private isTokenInWinnerCombination (row: number, column: number): boolean {
     const token = this.board[row][column]
-    if (token === null) { throw new Error('Token cannot be null') }
+    if (token.isNull()) {
+      throw new Error('Token cannot be null')
+    }
 
     let auxToken
     let count
@@ -110,7 +112,7 @@ export class StringBoard implements Board {
     auxColumn = column
     while (
       this.isValidRow(auxRow) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
@@ -122,7 +124,7 @@ export class StringBoard implements Board {
     auxColumn = column
     while (
       this.isValidRow(auxRow) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
@@ -138,7 +140,7 @@ export class StringBoard implements Board {
     auxColumn = column + 1
     while (
       this.isValidColumn(auxColumn) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
@@ -150,7 +152,7 @@ export class StringBoard implements Board {
     auxColumn = column - 1
     while (
       this.isValidRow(auxColumn) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
@@ -167,7 +169,7 @@ export class StringBoard implements Board {
     while (
       this.isValidRow(auxRow) &&
       this.isValidColumn(auxColumn) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
@@ -181,7 +183,7 @@ export class StringBoard implements Board {
     while (
       this.isValidRow(auxRow) &&
       this.isValidColumn(auxColumn) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
@@ -199,7 +201,7 @@ export class StringBoard implements Board {
     while (
       this.isValidRow(auxRow) &&
       this.isValidColumn(auxColumn) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
@@ -213,7 +215,7 @@ export class StringBoard implements Board {
     while (
       this.isValidRow(auxRow) &&
       this.isValidColumn(auxColumn) &&
-      (auxToken = this.board[auxRow][auxColumn]) !== null &&
+      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
       token.equals(auxToken)
     ) {
       count++
