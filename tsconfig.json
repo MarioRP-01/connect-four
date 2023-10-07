@@ -29,5 +29,8 @@
     /* Output */
     "noEmit": true,
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*.ts",
+    ".eslintrc.cjs"
+  ],
 }
