@@ -2,6 +2,7 @@ import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
 import { type Board } from './Board.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
+import { type Coordinates } from './Coordinates.ts'
 
 export class StringBoard implements Board {
   /**
@@ -21,6 +22,10 @@ export class StringBoard implements Board {
     this.board = Array.from({ length: this.sizeRows }, () =>
       Array(this.sizeColumns).fill(new Token(TOKEN_SYMBOLS.NULL))
     )
+  }
+
+  getToken ({ row, column }: Coordinates): Token {
+
   }
 
   isWinnable (): boolean {
