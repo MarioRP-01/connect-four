@@ -7,7 +7,7 @@ import { type Token } from './Token.ts'
 export class HumanPlayer implements Player {
   constructor (readonly name: string, readonly token: Token) { }
 
-  getPrompt (): string {
+  getPromptMessage (): string {
     return `${this.name} (${this.token.toString()}):`
   }
 
