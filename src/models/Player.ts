@@ -6,6 +6,6 @@ import { type Token } from './Token.ts'
 export interface Player {
   readonly name: string
   readonly token: Token
-  renderPrompt: () => string
+  getPromptMessage: () => string
   getMove: (turnView: TurnView) => ResultAsync<{ selectColumn: number }, BoardError>
 }
