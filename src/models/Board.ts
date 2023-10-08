@@ -1,10 +1,12 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
-import { Coordinates } from './Coordinates.ts'
+import { Coordinate, isValidColumn } from './Coordinate.ts'
+import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 export class Board {
   private readonly board: Token[][]
+  private readonly lineFactory = new LineFactory()
 
   constructor (
     private readonly sizeRows: number,
@@ -19,11 +21,11 @@ export class Board {
     )
   }
 
-  getToken ({ row, column }: Coordinates): Token {
+  getToken ({ row, column }: Coordinate): Token {
     return this.board[row][column]
   }
 
-  private placeToken ({ row, column }: Coordinates, token: Token): void {
+  private placeToken ({ row, column }: Coordinate, token: Token): void {
     this.board[row][column] = token
   }
 
@@ -43,12 +45,12 @@ export class Board {
       while (
         this.isValidRow(row = (row + 1)) &&
         row >= 0 && row <= 5 &&
-        !this.getToken(new Coordinates(row, column)).isNull()
+        !this.getToken(new Coordinate(row, column)).isNull()
       ) {
         row++
       }
 
-      if (this.isValidRow(row) && !(this.getToken(new Coordinates(row, column)).isNull())) {
+      if (this.isValidRow(row) && !(this.getToken(new Coordinate(row, column)).isNull())) {
         foundWinnerCombination = this.isTokenInWinnerCombination(row, column)
       }
 
@@ -61,23 +63,24 @@ export class Board {
   put (column: number, token: Token): Result<null, Errors.BoardError> {
     const columnIndex = column - 1
 
-    if (!this.isValidColumn(columnIndex)) {
+    if (!isValidColumn(columnIndex)) {
       return new Err(Errors.invalidColumn())
     }
 
-    let row = 0
-    while (
-      this.isValidRow(row) &&
-      !this.getToken(new Coordinates(row, columnIndex)).isNull()
-    ) {
-      row++
-    }
+    const columnCoordinates = this.lineFactory.createFromCoordinateAndDirection(
+      new Coordinate(0, columnIndex),
+      'VERTICAL'
+    )
 
-    if (!this.isValidRow(row)) {
+    const freeCoordinate = columnCoordinates.coordinates.find(
+      (coordinate) => this.getToken(coordinate).isNull()
+    )
+
+    if (freeCoordinate === undefined) {
       return new Err(Errors.fullColumn())
     }
 
-    this.placeToken(new Coordinates(row, columnIndex), token)
+    this.placeToken(freeCoordinate, token)
     return new Ok(null)
   }
 
@@ -86,7 +89,7 @@ export class Board {
     for (let row = 0; row < this.sizeRows; row++) {
       let line = ''
       for (let column = 0; column < this.sizeColumns; column++) {
-        line += this.getToken(new Coordinates(row, column))?.toString() ?? TOKEN_SYMBOLS.NULL
+        line += this.getToken(new Coordinate(row, column))?.toString() ?? TOKEN_SYMBOLS.NULL
       }
       result = `${line}\n${result}`
     }
@@ -103,7 +106,7 @@ export class Board {
   }
 
   private isTokenInWinnerCombination (row: number, column: number): boolean {
-    const token = this.getToken(new Coordinates(row, column))
+    const token = this.getToken(new Coordinate(row, column))
     if (token.isNull()) {
       throw new Error('Token cannot be null')
     }
