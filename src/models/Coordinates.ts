@@ -1,16 +1,13 @@
 import { type IntRange } from '../utils/IntRange.ts'
-import { type ObjectValues } from '../utils/objectValues.ts'
 
 export const VALID_COORDINATES = {
   MAX_ROW: 6,
   MAX_COLUMN: 7
 } as const
 
-export type validCoordinates = ObjectValues<typeof VALID_COORDINATES>
-
 export class Coordinates {
-  readonly row: number
-  readonly column: number
+  readonly row: IntRange<0, typeof VALID_COORDINATES.MAX_ROW>
+  readonly column: IntRange<0, typeof VALID_COORDINATES.MAX_COLUMN>
 
   constructor (
     row: IntRange<0, typeof VALID_COORDINATES.MAX_ROW>,

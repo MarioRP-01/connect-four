@@ -1,18 +1,18 @@
 import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.js'
 import { type Player } from '../models/Player.js'
-import { StringBoard } from '../models/StringBoard.js'
+import { Board } from '../models/Board.js'
 import { Turn, type Players } from '../models/Turn.js'
 import { TurnView } from '../views/TurnView.js'
 
 export class Game {
-  private readonly board: StringBoard
+  private readonly board: Board
   private readonly turn: Turn
 
   constructor (
     players: Players
   ) {
-    this.board = new StringBoard(6, 7)
+    this.board = new Board(6, 7)
     this.turn = new Turn(players)
   }
 
