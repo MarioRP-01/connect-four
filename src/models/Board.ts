@@ -102,143 +102,25 @@ export class Board {
     return result
   }
 
-  private isValidColumn (column: number): boolean {
-    return column >= 0 && column < this.sizeColumns
-  }
-
-  private isValidRow (row: number): boolean {
-    return row >= 0 && row < this.sizeRows
-  }
-
-  private isCoordinateInWinnerCombination ({ row, column }: Coordinate): boolean {
-    const token = this.getToken(new Coordinate(row, column))
+  private isCoordinateInWinnerCombination (coordinate: Coordinate): boolean {
+    const token = this.getToken(coordinate)
     if (token.isNull()) {
       throw new Error('Token cannot be null')
     }
 
-    let auxToken
-    let count
-    let auxRow
-    let auxColumn
+    return this.lineFactory.createAllLinesFromCoordinate(coordinate)
+      .some((line) => {
+        const { count } = line.coordinates.reduce(({ token, count }, coordinate) => {
+          const currentToken = this.getToken(coordinate)
+          if (count > 3) return { token, count }
+          if (token.isNull() || !token.equals(currentToken)) {
+            return { token: currentToken, count: 1 }
+          }
+          count++
+          return { token, count }
+        }, { token: new Token(TOKEN_SYMBOLS.NULL), count: 1 })
 
-    // check horizontal
-    count = 1
-    // to the right ->
-    auxRow = row + 1
-    auxColumn = column
-    while (
-      this.isValidRow(auxRow) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxRow++
-    }
-
-    // to the left <-
-    auxRow = row - 1
-    auxColumn = column
-    while (
-      this.isValidRow(auxRow) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxRow--
-    }
-
-    if (count > 3) { return true }
-
-    // check vertical
-    count = 1
-    // to the top
-    auxRow = row
-    auxColumn = column + 1
-    while (
-      this.isValidColumn(auxColumn) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxColumn++
-    }
-
-    // to the bottom
-    auxRow = row
-    auxColumn = column - 1
-    while (
-      this.isValidRow(auxColumn) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxColumn--
-    }
-
-    if (count > 3) { return true }
-
-    // check diagonal
-    count = 1
-    // to the top right
-    auxRow = row + 1
-    auxColumn = column + 1
-    while (
-      this.isValidRow(auxRow) &&
-      this.isValidColumn(auxColumn) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxRow++
-      auxColumn++
-    }
-
-    // to the bottom left
-    auxRow = row - 1
-    auxColumn = column - 1
-    while (
-      this.isValidRow(auxRow) &&
-      this.isValidColumn(auxColumn) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxRow--
-      auxColumn--
-    }
-
-    if (count > 3) { return true }
-
-    // check inverse diagonal
-    count = 1
-    // to the top left
-    auxRow = row + 1
-    auxColumn = column - 1
-    while (
-      this.isValidRow(auxRow) &&
-      this.isValidColumn(auxColumn) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxRow++
-      auxColumn--
-    }
-
-    // to the bottom right
-    auxRow = row - 1
-    auxColumn = column + 1
-    while (
-      this.isValidRow(auxRow) &&
-      this.isValidColumn(auxColumn) &&
-      !(auxToken = this.board[auxRow][auxColumn]).isNull() &&
-      token.equals(auxToken)
-    ) {
-      count++
-      auxRow--
-      auxColumn++
-    }
-
-    return count > 3
+        return count > 3
+      })
   }
 }
