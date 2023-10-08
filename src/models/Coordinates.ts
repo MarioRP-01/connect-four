@@ -5,23 +5,33 @@ export const VALID_COORDINATES = {
   MAX_COLUMN: 7
 } as const
 
+export type CoordinateRow = IntRange<0, typeof VALID_COORDINATES.MAX_ROW>
+export function coordinateRow (number: number): CoordinateRow {
+  if (number < 0 || number > 6) {
+    throw new Error('row is not valid')
+  }
+
+  return number as any
+}
+
+export type CoordinateColumn = IntRange<0, typeof VALID_COORDINATES.MAX_COLUMN>
+export function coordinateColumn (number: number): CoordinateColumn {
+  if (number < 0 || number > 7) {
+    throw new Error('column is not valid')
+  }
+
+  return number as any
+}
+
 export class Coordinates {
-  readonly row: IntRange<0, typeof VALID_COORDINATES.MAX_ROW>
-  readonly column: IntRange<0, typeof VALID_COORDINATES.MAX_COLUMN>
+  readonly row: CoordinateRow
+  readonly column: CoordinateColumn
 
   constructor (
-    row: IntRange<0, typeof VALID_COORDINATES.MAX_ROW>,
-    column: IntRange<0, typeof VALID_COORDINATES.MAX_COLUMN>
+    row: number,
+    column: number
   ) {
-    if (row < 1 || row > VALID_COORDINATES.MAX_ROW) {
-      throw new Error(`row ${row} is not valid`)
-    }
-
-    if (column < 1 || column > VALID_COORDINATES.MAX_COLUMN) {
-      throw new Error(`column ${column} is not valid`)
-    }
-
-    this.row = row
-    this.column = column
+    this.row = coordinateRow(row)
+    this.column = coordinateColumn(column)
   }
 }
