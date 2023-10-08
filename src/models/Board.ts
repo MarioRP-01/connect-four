@@ -31,7 +31,7 @@ export class Board {
 
   isWinnable (): boolean {
     const lastRow = this.lineFactory.createFromCoordinateAndDirection(
-      new Coordinate(0, MAX_COORDINATES.MAX_COLUMN - 1),
+      new Coordinate(MAX_COORDINATES.MAX_ROW - 1, 0),
       'HORIZONTAL'
     )
 
