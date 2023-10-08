@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
-import { Coordinate, MAX_COORDINATES, isValidColumn } from './Coordinate.ts'
+import { Coordinate, MAX_COORDINATES, isCoordinate, isValidColumn } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
@@ -41,27 +41,28 @@ export class Board {
   }
 
   hasWinner (): boolean {
-    let column = 0
-    let foundWinnerCombination = false
-    while (column < this.sizeColumns && !foundWinnerCombination) {
-      let row = 0
-
-      while (
-        this.isValidRow(row = (row + 1)) &&
-        row >= 0 && row <= 5 &&
-        !this.getToken(new Coordinate(row, column)).isNull()
-      ) {
-        row++
-      }
-
-      if (this.isValidRow(row) && !(this.getToken(new Coordinate(row, column)).isNull())) {
-        foundWinnerCombination = this.isTokenInWinnerCombination(row, column)
-      }
-
-      column++
-    }
-
-    return foundWinnerCombination
+    return this.lineFactory.createFromCoordinateAndDirection(
+      new Coordinate(0, 0),
+      'HORIZONTAL'
+    )
+      .coordinates
+      .map((coordinate) =>
+        this.lineFactory.createFromCoordinateAndDirection(
+          coordinate,
+          'VERTICAL'
+        )
+      )
+      .map((line) => {
+        const index = line.coordinates.findIndex((coordinate) => {
+          return this.getToken(coordinate).isNull()
+        })
+        if (index < 1) return undefined
+        return line.coordinates[index - 1]
+      })
+      .filter(isCoordinate)
+      .some((coordinate) => {
+        return this.isCoordinateInWinnerCombination(coordinate)
+      })
   }
 
   put (column: number, token: Token): Result<null, Errors.BoardError> {
@@ -109,7 +110,7 @@ export class Board {
     return row >= 0 && row < this.sizeRows
   }
 
-  private isTokenInWinnerCombination (row: number, column: number): boolean {
+  private isCoordinateInWinnerCombination ({ row, column }: Coordinate): boolean {
     const token = this.getToken(new Coordinate(row, column))
     if (token.isNull()) {
       throw new Error('Token cannot be null')

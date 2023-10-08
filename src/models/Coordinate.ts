@@ -31,6 +31,10 @@ export function isValidColumn (number: number): boolean {
   return number >= 0 && number < MAX_COORDINATES.MAX_COLUMN
 }
 
+export function isCoordinate (item: Coordinate | undefined): item is Coordinate {
+  return item !== undefined
+}
+
 export class Coordinate {
   readonly row: CoordinateRow
   readonly column: CoordinateColumn
