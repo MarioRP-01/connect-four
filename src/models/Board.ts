@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
-import { Coordinate, isValidColumn } from './Coordinate.ts'
+import { Coordinate, MAX_COORDINATES, isValidColumn } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
@@ -30,10 +30,14 @@ export class Board {
   }
 
   isWinnable (): boolean {
-    return this.board[this.sizeRows - 1]
-      .some((lastColumnValue) => {
-        return lastColumnValue.isNull()
-      })
+    const lastRow = this.lineFactory.createFromCoordinateAndDirection(
+      new Coordinate(0, MAX_COORDINATES.MAX_COLUMN - 1),
+      'HORIZONTAL'
+    )
+
+    return lastRow.coordinates.some((coordinate) => {
+      return this.getToken(coordinate).isNull()
+    })
   }
 
   hasWinner (): boolean {
