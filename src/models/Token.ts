@@ -1,10 +1,11 @@
+import { type ObjectValues } from '../utils/objectValues.ts'
+
 export const TOKEN_SYMBOLS = {
   RED_TOKEN: '🔴',
   BLUE_TOKEN: '🔵',
   NULL: '⚪'
 } as const
 
-type ObjectValues<T> = T[keyof T]
 export type TokenSymbol = ObjectValues<typeof TOKEN_SYMBOLS>
 
 export function isValidTokenSymbol (symbol: string): symbol is TokenSymbol {
