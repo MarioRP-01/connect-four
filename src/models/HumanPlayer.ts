@@ -11,7 +11,7 @@ export class HumanPlayer implements Player {
     return `${this.name} (${this.token.toString()}):`
   }
 
-  getMove (turnView: TurnView): ResultAsync<{ selectColumn: number }, BoardError> {
-    return turnView.askHumanMove(this)
+  accept (turnView: TurnView): ResultAsync<{ selectColumn: number }, BoardError> {
+    return turnView.visitHuman(this)
   }
 }

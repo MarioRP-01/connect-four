@@ -4,16 +4,17 @@ import { type BoardError } from '../errors.ts'
 import { type BotPlayer } from '../models/BotPlayer.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
 import { type Player } from '../models/Player.ts'
+import { type PlayerVisitor } from '../models/PlayerVisitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
-export class TurnView {
+export class TurnView implements PlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
 
   askMove (player: Player): ResultAsync<{ selectColumn: number }, BoardError> {
-    return player.getMove(this)
+    return player.accept(this)
   }
 
-  askHumanMove (human: HumanPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
+  visitHuman (human: HumanPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
     return fromPromise(
       this.inquirerCli
         .prompt([{
@@ -24,7 +25,7 @@ export class TurnView {
     ).map((answers) => ({ selectColumn: answers.selectColumn }))
   }
 
-  askBotMove (bot: BotPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
+  visitBot (bot: BotPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
     return fromPromise(new Promise((resolve) => {
       setTimeout(() => {
         const column = Math.floor(Math.random() * 6) + 1

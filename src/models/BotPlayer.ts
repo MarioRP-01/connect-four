@@ -11,7 +11,7 @@ export class BotPlayer implements Player {
     return `${this.name} (${this.token.toString()}):`
   }
 
-  getMove (turnView: TurnView): ResultAsync<{ selectColumn: number }, BoardError> {
-    return turnView.askBotMove(this)
+  accept (turnView: TurnView): ResultAsync<{ selectColumn: number }, BoardError> {
+    return turnView.visitBot(this)
   }
 }

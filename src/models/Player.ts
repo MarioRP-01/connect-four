@@ -7,5 +7,5 @@ export interface Player {
   readonly name: string
   readonly token: Token
   getPromptMessage: () => string
-  getMove: (turnView: TurnView) => ResultAsync<{ selectColumn: number }, BoardError>
+  accept: (turnView: TurnView) => ResultAsync<{ selectColumn: number }, BoardError>
 }
