@@ -32,7 +32,7 @@ export class Board {
   isWinnable (): boolean {
     const lastRow = this.lineFactory.createFromCoordinateAndDirection(
       new Coordinate(MAX_COORDINATES.MAX_ROW - 1, 0),
-      'HORIZONTAL'
+      'ROW'
     )
 
     return lastRow.coordinates.some((coordinate) => {
@@ -43,13 +43,13 @@ export class Board {
   hasWinner (): boolean {
     return this.lineFactory.createFromCoordinateAndDirection(
       new Coordinate(0, 0),
-      'HORIZONTAL'
+      'ROW'
     )
       .coordinates
       .map((coordinate) =>
         this.lineFactory.createFromCoordinateAndDirection(
           coordinate,
-          'VERTICAL'
+          'COLUMN'
         )
       )
       .map((line) => {
@@ -74,7 +74,7 @@ export class Board {
 
     const columnCoordinates = this.lineFactory.createFromCoordinateAndDirection(
       new Coordinate(0, columnIndex),
-      'VERTICAL'
+      'COLUMN'
     )
 
     const freeCoordinate = columnCoordinates.coordinates.find(

@@ -1,9 +1,9 @@
 import { type Result } from 'neverthrow'
-import { type BoardError } from '../errors.js'
-import { type Player } from '../models/Player.js'
-import { Board } from '../models/Board.js'
-import { Turn, type Players } from '../models/Turn.js'
-import { TurnView } from '../views/TurnView.js'
+import { type BoardError } from '../errors.ts'
+import { TurnView } from '../views/TurnView.ts'
+import { Board } from './Board.ts'
+import { type Player } from './Player.ts'
+import { Turn, type Players } from './Turn.ts'
 
 export class Game {
   private readonly board: Board
