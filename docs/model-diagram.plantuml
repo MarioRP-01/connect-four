@@ -11,44 +11,53 @@ interface Player
 class Bot
 class Human
 class Board
-class Hole
+class Coordinate
+class Line
+class Row
+class Column
+class AscendingDiagonal
+class DescendingDiagonal
 class Turn
 class Token
-class Column
 class Put
+
+
 
 class Result
 class Draw
 class Victory
-class FourInRow
-class FourInColumn
-class FourInDiagonal
-class FourInInverseDiagonal
 
 Connect4 *--> "0..n" Game
 
 Result <|-- Victory
 Result <|-- Draw
 
-Victory o--> Hole : 4
+Victory o--> Token : 4
 
-Victory <|-- FourInRow
-Victory <|-- FourInColumn
-Victory <|-- FourInDiagonal
-Victory <|-- FourInInverseDiagonal
+Victory o--> Line
 
 Put ..> Column
 Put ..> Token
 
-Hole "0..1" o-- "0..1" Token
+Coordinate --> Token
 
 Game *--> "0..1" Result
 Game *--> Board : 1
 Game *--> Turn
 Game o--> Player : 2
 
-Board *--> "7" Column
-Column *--> "6" Hole
+Board *--> "6 * 7" Token
+Board --> Coordinate
+Line *-->  Coordinate
+
+Board --> Line
+Line <|-- Row
+Line <|-- Column
+Line <|-- AscendingDiagonal
+Line <|-- DescendingDiagonal
+
+Row *--> "7" Coordinate
+Column *--> "6" Coordinate
 
 Player ..> Board
 Player ..> Put
@@ -62,7 +71,8 @@ Token --> Color
 
 enum Color {
   RED
-  YELLOW
+  BLUE
+  NULL
 }
 
 @enduml
