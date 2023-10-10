@@ -1,17 +1,9 @@
-import { BotPlayer } from './models/BotPlayer.ts'
-import { Game } from './models/Game.ts'
-import { HumanPlayer } from './models/HumanPlayer.ts'
-import { TOKEN_SYMBOLS, Token } from './models/Token.ts'
+import { Connect4Game } from './Connect4Game.ts'
 
-function main (): void {
-  const game = new Game(
-    [
-      new HumanPlayer('Player 1', new Token(TOKEN_SYMBOLS.RED_TOKEN)),
-      new BotPlayer('Player 2', new Token(TOKEN_SYMBOLS.BLUE_TOKEN))
-    ]
-  )
+async function main (): Promise<void> {
+  const connect4Game = new Connect4Game()
 
-  void game.start()
+  await connect4Game.play()
 }
 
-main()
+await main()
