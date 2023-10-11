@@ -89,19 +89,6 @@ export class Board {
     return new Ok(null)
   }
 
-  toString (): string {
-    let result = ''
-    for (let row = 0; row < this.sizeRows; row++) {
-      let line = ''
-      for (let column = 0; column < this.sizeColumns; column++) {
-        line += this.getToken(new Coordinate(row, column))?.toString() ?? TOKEN_SYMBOLS.NULL
-      }
-      result = `${line}\n${result}`
-    }
-
-    return result
-  }
-
   private isCoordinateInWinnerCombination (coordinate: Coordinate): boolean {
     const token = this.getToken(coordinate)
     if (token.isNull()) {
