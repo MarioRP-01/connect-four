@@ -18,7 +18,7 @@ export class Board {
     return this.board[row][column]
   }
 
-  private placeToken ({ row, column }: Coordinate, token: Token): void {
+  private setToken ({ row, column }: Coordinate, token: Token): void {
     this.board[row][column] = token
   }
 
@@ -78,7 +78,7 @@ export class Board {
       return new Err(Errors.fullColumn())
     }
 
-    this.placeToken(freeCoordinate, token)
+    this.setToken(freeCoordinate, token)
     return new Ok(null)
   }
 
