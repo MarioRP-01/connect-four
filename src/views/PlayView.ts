@@ -21,7 +21,7 @@ export class PlayView {
   private async turnPhase (): Promise<void> {
     await this.turnView.interact()
       .andThen(({ selectColumn }: { selectColumn: number }): Result<null, BoardError> => {
-        return this.game.putToken(selectColumn)
+        return this.game.performTurn(selectColumn)
       })
       .match(
         () => {
