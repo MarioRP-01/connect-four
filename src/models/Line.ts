@@ -1,18 +1,18 @@
 import { Coordinate, isValidColumn, isValidRow } from './Coordinate.ts'
 
 export type Direction =
-  | { type: 'ROW', vector: { row: 0, column: 1 } }
-  | { type: 'COLUMN', vector: { row: 1, column: 0 } }
+  | { type: 'HORIZONTAL', vector: { row: 0, column: 1 } }
+  | { type: 'VERTICAL', vector: { row: 1, column: 0 } }
   | { type: 'ASCENDING_DIAGONAL', vector: { row: 1, column: 1 } }
   | { type: 'DESCENDING_DIAGONAL', vector: { row: 1, column: -1 } }
 
 export type DirectionType = Direction['type']
 
 export const horizontalDirection = (): Direction =>
-  ({ type: 'ROW', vector: { row: 0, column: 1 } })
+  ({ type: 'HORIZONTAL', vector: { row: 0, column: 1 } })
 
 export const verticalDirection = (): Direction =>
-  ({ type: 'COLUMN', vector: { row: 1, column: 0 } })
+  ({ type: 'VERTICAL', vector: { row: 1, column: 0 } })
 
 export const ascendingDiagonalDirection = (): Direction =>
   ({ type: 'ASCENDING_DIAGONAL', vector: { row: 1, column: 1 } })
@@ -21,8 +21,8 @@ export const descendingDiagonalDirection = (): Direction =>
   ({ type: 'DESCENDING_DIAGONAL', vector: { row: 1, column: -1 } })
 
 const directionFactory = {
-  ROW: horizontalDirection,
-  COLUMN: verticalDirection,
+  HORIZONTAL: horizontalDirection,
+  VERTICAL: verticalDirection,
   ASCENDING_DIAGONAL: ascendingDiagonalDirection,
   DESCENDING_DIAGONAL: descendingDiagonalDirection
 }
@@ -56,8 +56,8 @@ export class LineFactory {
 
   createAllLinesFromCoordinate (coordinate: Coordinate): Line[] {
     return [
-      this.createFromCoordinateAndDirection(coordinate, 'ROW'),
-      this.createFromCoordinateAndDirection(coordinate, 'COLUMN'),
+      this.createFromCoordinateAndDirection(coordinate, 'HORIZONTAL'),
+      this.createFromCoordinateAndDirection(coordinate, 'VERTICAL'),
       this.createFromCoordinateAndDirection(coordinate, 'ASCENDING_DIAGONAL'),
       this.createFromCoordinateAndDirection(coordinate, 'DESCENDING_DIAGONAL')
     ]

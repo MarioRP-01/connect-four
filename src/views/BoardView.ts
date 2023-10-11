@@ -12,12 +12,12 @@ export class BoardView {
   interact (): void {
     const rows = this.lineFactory.createFromCoordinateAndDirection(
       new Coordinate(0, 0),
-      'COLUMN'
+      'VERTICAL'
     ).coordinates
       .map((coordinate) => {
         return this.lineFactory.createFromCoordinateAndDirection(
           coordinate,
-          'ROW'
+          'HORIZONTAL'
         ).coordinates
       })
       .map((lineCoordinates) => {

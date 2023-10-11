@@ -13,8 +13,8 @@ class Human
 class Board
 class Coordinate
 class Line
-class Row
-class Column
+class Horizontal
+class Vertical
 class AscendingDiagonal
 class DescendingDiagonal
 class Turn
@@ -36,7 +36,7 @@ Victory o--> Token : 4
 
 Victory o--> Line
 
-Put ..> Column
+Put ..> Vertical
 Put ..> Token
 
 Coordinate --> Token
@@ -51,13 +51,13 @@ Board --> Coordinate
 Line *-->  Coordinate
 
 Board --> Line
-Line <|-- Row
-Line <|-- Column
+Line <|-- Horizontal
+Line <|-- Vertical
 Line <|-- AscendingDiagonal
 Line <|-- DescendingDiagonal
 
-Row *--> "7" Coordinate
-Column *--> "6" Coordinate
+Horizontal *--> "7" Coordinate
+Vertical *--> "6" Coordinate
 
 Player ..> Board
 Player ..> Put
