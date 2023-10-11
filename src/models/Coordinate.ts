@@ -23,11 +23,11 @@ export function coordinateColumn (number: number): CoordinateColumn {
   return number as any
 }
 
-export function isValidRow (number: number): boolean {
+export function isValidRow (number: number): number is CoordinateRow {
   return number >= 0 && number < MAX_COORDINATES.MAX_ROW
 }
 
-export function isValidColumn (number: number): boolean {
+export function isValidColumn (number: number): number is CoordinateColumn {
   return number >= 0 && number < MAX_COORDINATES.MAX_COLUMN
 }
 

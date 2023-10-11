@@ -30,7 +30,7 @@ export class AskMoveView implements PlayerVisitor {
   visitBot (bot: BotPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
     return fromPromise(new Promise((resolve) => {
       setTimeout(() => {
-        const column = Math.floor(Math.random() * 6) + 1
+        const column = bot.randomColumn()
         this.inquirerCli.render(bot.getPromptMessage() + ` ${column}`)
         resolve({
           selectColumn: column
