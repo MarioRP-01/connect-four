@@ -8,16 +8,9 @@ export class Board {
   private readonly board: Token[][]
   private readonly lineFactory = new LineFactory()
 
-  constructor (
-    private readonly sizeRows: number,
-    private readonly sizeColumns: number
-  ) {
-    if (sizeRows < 1 || sizeColumns < 1) {
-      throw new Error('Board must have at least 1 row and 1 column')
-    }
-
-    this.board = Array.from({ length: this.sizeRows }, () =>
-      Array(this.sizeColumns).fill(new Token(TOKEN_SYMBOLS.NULL))
+  constructor () {
+    this.board = Array.from({ length: MAX_COORDINATES.MAX_ROW }, () =>
+      Array(MAX_COORDINATES.MAX_COLUMN).fill(new Token(TOKEN_SYMBOLS.NULL))
     )
   }
 

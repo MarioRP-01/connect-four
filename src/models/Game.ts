@@ -7,7 +7,7 @@ import { type Token } from './Token.ts'
 import { Turn, type Players } from './Turn.ts'
 
 export class Game {
-  private readonly board: Board = new Board(6, 7)
+  private readonly board: Board = new Board()
   private readonly turn: Turn
 
   constructor (
