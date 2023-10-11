@@ -1,11 +1,11 @@
 import { type IntRange } from '../utils/IntRange.ts'
 
 export const MAX_COORDINATES = {
-  MAX_ROW: 6,
-  MAX_COLUMN: 7
+  ROW: 6,
+  COLUMN: 7
 } as const
 
-export type CoordinateRow = IntRange<0, typeof MAX_COORDINATES.MAX_ROW>
+export type CoordinateRow = IntRange<0, typeof MAX_COORDINATES.ROW>
 export function coordinateRow (number: number): CoordinateRow {
   if (!isValidRow(number)) {
     throw new Error('row is not valid')
@@ -14,7 +14,7 @@ export function coordinateRow (number: number): CoordinateRow {
   return number as any
 }
 
-export type CoordinateColumn = IntRange<0, typeof MAX_COORDINATES.MAX_COLUMN>
+export type CoordinateColumn = IntRange<0, typeof MAX_COORDINATES.COLUMN>
 export function coordinateColumn (number: number): CoordinateColumn {
   if (!isValidColumn(number)) {
     throw new Error('column is not valid')
@@ -24,11 +24,11 @@ export function coordinateColumn (number: number): CoordinateColumn {
 }
 
 export function isValidRow (number: number): number is CoordinateRow {
-  return number >= 0 && number < MAX_COORDINATES.MAX_ROW
+  return number >= 0 && number < MAX_COORDINATES.ROW
 }
 
 export function isValidColumn (number: number): number is CoordinateColumn {
-  return number >= 0 && number < MAX_COORDINATES.MAX_COLUMN
+  return number >= 0 && number < MAX_COORDINATES.COLUMN
 }
 
 export function isCoordinate (item: Coordinate | undefined): item is Coordinate {

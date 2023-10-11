@@ -9,8 +9,8 @@ export class Board {
   private readonly lineFactory = new LineFactory()
 
   constructor () {
-    this.board = Array.from({ length: MAX_COORDINATES.MAX_ROW }, () =>
-      Array(MAX_COORDINATES.MAX_COLUMN).fill(new Token(TOKEN_SYMBOLS.NULL))
+    this.board = Array.from({ length: MAX_COORDINATES.ROW }, () =>
+      Array(MAX_COORDINATES.COLUMN).fill(new Token(TOKEN_SYMBOLS.NULL))
     )
   }
 
@@ -24,7 +24,7 @@ export class Board {
 
   isWinnable (): boolean {
     const lastRow = this.lineFactory.createFromCoordinateAndDirection(
-      new Coordinate(MAX_COORDINATES.MAX_ROW - 1, 0),
+      new Coordinate(MAX_COORDINATES.ROW - 1, 0),
       'ROW'
     )
 
