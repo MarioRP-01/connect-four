@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
-import { Coordinate, MAX_COORDINATES, isCoordinate, isValidColumn } from './Coordinate.ts'
+import { Coordinate, MAX_COORDINATES, isValidColumn, isValidCoordinate } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
@@ -52,7 +52,7 @@ export class Board {
         if (index < 1) return undefined
         return line.coordinates[index - 1]
       })
-      .filter(isCoordinate)
+      .filter(isValidCoordinate)
       .some((coordinate) => {
         return this.isCoordinateInWinnerCombination(coordinate)
       })

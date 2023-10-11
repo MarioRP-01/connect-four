@@ -1,4 +1,4 @@
-import { Coordinate, isValidColumn, isValidRow } from './Coordinate.ts'
+import { isValidCoordinate, type Coordinate } from './Coordinate.ts'
 
 export type Direction =
   | { type: 'HORIZONTAL', vector: { row: 0, column: 1 } }
@@ -29,26 +29,22 @@ const directionFactory = {
 
 export class LineFactory {
   createFromCoordinateAndDirection (
-    { row: initialRow, column: initialColumn }: Coordinate,
+    initialCoordinate: Coordinate,
     directionType: DirectionType
   ): Line {
     const direction = directionFactory[directionType]()
-    const coordinates: Coordinate[] = []
+    const coordinates: Coordinate[] = [initialCoordinate]
 
-    let row: number = initialRow
-    let column: number = initialColumn
-    while (isValidRow(row) && isValidColumn(column)) {
-      coordinates.push(new Coordinate(row, column))
-      row += direction.vector.row
-      column += direction.vector.column
+    let coordinate = initialCoordinate.getNext(direction)
+    while (isValidCoordinate(coordinate)) {
+      coordinates.push(coordinate)
+      coordinate = coordinate.getNext(direction)
     }
 
-    row = initialRow - direction.vector.row
-    column = initialColumn - direction.vector.column
-    while (isValidRow(row) && isValidColumn(column)) {
-      coordinates.unshift(new Coordinate(row, column))
-      row -= direction.vector.row
-      column -= direction.vector.column
+    coordinate = initialCoordinate.getPrevious(direction)
+    while (isValidCoordinate(coordinate)) {
+      coordinates.unshift(coordinate)
+      coordinate = coordinate.getPrevious(direction)
     }
 
     return new Line(coordinates, direction)

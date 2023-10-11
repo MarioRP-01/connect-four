@@ -1,4 +1,5 @@
 import { type IntRange } from '../utils/IntRange.ts'
+import { type Direction } from './Line.ts'
 
 export const MAX_COORDINATES = {
   ROW: 6,
@@ -31,8 +32,10 @@ export function isValidColumn (number: number): number is CoordinateColumn {
   return number >= 0 && number < MAX_COORDINATES.COLUMN
 }
 
-export function isCoordinate (item: Coordinate | undefined): item is Coordinate {
-  return item !== undefined
+export function isValidCoordinate (item: Coordinate | undefined): item is Coordinate {
+  return item !== undefined &&
+    isValidColumn(item.column) &&
+    isValidRow(item.row)
 }
 
 export class Coordinate {
@@ -45,5 +48,27 @@ export class Coordinate {
   ) {
     this.row = coordinateRow(row)
     this.column = coordinateColumn(column)
+  }
+
+  getNext ({ vector: { row, column } }: Direction): Coordinate | undefined {
+    const newRow = this.row + row
+    const newColumn = this.column + column
+
+    if (!isValidRow(newRow) || !isValidColumn(newColumn)) {
+      return undefined
+    }
+
+    return new Coordinate(newRow, newColumn)
+  }
+
+  getPrevious ({ vector: { row, column } }: Direction): Coordinate | undefined {
+    const newRow = this.row - row
+    const newColumn = this.column - column
+
+    if (!isValidRow(newRow) || !isValidColumn(newColumn)) {
+      return undefined
+    }
+
+    return new Coordinate(newRow, newColumn)
   }
 }
