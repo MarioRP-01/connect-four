@@ -1,40 +1,61 @@
-import { type BoardError } from '../errors'
-import { InquirerCli } from './InquirerCli'
+import { type BoardError } from '../errors.ts'
+import { type PlayerVisitor } from '../models/Visitor.ts'
+import { InquirerCli } from './InquirerCli.ts'
+import { type PlayController } from '../controller/PlayController.ts'
+// import * as Errors from '../errors.ts'
 
 export abstract class ErrorView {
   protected readonly inquirerCli: InquirerCli = new InquirerCli()
   abstract interact (): void
 }
 
-const errorViewFactory = {
-  InvalidColumn: new InvalidColumnErrorView()
-  FullColumn: new FullColumnErrorView()
-  Other: new OtherErrorView()
-}
-
-export class ErrorViewFactory {
-  createFromErrorType(error: BoardError['type']): ErrorView {
-
+class InvalidColumnErrorView extends ErrorView {
+  interact (): void {
+    this.inquirerCli.render('Invalid column. Try again.')
   }
 }
 
-class InvalidColumnErrorView extends ErrorView {
-  constructor (private readonly error: { type: 'InvalidColumn' }) {
+class FullColumnErrorView extends ErrorView implements PlayerVisitor {
+  constructor (
+    private readonly errorContent: BoardError,
+    private readonly playController: PlayController
+  ) {
     super()
   }
 
-  interact() {
-    this.inquirerCli.render(this.error.type)
+  interact (): void {
+    this.playController.getCurrentPlayer().accept(this)
   }
-  
-}
 
-class FullColumnErrorView extends ErrorView {
-  interact()
-  
+  visitHuman (): void {
+    this.inquirerCli.render(this.errorContent.type)
+  }
+
+  visitBot (): void { }
 }
 
 class OtherErrorView extends ErrorView {
-  interact()
-  
+  constructor (
+    private readonly errorContent: BoardError
+  ) {
+    super()
+  }
+
+  interact (): void {
+    this.inquirerCli.render(String(this.errorContent))
+  }
+}
+
+const errorViewFactory = {
+  InvalidColumn: () => new InvalidColumnErrorView(),
+  FullColumn: (error: BoardError, playController: PlayController) => new FullColumnErrorView(error, playController),
+  Other: (error: BoardError) => new OtherErrorView(error)
+}
+
+export class ErrorViewFactory {
+  constructor (private readonly playController: PlayController) { }
+
+  createFromErrorType (error: BoardError): ErrorView {
+    return errorViewFactory[error.type](error, this.playController)
+  }
 }

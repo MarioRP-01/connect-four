@@ -3,17 +3,17 @@ import * as Errors from '../errors.ts'
 import { type BoardError } from '../errors.ts'
 import { type BotPlayer } from '../models/BotPlayer.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
-import { type PlayerVisitor } from '../models/PlayerVisitor.ts'
+import { type AskMovePlayerVisitor } from '../models/Visitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
 import { type PlayController } from '../controller/PlayController.ts'
 
-export class AskMoveView implements PlayerVisitor {
+export class AskMoveView implements AskMovePlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
 
   constructor (private readonly playController: PlayController) { }
 
   interact (): ResultAsync<{ selectColumn: number }, BoardError> {
-    return this.playController.getCurrentPlayer().accept(this)
+    return this.playController.getCurrentPlayer().acceptAskMove(this)
   }
 
   visitHuman (human: HumanPlayer): ResultAsync<{ selectColumn: number }, BoardError> {

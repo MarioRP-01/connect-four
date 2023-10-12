@@ -1,9 +1,9 @@
 import { type ResultAsync } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
-import { type AskMoveView } from '../views/AskMoveView.ts'
 import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from './Coordinate.ts'
 import { type Player } from './Player.ts'
 import { type Token } from './Token.ts'
+import { type PlayerVisitor, type AskMovePlayerVisitor } from './Visitor.ts'
 
 export class BotPlayer implements Player {
   constructor (readonly name: string, readonly token: Token) { }
@@ -12,8 +12,12 @@ export class BotPlayer implements Player {
     return `${this.name} (${this.token.toString()}):`
   }
 
-  accept (turnView: AskMoveView): ResultAsync<{ selectColumn: number }, BoardError> {
-    return turnView.visitBot(this)
+  accept (playerVisitor: PlayerVisitor): void {
+    playerVisitor.visitBot(this)
+  }
+
+  acceptAskMove (playerVisitor: AskMovePlayerVisitor): ResultAsync<{ selectColumn: number }, BoardError> {
+    return playerVisitor.visitBot(this)
   }
 
   randomColumn (): CoordinateColumn {

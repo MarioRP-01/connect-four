@@ -4,6 +4,11 @@ import { type BotPlayer } from './BotPlayer.ts'
 import { type HumanPlayer } from './HumanPlayer.ts'
 
 export interface PlayerVisitor {
+  visitBot: (bot: BotPlayer) => void
+  visitHuman: (human: HumanPlayer) => void
+}
+
+export interface AskMovePlayerVisitor {
   visitBot: (bot: BotPlayer) => ResultAsync<{ selectColumn: number }, BoardError>
   visitHuman: (human: HumanPlayer) => ResultAsync<{ selectColumn: number }, BoardError>
 }

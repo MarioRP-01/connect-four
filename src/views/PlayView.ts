@@ -2,13 +2,13 @@ import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { AskMoveView } from './AskMoveView.ts'
 import { BoardView } from './BoardView.ts'
-import { InquirerCli } from './InquirerCli.ts'
 import { type PlayController } from '../controller/PlayController.ts'
+import { ErrorViewFactory } from './ErrorView.ts'
 
 export class PlayView {
-  private readonly inquirerCli: InquirerCli = new InquirerCli()
   private readonly turnView: AskMoveView = new AskMoveView(this.playController)
   private readonly boardView: BoardView = new BoardView(this.playController)
+  private readonly errorViewFactory: ErrorViewFactory = new ErrorViewFactory(this.playController)
 
   constructor (private readonly playController: PlayController) { }
 
@@ -28,7 +28,7 @@ export class PlayView {
           this.boardView.interact()
         },
         (error) => {
-          this.inquirerCli.render(error.type)
+          this.errorViewFactory.createFromErrorType(error).interact()
         }
       )
   }
