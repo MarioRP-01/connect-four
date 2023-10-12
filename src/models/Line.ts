@@ -47,7 +47,7 @@ export class LineFactory {
       coordinate = coordinate.getPrevious(direction)
     }
 
-    return new Line(coordinates, direction)
+    return coordinates
   }
 
   createAllLinesFromCoordinate (coordinate: Coordinate): Line[] {
@@ -60,9 +60,11 @@ export class LineFactory {
   }
 }
 
-export class Line {
-  constructor (
-    readonly coordinates: Coordinate[],
-    readonly direction: Direction
-  ) { }
-}
+export type Line = Coordinate[]
+
+// export class Line {
+//   constructor (
+//     readonly coordinates: Coordinate[],
+//     readonly direction: Direction
+//   ) { }
+// }

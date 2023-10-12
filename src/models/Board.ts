@@ -29,7 +29,7 @@ export class Board {
       'HORIZONTAL'
     )
 
-    return lastRow.coordinates.some((coordinate) => {
+    return lastRow.some((coordinate) => {
       return this.getToken(coordinate).isNull()
     })
   }
@@ -54,7 +54,7 @@ export class Board {
       'VERTICAL'
     )
 
-    const emptyCoordinate = columnCoordinates.coordinates.find(
+    const emptyCoordinate = columnCoordinates.find(
       (coordinate) => this.getToken(coordinate).isNull()
     )
 
@@ -74,20 +74,17 @@ export class Board {
     }
 
     return this.lineFactory.createAllLinesFromCoordinate(coordinate)
-      .some(
-        (line) => this.hasFourConsecutiveMatchingTokens(line.coordinates)
-      )
+      .some(this.hasFourConsecutiveMatchingTokens.bind(this))
   }
 
   private hasFourConsecutiveMatchingTokens (line: Coordinate[]): boolean {
-    const { count } = line.reduce(({ token, count }, coordinate) => {
+    const { count } = line.reduce(({ token: previousToken, count }, coordinate) => {
+      if (count > 3) return { token: previousToken, count }
       const currentToken = this.getToken(coordinate)
-      if (count > 3) return { token, count }
-      if (token.isNull() || !token.equals(currentToken)) {
+      if (previousToken.isNull() || !previousToken.equals(currentToken)) {
         return { token: currentToken, count: 1 }
       }
-      count++
-      return { token, count }
+      return { token: currentToken, count: count + 1 }
     }, { token: new Token(TOKEN_SYMBOLS.NULL), count: 1 })
 
     return count > 3
