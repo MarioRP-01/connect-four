@@ -74,18 +74,22 @@ export class Board {
     }
 
     return this.lineFactory.createAllLinesFromCoordinate(coordinate)
-      .some((line) => {
-        const { count } = line.coordinates.reduce(({ token, count }, coordinate) => {
-          const currentToken = this.getToken(coordinate)
-          if (count > 3) return { token, count }
-          if (token.isNull() || !token.equals(currentToken)) {
-            return { token: currentToken, count: 1 }
-          }
-          count++
-          return { token, count }
-        }, { token: new Token(TOKEN_SYMBOLS.NULL), count: 1 })
+      .some(
+        (line) => this.hasFourConsecutiveMatchingTokens(line.coordinates)
+      )
+  }
 
-        return count > 3
-      })
+  private hasFourConsecutiveMatchingTokens (line: Coordinate[]): boolean {
+    const { count } = line.reduce(({ token, count }, coordinate) => {
+      const currentToken = this.getToken(coordinate)
+      if (count > 3) return { token, count }
+      if (token.isNull() || !token.equals(currentToken)) {
+        return { token: currentToken, count: 1 }
+      }
+      count++
+      return { token, count }
+    }, { token: new Token(TOKEN_SYMBOLS.NULL), count: 1 })
+
+    return count > 3
   }
 }
