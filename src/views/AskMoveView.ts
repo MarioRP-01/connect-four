@@ -2,18 +2,18 @@ import { fromPromise, type ResultAsync } from 'neverthrow'
 import * as Errors from '../errors.ts'
 import { type BoardError } from '../errors.ts'
 import { type BotPlayer } from '../models/BotPlayer.ts'
-import { type Game } from '../models/Game.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
 import { type PlayerVisitor } from '../models/PlayerVisitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
+import { type PlayController } from '../controller/PlayController.ts'
 
 export class AskMoveView implements PlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
 
-  constructor (private readonly game: Game) { }
+  constructor (private readonly playController: PlayController) { }
 
   interact (): ResultAsync<{ selectColumn: number }, BoardError> {
-    return this.game.getCurrentPlayer().accept(this)
+    return this.playController.getCurrentPlayer().accept(this)
   }
 
   visitHuman (human: HumanPlayer): ResultAsync<{ selectColumn: number }, BoardError> {

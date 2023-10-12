@@ -1,16 +1,17 @@
-import { type Game } from '../models/Game.ts'
+import { type ResultController } from '../controller/ResultController.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class ResultView {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
 
-  constructor (private readonly game: Game) { }
+  constructor (private readonly resultController: ResultController) { }
 
   interact (): void {
-    if ((this.game.getWinner()) === null) {
+    const winner = this.resultController.getWinner()
+    if ((winner) === null) {
       this.inquirerCli.render('It\'s a tie!')
     } else {
-      this.inquirerCli.render(`Congratulations, ${this.game.getWinner()?.name}! You won!`)
+      this.inquirerCli.render(`Congratulations, ${winner?.name}! You won!`)
     }
   }
 }

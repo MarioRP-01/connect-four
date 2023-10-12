@@ -1,5 +1,5 @@
+import { type PlayController } from '../controller/PlayController.ts'
 import { Coordinate } from '../models/Coordinate.ts'
-import { type Game } from '../models/Game.ts'
 import { LineFactory } from '../models/Line.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
@@ -7,7 +7,7 @@ export class BoardView {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
   private readonly lineFactory: LineFactory = new LineFactory()
 
-  constructor (private readonly game: Game) {}
+  constructor (private readonly playController: PlayController) {}
 
   interact (): void {
     const rows = this.lineFactory.createFromCoordinateAndDirection(
@@ -23,7 +23,7 @@ export class BoardView {
       .map((lineCoordinates) => {
         return lineCoordinates
           .map((coordinate) => {
-            return this.game.getToken(coordinate)
+            return this.playController.getToken(coordinate)
           })
           .map((token) => token.symbol)
           .join('')
