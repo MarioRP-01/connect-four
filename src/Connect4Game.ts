@@ -1,5 +1,5 @@
-import { PlayController } from './controller/PlayController.ts'
-import { ResultController } from './controller/ResultController.ts'
+import { PlayController } from './controllers/PlayController.ts'
+import { ResultController } from './controllers/ResultController.ts'
 import { BotPlayer } from './models/BotPlayer.ts'
 import { Game } from './models/Game.ts'
 import { HumanPlayer } from './models/HumanPlayer.ts'

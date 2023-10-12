@@ -1,8 +1,8 @@
 import { type Result } from 'neverthrow'
+import { type PlayController } from '../controllers/PlayController.ts'
 import { type BoardError } from '../errors.ts'
 import { AskMoveView } from './AskMoveView.ts'
 import { BoardView } from './BoardView.ts'
-import { type PlayController } from '../controller/PlayController.ts'
 import { ErrorViewFactory } from './ErrorView.ts'
 
 export class PlayView {

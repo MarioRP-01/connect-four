@@ -1,5 +1,5 @@
-import { type PlayController } from '../controller/PlayController.ts'
-import { type ResultController } from '../controller/ResultController.ts'
+import { type PlayController } from '../controllers/PlayController.ts'
+import { type ResultController } from '../controllers/ResultController.ts'
 import { PlayView } from './PlayView.ts'
 import { ResultView } from './ResultView.ts'
 import { StartView } from './StartView.ts'

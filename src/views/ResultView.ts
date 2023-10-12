@@ -1,4 +1,4 @@
-import { type ResultController } from '../controller/ResultController.ts'
+import { type ResultController } from '../controllers/ResultController.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class ResultView {

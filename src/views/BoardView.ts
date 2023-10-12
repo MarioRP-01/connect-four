@@ -1,4 +1,4 @@
-import { type PlayController } from '../controller/PlayController.ts'
+import { type PlayController } from '../controllers/PlayController.ts'
 import { Coordinate } from '../models/Coordinate.ts'
 import { LineFactory } from '../models/Line.ts'
 import { InquirerCli } from './InquirerCli.ts'
