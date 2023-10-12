@@ -1,12 +1,13 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
-import { Coordinate, MAX_COORDINATES, isValidColumn, isValidCoordinate } from './Coordinate.ts'
+import { Coordinate, MAX_COORDINATES, isValidColumn } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 export class Board {
   private readonly board: Token[][]
   private readonly lineFactory = new LineFactory()
+  private lastCoordinate = null as Coordinate | null
 
   constructor () {
     this.board = Array.from({ length: MAX_COORDINATES.ROW }, () =>
@@ -34,28 +35,11 @@ export class Board {
   }
 
   hasWinner (): boolean {
-    return this.lineFactory.createFromCoordinateAndDirection(
-      new Coordinate(0, 0),
-      'HORIZONTAL'
-    )
-      .coordinates
-      .map((coordinate) =>
-        this.lineFactory.createFromCoordinateAndDirection(
-          coordinate,
-          'VERTICAL'
-        )
-      )
-      .map((line) => {
-        const index = line.coordinates.findIndex((coordinate) => {
-          return this.getToken(coordinate).isNull()
-        })
-        if (index < 1) return undefined
-        return line.coordinates[index - 1]
-      })
-      .filter(isValidCoordinate)
-      .some((coordinate) => {
-        return this.isCoordinateInWinnerCombination(coordinate)
-      })
+    if (this.lastCoordinate === null) {
+      return false
+    }
+
+    return this.isCoordinateInWinnerCombination(this.lastCoordinate)
   }
 
   put (column: number, token: Token): Result<null, Errors.BoardError> {
@@ -70,15 +54,16 @@ export class Board {
       'VERTICAL'
     )
 
-    const freeCoordinate = columnCoordinates.coordinates.find(
+    const emptyCoordinate = columnCoordinates.coordinates.find(
       (coordinate) => this.getToken(coordinate).isNull()
     )
 
-    if (freeCoordinate === undefined) {
+    if (emptyCoordinate === undefined) {
       return new Err(Errors.fullColumn())
     }
 
-    this.setToken(freeCoordinate, token)
+    this.setToken(emptyCoordinate, token)
+    this.lastCoordinate = emptyCoordinate
     return new Ok(null)
   }
 
