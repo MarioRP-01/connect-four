@@ -1,4 +1,4 @@
-import { type PlayController } from '../controllers/PlayController.ts'
+import { type Logic } from '../controllers/Logic.ts'
 import { type BoardError } from '../errors.ts'
 import { type PlayerVisitor } from '../models/Visitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
@@ -18,13 +18,13 @@ class InvalidColumnErrorView extends ErrorView {
 class FullColumnErrorView extends ErrorView implements PlayerVisitor {
   constructor (
     private readonly errorContent: BoardError,
-    private readonly playController: PlayController
+    private readonly logic: Logic
   ) {
     super()
   }
 
   interact (): void {
-    this.playController.getCurrentPlayer().accept(this)
+    this.logic.getCurrentPlayer().accept(this)
   }
 
   visitHuman (): void {
@@ -48,14 +48,14 @@ class OtherErrorView extends ErrorView {
 
 const errorViewFactory = {
   InvalidColumn: () => new InvalidColumnErrorView(),
-  FullColumn: (error: BoardError, playController: PlayController) => new FullColumnErrorView(error, playController),
+  FullColumn: (error: BoardError, logic: Logic) => new FullColumnErrorView(error, logic),
   Other: (error: BoardError) => new OtherErrorView(error)
 }
 
 export class ErrorViewFactory {
-  constructor (private readonly playController: PlayController) { }
+  constructor (private readonly logic: Logic) { }
 
   createFromErrorType (error: BoardError): ErrorView {
-    return errorViewFactory[error.type](error, this.playController)
+    return errorViewFactory[error.type](error, this.logic)
   }
 }

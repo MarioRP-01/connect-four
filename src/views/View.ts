@@ -1,17 +1,15 @@
-import { type PlayController } from '../controllers/PlayController.ts'
-import { type ResultController } from '../controllers/ResultController.ts'
+import { type Logic } from '../controllers/Logic.ts'
 import { PlayView } from './PlayView.ts'
 import { ResultView } from './ResultView.ts'
 import { StartView } from './StartView.ts'
 
 export class View {
   private readonly startView = new StartView()
-  private readonly playView = new PlayView(this.playController)
-  private readonly resultView = new ResultView(this.resultController)
+  private readonly playView = new PlayView(this.logic)
+  private readonly resultView = new ResultView(this.logic)
 
   constructor (
-    private readonly playController: PlayController,
-    private readonly resultController: ResultController
+    private readonly logic: Logic
   ) { }
 
   start (): void {

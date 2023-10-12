@@ -1,5 +1,4 @@
-import { PlayController } from './controllers/PlayController.ts'
-import { ResultController } from './controllers/ResultController.ts'
+import { Logic } from './controllers/Logic.ts'
 import { BotPlayer } from './models/BotPlayer.ts'
 import { Game } from './models/Game.ts'
 import { HumanPlayer } from './models/HumanPlayer.ts'
@@ -9,8 +8,7 @@ import { View } from './views/View.ts'
 export class Connect4Game {
   private readonly game: Game
   private readonly view: View
-  private readonly playController: PlayController
-  private readonly resultController: ResultController
+  private readonly logic: Logic
 
   constructor () {
     this.game = new Game(
@@ -20,10 +18,8 @@ export class Connect4Game {
       ]
     )
 
-    this.playController = new PlayController(this.game)
-    this.resultController = new ResultController(this.game)
-
-    this.view = new View(this.playController, this.resultController)
+    this.logic = new Logic(this.game)
+    this.view = new View(this.logic)
   }
 
   async play (): Promise<void> {
