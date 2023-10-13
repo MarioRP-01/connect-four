@@ -1,6 +1,6 @@
 import { type Logic } from '../controllers/Logic.ts'
 import { type BoardError } from '../errors.ts'
-import { type PlayerVisitor } from '../models/Visitor.ts'
+import { type PlayerVisitor } from '../models/PlayerVisitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
 // import * as Errors from '../errors.ts'
 

@@ -1,8 +1,8 @@
 import { type ResultAsync } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { type Player } from './Player.ts'
+import { type AskMovePlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
 import { type Token } from './Token.ts'
-import { type PlayerVisitor, type AskMovePlayerVisitor } from './Visitor.ts'
 
 export class HumanPlayer implements Player {
   constructor (readonly name: string, readonly token: Token) { }
