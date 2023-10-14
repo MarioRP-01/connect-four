@@ -11,12 +11,16 @@ export class Connect4Game {
     this.game = new Game()
 
     this.logic = new Logic(this.game)
-    this.view = new View(this.logic)
+    this.view = new View()
   }
 
   async play (): Promise<void> {
-    this.view.start()
-    await this.view.play()
-    this.view.result()
+    let controller
+    do {
+      controller = this.logic.getController()
+      if (controller != null) {
+        controller.accept(this.view)
+      }
+    } while (controller != null)
   }
 }

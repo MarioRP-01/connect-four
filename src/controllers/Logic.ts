@@ -1,35 +1,26 @@
-import { type Result } from 'neverthrow'
-import { type BoardError } from '../errors.ts'
-import { type Coordinate } from '../models/Coordinate.ts'
 import { type Game } from '../models/Game.ts'
-import { type Player } from '../models/Player.ts'
-import { type Token } from '../models/Token.ts'
+import { State } from '../models/State.ts'
+import { type Controller } from './Controller.ts'
 import { PlayController } from './PlayController.ts'
 import { ResultController } from './ResultController.ts'
+import { StartController } from './StartController.ts'
 
 export class Logic {
-  private readonly playController = new PlayController(this.game)
-  private readonly resultController = new ResultController(this.game)
+  private readonly state: State = new State()
+  private readonly startController = new StartController(this.game, this.state)
+  private readonly playController = new PlayController(this.game, this.state)
+  private readonly resultController = new ResultController(this.game, this.state)
 
   constructor (private readonly game: Game) { }
 
-  getCurrentPlayer (): Player {
-    return this.playController.getCurrentPlayer()
+  private readonly controllers = {
+    INITIAL: this.startController,
+    PLAYING: this.playController,
+    RESULT: this.resultController,
+    EXIT: null
   }
 
-  performTurn (column: number): Result<null, BoardError> {
-    return this.playController.performTurn(column)
-  }
-
-  getToken (coordinate: Coordinate): Token {
-    return this.playController.getToken(coordinate)
-  }
-
-  canContinue (): boolean {
-    return this.playController.canContinue()
-  }
-
-  getWinner (): Player | null {
-    return this.resultController.getWinner()
+  getController (): Controller | null {
+    return this.controllers[this.state.getStateValue()]
   }
 }

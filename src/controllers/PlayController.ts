@@ -4,6 +4,7 @@ import { type Coordinate } from '../models/Coordinate.ts'
 import { type Player } from '../models/Player.ts'
 import { type Token } from '../models/Token.ts'
 import { Controller } from './Controller.ts'
+import { type ControllersVisitor } from './ControllersVisitor.ts'
 
 export class PlayController extends Controller {
   getCurrentPlayer (): Player {
@@ -20,5 +21,11 @@ export class PlayController extends Controller {
 
   canContinue (): boolean {
     return this.game.canContinue()
+  }
+
+  accept (controllersVisitor: ControllersVisitor): void {
+    controllersVisitor.visitPlayController(this).catch((error) => {
+      return error
+    })
   }
 }
