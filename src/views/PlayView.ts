@@ -8,7 +8,7 @@ import { ErrorViewFactory } from './ErrorView.ts'
 export class PlayView {
   private readonly turnView: AskMoveView = new AskMoveView(this.logic)
   private readonly boardView: BoardView = new BoardView(this.logic)
-  private readonly errorViewFactory: ErrorViewFactory = new ErrorViewFactory(this.logic)
+  private readonly errorViewFactory: ErrorViewFactory = new ErrorViewFactory()
 
   constructor (private readonly logic: Logic) { }
 

@@ -4,24 +4,18 @@ import { Board } from './Board.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { type Player } from './Player.ts'
 import { type Token } from './Token.ts'
-import { Turn, type Players } from './Turn.ts'
+import { Turn } from './Turn.ts'
 
 export class Game {
-  private readonly board: Board = new Board()
-  private readonly turn: Turn
-
-  constructor (
-    players: Players
-  ) {
-    this.turn = new Turn(players)
-  }
+  private readonly board = new Board()
+  private readonly turn = new Turn(this.board)
 
   getCurrentPlayer (): Player {
     return this.turn.getCurrentPlayer()
   }
 
   performTurn (column: number): Result<null, BoardError> {
-    return this.board.put(column, this.turn.getCurrentPlayer().token)
+    return this.turn.putToken(column)
       .map(() => {
         if (!this.board.hasWinner()) {
           this.turn.switchPlayer()
