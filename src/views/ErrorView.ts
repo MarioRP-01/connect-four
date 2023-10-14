@@ -1,8 +1,5 @@
 import { type BoardError } from '../errors.ts'
-import { type PlayerVisitor } from '../models/Visitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
-import { type PlayController } from '../controller/PlayController.ts'
-// import * as Errors from '../errors.ts'
 
 export abstract class ErrorView {
   protected readonly inquirerCli: InquirerCli = new InquirerCli()
@@ -15,23 +12,10 @@ class InvalidColumnErrorView extends ErrorView {
   }
 }
 
-class FullColumnErrorView extends ErrorView implements PlayerVisitor {
-  constructor (
-    private readonly errorContent: BoardError,
-    private readonly playController: PlayController
-  ) {
-    super()
-  }
-
+class FullColumnErrorView extends ErrorView {
   interact (): void {
-    this.playController.getCurrentPlayer().accept(this)
+    this.inquirerCli.render('Column in full. Try again.')
   }
-
-  visitHuman (): void {
-    this.inquirerCli.render(this.errorContent.type)
-  }
-
-  visitBot (): void { }
 }
 
 class OtherErrorView extends ErrorView {
@@ -48,14 +32,12 @@ class OtherErrorView extends ErrorView {
 
 const errorViewFactory = {
   InvalidColumn: () => new InvalidColumnErrorView(),
-  FullColumn: (error: BoardError, playController: PlayController) => new FullColumnErrorView(error, playController),
+  FullColumn: () => new FullColumnErrorView(),
   Other: (error: BoardError) => new OtherErrorView(error)
 }
 
 export class ErrorViewFactory {
-  constructor (private readonly playController: PlayController) { }
-
   createFromErrorType (error: BoardError): ErrorView {
-    return errorViewFactory[error.type](error, this.playController)
+    return errorViewFactory[error.type](error)
   }
 }
