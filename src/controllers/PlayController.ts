@@ -23,9 +23,7 @@ export class PlayController extends Controller {
     return this.game.canContinue()
   }
 
-  accept (controllersVisitor: ControllersVisitor): void {
-    controllersVisitor.visitPlayController(this).catch((error) => {
-      return error
-    })
+  async accept (controllersVisitor: ControllersVisitor): Promise<void> {
+    await controllersVisitor.visitPlayController(this)
   }
 }

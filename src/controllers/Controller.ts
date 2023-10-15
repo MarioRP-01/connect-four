@@ -12,5 +12,5 @@ export abstract class Controller {
     this.state.next()
   }
 
-  abstract accept (controllersVisitor: ControllersVisitor): void
+  abstract accept (controllersVisitor: ControllersVisitor): Promise<void>
 }

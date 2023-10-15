@@ -19,7 +19,7 @@ export class Connect4Game {
     do {
       controller = this.logic.getController()
       if (controller != null) {
-        controller.accept(this.view)
+        await controller.accept(this.view)
       }
     } while (controller != null)
   }

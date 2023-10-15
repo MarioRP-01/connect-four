@@ -7,7 +7,7 @@ export class ResultController extends Controller {
     return this.game.getWinner()
   }
 
-  accept (controllersVisitor: ControllersVisitor): void {
+  async accept (controllersVisitor: ControllersVisitor): Promise<void> {
     controllersVisitor.visitResultController(this)
   }
 }
