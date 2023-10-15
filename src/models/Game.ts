@@ -10,6 +10,10 @@ export class Game {
   private readonly board = new Board()
   private readonly turn = new Turn(this.board)
 
+  init (players: Player[]): void {
+    this.turn.setPlayers(players)
+  }
+
   getCurrentPlayer (): Player {
     return this.turn.getCurrentPlayer()
   }
