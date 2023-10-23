@@ -1,10 +1,11 @@
+import assert from 'assert'
 import { type Result } from 'neverthrow'
-import { type Player } from './Player.ts'
 import { type BoardError } from '../errors.ts'
-import { HumanPlayer } from './HumanPlayer.ts'
-import { BotPlayer } from './BotPlayer.ts'
-import { TOKEN_SYMBOLS, Token } from './Token.ts'
 import { type Board } from './Board.ts'
+import { BotPlayer } from './BotPlayer.ts'
+import { HumanPlayer } from './HumanPlayer.ts'
+import { type Player } from './Player.ts'
+import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 type Players = [ player1: Player, player2: Player ]
 
@@ -20,6 +21,10 @@ export class Turn {
     ]
   }
 
+  reset (): void {
+    this.currentTurn = 0
+  }
+
   getCurrentPlayer (): Player {
     return this.turns[this.currentTurn]
   }
@@ -30,5 +35,10 @@ export class Turn {
 
   putToken (column: number): Result<null, BoardError> {
     return this.getCurrentPlayer().putToken(column, this.board)
+  }
+
+  setTurnByToken (token: Token): void {
+    const newTurn = this.turns.findIndex((player) => player.token.equals(token))
+    assert(newTurn > -1)
   }
 }

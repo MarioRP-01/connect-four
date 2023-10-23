@@ -12,4 +12,7 @@
     "eslint.options": {
         "overrideConfigFile": ".eslintrc.cjs"
     },
+    "cSpell.words": [
+        "neverthrow"
+    ],
 }

@@ -5,14 +5,19 @@ import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 export class Board {
-  private readonly board: Token[][]
+  private board!: Token[][]
   private readonly lineFactory = new LineFactory()
-  private lastCoordinate = null as Coordinate | null
+  private lastCoordinate!: Coordinate | null
 
   constructor () {
+    this.reset()
+  }
+
+  reset (): void {
     this.board = Array.from({ length: MAX_COORDINATES.ROW }, () =>
       Array(MAX_COORDINATES.COLUMN).fill(new Token(TOKEN_SYMBOLS.NULL))
     )
+    this.lastCoordinate = null
   }
 
   getToken ({ row, column }: Coordinate): Token {
@@ -88,5 +93,17 @@ export class Board {
     }, { token: new Token(TOKEN_SYMBOLS.NULL), count: 1 })
 
     return count > 3
+  }
+
+  loadState (memento: { boardPersisted: string, lastCoordinate: Coordinate | null }): void {
+    this.board = JSON.parse(memento.boardPersisted)
+    this.lastCoordinate = memento.lastCoordinate
+  }
+
+  saveState (): { boardPersisted: string, lastCoordinate: Coordinate | null } {
+    return {
+      boardPersisted: JSON.stringify(this.board),
+      lastCoordinate: this.lastCoordinate
+    }
   }
 }
