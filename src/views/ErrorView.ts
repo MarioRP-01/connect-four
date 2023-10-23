@@ -12,9 +12,27 @@ class InvalidColumnErrorView extends ErrorView {
   }
 }
 
+class InvalidPlayErrorView extends ErrorView {
+  interact (): void {
+    this.inquirerCli.render('Invalid play. Try again.')
+  }
+}
+
 class FullColumnErrorView extends ErrorView {
   interact (): void {
     this.inquirerCli.render('Column in full. Try again.')
+  }
+}
+
+class CannotUndoErrorView extends ErrorView {
+  interact (): void {
+    this.inquirerCli.render('Cannot undo.')
+  }
+}
+
+class CannotRedoErrorView extends ErrorView {
+  interact (): void {
+    this.inquirerCli.render('Cannot redo.')
   }
 }
 
@@ -32,7 +50,10 @@ class OtherErrorView extends ErrorView {
 
 const errorViewFactory = {
   InvalidColumn: () => new InvalidColumnErrorView(),
+  InvalidPlay: () => new InvalidPlayErrorView(),
   FullColumn: () => new FullColumnErrorView(),
+  CannotUndo: () => new CannotUndoErrorView(),
+  CannotRedo: () => new CannotRedoErrorView(),
   Other: (error: BoardError) => new OtherErrorView(error)
 }
 

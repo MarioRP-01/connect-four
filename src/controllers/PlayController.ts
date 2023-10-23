@@ -7,24 +7,36 @@ import { type AcceptorController } from './AcceptorController.ts'
 import { Controller } from './Controller.ts'
 import { type ControllersVisitor } from './ControllersVisitor.ts'
 import { PutController } from './PutController.ts'
+import { UndoController } from './UndoController.ts'
+import { RedoController } from './RedoController.ts'
 
 export class PlayController extends Controller implements AcceptorController {
-  private readonly actionController: PutController = new PutController(this.session, this.state)
+  private readonly putController: PutController = new PutController(this.session, this.state)
+  private readonly undoController: UndoController = new UndoController(this.session, this.state)
+  private readonly redoController: RedoController = new RedoController(this.session, this.state)
 
   getCurrentPlayer (): Player {
-    return this.actionController.getCurrentPlayer()
+    return this.putController.getCurrentPlayer()
   }
 
   performTurn (column: number): Result<null, BoardError> {
-    return this.actionController.performTurn(column)
+    return this.putController.performTurn(column)
   }
 
   getToken (coordinate: Coordinate): Token {
-    return this.actionController.getToken(coordinate)
+    return this.putController.getToken(coordinate)
   }
 
   canContinue (): boolean {
-    return this.actionController.canContinue()
+    return this.putController.canContinue()
+  }
+
+  redo (): Result<null, BoardError> {
+    return this.redoController.redo()
+  }
+
+  undo (): Result<null, BoardError> {
+    return this.undoController.undo()
   }
 
   async accept (controllersVisitor: ControllersVisitor): Promise<void> {

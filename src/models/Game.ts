@@ -20,7 +20,7 @@ export class Game {
     return this.turn.getCurrentPlayer()
   }
 
-  performTurn (column: number): Result<null, BoardError> {
+  putToken (column: number): Result<null, BoardError> {
     return this.turn.putToken(column)
       .map(() => {
         if (!this.board.hasWinner()) {

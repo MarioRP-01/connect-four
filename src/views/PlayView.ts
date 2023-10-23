@@ -4,9 +4,10 @@ import { type BoardError } from '../errors.ts'
 import { AskPlayView } from './AskPlayView.ts'
 import { BoardView } from './BoardView.ts'
 import { ErrorViewFactory } from './ErrorView.ts'
+import { PlayCommandFactory, type PlayCommand } from './PlayCommand.ts'
 
 export class PlayView {
-  private readonly askMoveView: AskPlayView = new AskPlayView()
+  private readonly askPlayView: AskPlayView = new AskPlayView()
   private readonly boardView: BoardView = new BoardView()
   private readonly errorViewFactory: ErrorViewFactory = new ErrorViewFactory()
 
@@ -18,9 +19,13 @@ export class PlayView {
   }
 
   private async turnPhase (playController: PlayController): Promise<void> {
-    await this.askMoveView.interact(playController)
-      .andThen(({ selectAction }: { selectAction: string }): Result<null, BoardError> => {
-        return playController.performTurn(Number(selectAction))
+    const playCommandFactory = new PlayCommandFactory(playController)
+    await this.askPlayView.interact(playController)
+      .andThen(({ selectAction }: { selectAction: string }): Result<PlayCommand, BoardError> => {
+        return playCommandFactory.getCommand(selectAction)
+      })
+      .andThen((playCommand: PlayCommand): Result<null, BoardError> => {
+        return playCommand.execute()
       })
       .match(
         () => {

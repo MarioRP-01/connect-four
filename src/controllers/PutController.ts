@@ -11,7 +11,7 @@ export class PutController extends Controller {
   }
 
   performTurn (column: number): Result<null, BoardError> {
-    return this.session.performTurn(column)
+    return this.session.putToken(column)
   }
 
   getToken (coordinate: Coordinate): Token {
