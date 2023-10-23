@@ -1,16 +1,15 @@
 import { Logic } from './controllers/Logic.ts'
-import { Game } from './models/Game.ts'
+import { Session } from './models/Session.ts'
 import { View } from './views/View.ts'
 
 export class Connect4Game {
-  private readonly game: Game
+  private readonly session: Session
   private readonly view: View
   private readonly logic: Logic
 
   constructor () {
-    this.game = new Game()
-
-    this.logic = new Logic(this.game)
+    this.session = new Session()
+    this.logic = new Logic(this.session)
     this.view = new View()
   }
 

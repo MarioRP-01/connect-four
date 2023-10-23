@@ -9,7 +9,7 @@ import { Controller } from './Controller.ts'
 import { type ControllersVisitor } from './ControllersVisitor.ts'
 
 export class PlayController extends Controller implements AcceptorController {
-  private readonly actionController: ActionController = new ActionController(this.game, this.state)
+  private readonly actionController: ActionController = new ActionController(this.session, this.state)
 
   getCurrentPlayer (): Player {
     return this.actionController.getCurrentPlayer()

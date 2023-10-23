@@ -5,7 +5,7 @@ import { type ControllersVisitor } from './ControllersVisitor.ts'
 
 export class ResultController extends Controller implements AcceptorController {
   getWinner (): Player | null {
-    return this.game.getWinner()
+    return this.session.getWinner()
   }
 
   async accept (controllersVisitor: ControllersVisitor): Promise<void> {

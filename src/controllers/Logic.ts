@@ -1,4 +1,4 @@
-import { type Game } from '../models/Game.ts'
+import { type Session } from '../models/Session.ts'
 import { State } from '../models/State.ts'
 import { type AcceptorController } from './AcceptorController.ts'
 import { PlayController } from './PlayController.ts'
@@ -7,11 +7,11 @@ import { StartController } from './StartController.ts'
 
 export class Logic {
   private readonly state: State = new State()
-  private readonly startController = new StartController(this.game, this.state)
-  private readonly playController = new PlayController(this.game, this.state)
-  private readonly resultController = new ResultController(this.game, this.state)
+  private readonly startController = new StartController(this.session, this.state)
+  private readonly playController = new PlayController(this.session, this.state)
+  private readonly resultController = new ResultController(this.session, this.state)
 
-  constructor (private readonly game: Game) { }
+  constructor (private readonly session: Session) { }
 
   private readonly controllers = {
     INITIAL: this.startController,

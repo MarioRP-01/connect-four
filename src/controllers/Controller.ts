@@ -1,9 +1,9 @@
-import { type Game } from '../models/Game.ts'
+import { type Session } from '../models/Session.ts'
 import { type State } from '../models/State.ts'
 
 export abstract class Controller {
   constructor (
-    protected readonly game: Game,
+    protected readonly session: Session,
     protected readonly state: State
   ) { }
 

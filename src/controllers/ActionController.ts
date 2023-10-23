@@ -7,18 +7,18 @@ import { Controller } from './Controller.ts'
 
 export class ActionController extends Controller {
   getCurrentPlayer (): Player {
-    return this.game.getCurrentPlayer()
+    return this.session.getCurrentPlayer()
   }
 
   performTurn (column: number): Result<null, BoardError> {
-    return this.game.performTurn(column)
+    return this.session.performTurn(column)
   }
 
   getToken (coordinate: Coordinate): Token {
-    return this.game.getToken(coordinate)
+    return this.session.getToken(coordinate)
   }
 
   canContinue (): boolean {
-    return this.game.canContinue()
+    return this.session.canContinue()
   }
 }
