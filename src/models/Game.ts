@@ -59,8 +59,8 @@ export class Game {
     }
 
     this.board.loadState({ boardPersisted, lastCoordinate })
-
     const lastToken = this.board.getToken(lastCoordinate)
     this.turn.setTurnByToken(lastToken)
+    this.turn.switchPlayer()
   }
 }

@@ -38,7 +38,9 @@ export class Turn {
   }
 
   setTurnByToken (token: Token): void {
+    console.log('setTurnByToken', token)
     const newTurn = this.turns.findIndex((player) => player.token.equals(token))
     assert(newTurn > -1)
+    this.currentTurn = newTurn
   }
 }

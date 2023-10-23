@@ -2,7 +2,12 @@ import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
 import { Coordinate, MAX_COORDINATES, isValidColumn } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
-import { TOKEN_SYMBOLS, Token } from './Token.ts'
+import { TOKEN_SYMBOLS, Token, type TokenSymbol } from './Token.ts'
+
+export interface BoardPersistance {
+  boardPersisted: TokenSymbol[][]
+  lastCoordinate: Coordinate | null
+}
 
 export class Board {
   private board!: Token[][]
@@ -95,14 +100,18 @@ export class Board {
     return count > 3
   }
 
-  loadState (memento: { boardPersisted: string, lastCoordinate: Coordinate | null }): void {
-    this.board = JSON.parse(memento.boardPersisted)
-    this.lastCoordinate = memento.lastCoordinate
+  loadState (
+    { boardPersisted, lastCoordinate }: BoardPersistance
+  ): void {
+    this.board = boardPersisted.map((row) => row.map((symbol) => new Token(symbol)))
+    this.lastCoordinate = lastCoordinate
   }
 
-  saveState (): { boardPersisted: string, lastCoordinate: Coordinate | null } {
+  saveState (): BoardPersistance {
+    const boardPersisted = this.board.map((row) => row.map((token) => token.symbol))
+
     return {
-      boardPersisted: JSON.stringify(this.board),
+      boardPersisted,
       lastCoordinate: this.lastCoordinate
     }
   }
