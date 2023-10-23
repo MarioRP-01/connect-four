@@ -6,9 +6,11 @@ import { type BotPlayer } from '../models/BotPlayer.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
 import { type AskPlayerVisitor } from '../models/PlayerVisitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
+import { isValidColumn } from '../models/Coordinate.ts'
 
 export class AskPlayView implements AskPlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
+  private lastAction: string | null = null
 
   interact (playController: PlayController): ResultAsync<{ selectAction: string }, BoardError> {
     return playController.getCurrentPlayer().acceptAskAction(this)
@@ -22,16 +24,21 @@ export class AskPlayView implements AskPlayerVisitor {
           message: human.getPromptMessage()
         }]),
       (error) => (Errors.other('inquired failed', error as Error))
-    ).map((answers) => ({ selectAction: answers.selectAction }))
+    ).map((answers) => {
+      this.lastAction = answers.selectAction
+      return { selectAction: answers.selectAction }
+    })
   }
 
   visitBot (bot: BotPlayer): ResultAsync<{ selectAction: string }, BoardError> {
     return fromPromise(new Promise((resolve) => {
       setTimeout(() => {
-        const column = bot.randomColumn()
-        this.inquirerCli.render(bot.getPromptMessage() + ` ${column}`)
+        const action = bot.action(this.lastAction)
+        if (isValidColumn(Number(action))) {
+          this.inquirerCli.render(bot.getPromptMessage() + ` ${action}`)
+        }
         resolve({
-          selectAction: column.toString()
+          selectAction: action
         })
       }, 500)
     }), (error) => (Errors.other('timer failed', error as Error))

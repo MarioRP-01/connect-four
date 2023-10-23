@@ -1,7 +1,8 @@
-import { Err, type Result, type ResultAsync } from 'neverthrow'
+import { assert } from 'console'
+import { type Result, type ResultAsync } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { type Board } from './Board.ts'
-import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from './Coordinate.ts'
+import { MAX_COORDINATES, coordinateColumn, isValidColumn, type CoordinateColumn } from './Coordinate.ts'
 import { type Player } from './Player.ts'
 import { type AskPlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
 import { type Token } from './Token.ts'
@@ -21,6 +22,14 @@ export class BotPlayer implements Player {
     return playerVisitor.visitBot(this)
   }
 
+  action (action: string | null): string {
+    if (action === null || isValidColumn(Number(action))) {
+      return this.randomColumn().toString()
+    }
+
+    return action
+  }
+
   randomColumn (): CoordinateColumn {
     return coordinateColumn(Math.floor(Math.random() * (MAX_COORDINATES.COLUMN - 1)) + 1)
   }
@@ -29,7 +38,7 @@ export class BotPlayer implements Player {
     return board.put(column, this.token)
       .orElse((e) => {
         if (e.type !== 'FullColumn') {
-          return new Err(e)
+          assert(false, 'Unexpected error')
         }
         return this.putToken(this.randomColumn(), board)
       })
