@@ -1,6 +1,6 @@
 import { type Game } from '../models/Game.ts'
 import { State } from '../models/State.ts'
-import { type Controller } from './Controller.ts'
+import { type AcceptorController } from './AcceptorController.ts'
 import { PlayController } from './PlayController.ts'
 import { ResultController } from './ResultController.ts'
 import { StartController } from './StartController.ts'
@@ -20,7 +20,7 @@ export class Logic {
     EXIT: null
   }
 
-  getController (): Controller | null {
+  getController (): AcceptorController | null {
     return this.controllers[this.state.getStateValue()]
   }
 }

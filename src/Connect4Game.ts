@@ -15,12 +15,12 @@ export class Connect4Game {
   }
 
   async play (): Promise<void> {
-    let controller
+    let acceptorController
     do {
-      controller = this.logic.getController()
-      if (controller != null) {
-        await controller.accept(this.view)
+      acceptorController = this.logic.getController()
+      if (acceptorController != null) {
+        await acceptorController.accept(this.view)
       }
-    } while (controller != null)
+    } while (acceptorController != null)
   }
 }
