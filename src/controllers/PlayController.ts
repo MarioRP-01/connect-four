@@ -4,12 +4,12 @@ import { type Coordinate } from '../models/Coordinate.ts'
 import { type Player } from '../models/Player.ts'
 import { type Token } from '../models/Token.ts'
 import { type AcceptorController } from './AcceptorController.ts'
-import { ActionController } from './ActionController.ts'
 import { Controller } from './Controller.ts'
 import { type ControllersVisitor } from './ControllersVisitor.ts'
+import { PutController } from './PutController.ts'
 
 export class PlayController extends Controller implements AcceptorController {
-  private readonly actionController: ActionController = new ActionController(this.session, this.state)
+  private readonly actionController: PutController = new PutController(this.session, this.state)
 
   getCurrentPlayer (): Player {
     return this.actionController.getCurrentPlayer()

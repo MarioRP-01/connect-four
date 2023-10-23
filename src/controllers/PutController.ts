@@ -5,7 +5,7 @@ import { type Player } from '../models/Player.ts'
 import { type Token } from '../models/Token.ts'
 import { Controller } from './Controller.ts'
 
-export class ActionController extends Controller {
+export class PutController extends Controller {
   getCurrentPlayer (): Player {
     return this.session.getCurrentPlayer()
   }
