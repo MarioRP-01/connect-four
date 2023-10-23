@@ -8,7 +8,7 @@ export interface PlayerVisitor {
   visitHuman: (human: HumanPlayer) => void
 }
 
-export interface AskMovePlayerVisitor {
-  visitBot: (bot: BotPlayer) => ResultAsync<{ selectColumn: number }, BoardError>
-  visitHuman: (human: HumanPlayer) => ResultAsync<{ selectColumn: number }, BoardError>
+export interface AskPlayerVisitor {
+  visitBot: (bot: BotPlayer) => ResultAsync<{ selectAction: string }, BoardError>
+  visitHuman: (human: HumanPlayer) => ResultAsync<{ selectAction: string }, BoardError>
 }

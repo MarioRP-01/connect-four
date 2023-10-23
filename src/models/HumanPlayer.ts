@@ -2,7 +2,7 @@ import { type Result, type ResultAsync } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { type Board } from './Board.ts'
 import { type Player } from './Player.ts'
-import { type AskMovePlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
+import { type AskPlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
 import { type Token } from './Token.ts'
 
 export class HumanPlayer implements Player {
@@ -16,7 +16,7 @@ export class HumanPlayer implements Player {
     playerVisitor.visitHuman(this)
   }
 
-  acceptAskMove (playerVisitor: AskMovePlayerVisitor): ResultAsync<{ selectColumn: number }, BoardError> {
+  acceptAskAction (playerVisitor: AskPlayerVisitor): ResultAsync<{ selectAction: string }, BoardError> {
     return playerVisitor.visitHuman(this)
   }
 

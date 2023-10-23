@@ -3,7 +3,7 @@ import { type BoardError } from '../errors.ts'
 import { type Board } from './Board.ts'
 import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from './Coordinate.ts'
 import { type Player } from './Player.ts'
-import { type AskMovePlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
+import { type AskPlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
 import { type Token } from './Token.ts'
 
 export class BotPlayer implements Player {
@@ -17,7 +17,7 @@ export class BotPlayer implements Player {
     playerVisitor.visitBot(this)
   }
 
-  acceptAskMove (playerVisitor: AskMovePlayerVisitor): ResultAsync<{ selectColumn: number }, BoardError> {
+  acceptAskAction (playerVisitor: AskPlayerVisitor): ResultAsync<{ selectAction: string }, BoardError> {
     return playerVisitor.visitBot(this)
   }
 

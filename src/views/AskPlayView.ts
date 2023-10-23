@@ -4,34 +4,34 @@ import * as Errors from '../errors.ts'
 import { type BoardError } from '../errors.ts'
 import { type BotPlayer } from '../models/BotPlayer.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
-import { type AskMovePlayerVisitor } from '../models/PlayerVisitor.ts'
+import { type AskPlayerVisitor } from '../models/PlayerVisitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
-export class AskMoveView implements AskMovePlayerVisitor {
+export class AskPlayView implements AskPlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
 
-  interact (playController: PlayController): ResultAsync<{ selectColumn: number }, BoardError> {
-    return playController.getCurrentPlayer().acceptAskMove(this)
+  interact (playController: PlayController): ResultAsync<{ selectAction: string }, BoardError> {
+    return playController.getCurrentPlayer().acceptAskAction(this)
   }
 
-  visitHuman (human: HumanPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
+  visitHuman (human: HumanPlayer): ResultAsync<{ selectAction: string }, BoardError> {
     return fromPromise(
       this.inquirerCli
         .prompt([{
-          name: 'selectColumn',
+          name: 'selectAction',
           message: human.getPromptMessage()
         }]),
       (error) => (Errors.other('inquired failed', error as Error))
-    ).map((answers) => ({ selectColumn: answers.selectColumn }))
+    ).map((answers) => ({ selectAction: answers.selectAction }))
   }
 
-  visitBot (bot: BotPlayer): ResultAsync<{ selectColumn: number }, BoardError> {
+  visitBot (bot: BotPlayer): ResultAsync<{ selectAction: string }, BoardError> {
     return fromPromise(new Promise((resolve) => {
       setTimeout(() => {
         const column = bot.randomColumn()
         this.inquirerCli.render(bot.getPromptMessage() + ` ${column}`)
         resolve({
-          selectColumn: column
+          selectAction: column.toString()
         })
       }, 500)
     }), (error) => (Errors.other('timer failed', error as Error))
