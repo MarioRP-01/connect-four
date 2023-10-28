@@ -2,18 +2,35 @@ import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { type Coordinate } from '../models/Coordinate.ts'
 import { type Player } from '../models/Player.ts'
+import { type Session } from '../models/Session.ts'
+import { type State } from '../models/State.ts'
 import { type Token } from '../models/Token.ts'
+import { type ViewFactory } from '../views/View.ts'
 import { type AcceptorController } from './AcceptorController.ts'
 import { Controller } from './Controller.ts'
 import { type ControllersVisitor } from './ControllersVisitor.ts'
 import { PutController } from './PutController.ts'
-import { UndoController } from './UndoController.ts'
 import { RedoController } from './RedoController.ts'
+import { UndoController } from './UndoController.ts'
 
 export class PlayController extends Controller implements AcceptorController {
-  private readonly putController: PutController = new PutController(this.session, this.state)
-  private readonly undoController: UndoController = new UndoController(this.session, this.state)
-  private readonly redoController: RedoController = new RedoController(this.session, this.state)
+  constructor (
+    viewFactory: ViewFactory,
+    session: Session,
+    state: State,
+    private readonly controllersVisitor: ControllersVisitor
+  ) {
+    super(viewFactory, session, state)
+  }
+
+  private readonly putController: PutController =
+    new PutController(this.viewFactory, this.session, this.state)
+
+  private readonly undoController: UndoController =
+    new UndoController(this.viewFactory, this.session, this.state)
+
+  private readonly redoController: RedoController =
+    new RedoController(this.viewFactory, this.session, this.state)
 
   getCurrentPlayer (): Player {
     return this.putController.getCurrentPlayer()
@@ -39,7 +56,7 @@ export class PlayController extends Controller implements AcceptorController {
     return this.undoController.undo()
   }
 
-  async accept (controllersVisitor: ControllersVisitor): Promise<void> {
-    await controllersVisitor.visitPlayController(this)
+  async control (): Promise<void> {
+    await this.controllersVisitor.visitPlayController(this)
   }
 }
