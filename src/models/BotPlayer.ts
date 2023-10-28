@@ -2,13 +2,18 @@ import { assert } from 'console'
 import { type Result, type ResultAsync } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { type Board } from './Board.ts'
-import { MAX_COORDINATES, coordinateColumn, isValidColumn, type CoordinateColumn } from './Coordinate.ts'
+import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from './Coordinate.ts'
+import { type GameSessionState } from './GameSessionState.ts'
 import { type Player } from './Player.ts'
 import { type AskPlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
 import { type Token } from './Token.ts'
 
 export class BotPlayer implements Player {
-  constructor (readonly name: string, readonly token: Token) { }
+  constructor (
+    readonly name: string,
+    readonly token: Token,
+    private readonly gameSessionState: GameSessionState
+  ) { }
 
   getPromptMessage (): string {
     return `${this.name} (${this.token.toString()}):`
@@ -22,16 +27,18 @@ export class BotPlayer implements Player {
     return playerVisitor.visitBot(this)
   }
 
-  action (action: string | null): string {
-    if (action === null || isValidColumn(Number(action))) {
+  private randomColumn (): CoordinateColumn {
+    return coordinateColumn(Math.floor(Math.random() * (MAX_COORDINATES.COLUMN - 1)) + 1)
+  }
+
+  simulateAction (): string {
+    const lastAction = this.gameSessionState.getLastAction()
+
+    if (lastAction === null || lastAction === 'Put') {
       return this.randomColumn().toString()
     }
 
-    return action
-  }
-
-  randomColumn (): CoordinateColumn {
-    return coordinateColumn(Math.floor(Math.random() * (MAX_COORDINATES.COLUMN - 1)) + 1)
+    return lastAction
   }
 
   putToken (column: number, board: Board): Result<null, BoardError> {

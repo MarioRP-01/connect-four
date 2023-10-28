@@ -3,6 +3,7 @@ import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { type Board } from './Board.ts'
 import { BotPlayer } from './BotPlayer.ts'
+import { type GameSessionState } from './GameSessionState.ts'
 import { HumanPlayer } from './HumanPlayer.ts'
 import { type Player } from './Player.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
@@ -13,11 +14,14 @@ export class Turn {
   private readonly turns: Players
   private currentTurn: number
 
-  constructor (private readonly board: Board) {
+  constructor (
+    private readonly board: Board,
+    private readonly gameSessionState: GameSessionState
+  ) {
     this.currentTurn = 0
     this.turns = [
       new HumanPlayer('Player 1', new Token(TOKEN_SYMBOLS.RED_TOKEN)),
-      new BotPlayer('Player 2', new Token(TOKEN_SYMBOLS.BLUE_TOKEN))
+      new BotPlayer('Player 2', new Token(TOKEN_SYMBOLS.BLUE_TOKEN), this.gameSessionState)
     ]
   }
 
