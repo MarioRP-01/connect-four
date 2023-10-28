@@ -3,9 +3,9 @@ import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { type Board } from './Board.ts'
 import { BotPlayer } from './BotPlayer.ts'
-import { type GameSessionState } from './GameSessionState.ts'
 import { HumanPlayer } from './HumanPlayer.ts'
 import { type Player } from './Player.ts'
+import { type SessionState } from './SessionState.ts'
 import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 type Players = [ player1: Player, player2: Player ]
@@ -16,7 +16,7 @@ export class Turn {
 
   constructor (
     private readonly board: Board,
-    private readonly gameSessionState: GameSessionState
+    private readonly gameSessionState: SessionState
   ) {
     this.currentTurn = 0
     this.turns = [

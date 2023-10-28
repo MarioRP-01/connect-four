@@ -2,10 +2,10 @@ import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
 import { Board } from './Board.ts'
 import { type Coordinate } from './Coordinate.ts'
-import { type GameSessionState } from './GameSessionState.ts'
 import { Memento } from './Memento.ts'
 import { type Player } from './Player.ts'
 import { type PublicBoard } from './PublicBoard.ts'
+import { type SessionState } from './SessionState.ts'
 import { type Token } from './Token.ts'
 import { Turn } from './Turn.ts'
 
@@ -13,7 +13,7 @@ export class Game {
   private readonly board = new Board()
   private readonly turn = new Turn(this.board, this.gameSessionState)
 
-  constructor (private readonly gameSessionState: GameSessionState) { }
+  constructor (private readonly gameSessionState: SessionState) { }
 
   reset (): void {
     this.board.reset()

@@ -2,15 +2,15 @@ import { Err, Ok, type Result } from 'neverthrow'
 import { cannotRedo, cannotUndo, type BoardError } from '../errors.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Game } from './Game.ts'
-import { type GameSessionState } from './GameSessionState.ts'
 import { type Player } from './Player.ts'
 import { type PublicBoard } from './PublicBoard.ts'
 import { Registry } from './Registry.ts'
+import { type SessionState } from './SessionState.ts'
 import { type Token } from './Token.ts'
 
 export type ActionType = 'Put' | 'Undo' | 'Redo'
 
-export class Session implements GameSessionState {
+export class Session implements SessionState {
   private readonly game: Game = new Game(this)
   private readonly registry: Registry = new Registry(this.game)
   private lastAction: ActionType | null = null
