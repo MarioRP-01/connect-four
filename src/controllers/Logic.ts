@@ -1,7 +1,7 @@
 import { type Session } from '../models/Session.ts'
 import { State } from '../models/State.ts'
 import { type ViewFactory } from '../views/ViewFactory.ts'
-import { type AcceptorController } from './AcceptorController.ts'
+import { type LogicController } from './LogicController.ts'
 import { PlayController } from './PlayController.ts'
 import { ResultController } from './ResultController.ts'
 import { StartController } from './StartController.ts'
@@ -30,7 +30,7 @@ export class Logic {
     EXIT: null
   }
 
-  getController (): AcceptorController | null {
+  getController (): LogicController | null {
     return this.controllers[this.state.getStateValue()]
   }
 }

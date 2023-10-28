@@ -1,8 +1,8 @@
 import { type Player } from '../models/Player.ts'
-import { type AcceptorController } from './AcceptorController.ts'
 import { Controller } from './Controller.ts'
+import { type LogicController } from './LogicController.ts'
 
-export class ResultController extends Controller implements AcceptorController {
+export class ResultController extends Controller implements LogicController {
   private getWinner (): Player | null {
     return this.session.getWinner()
   }

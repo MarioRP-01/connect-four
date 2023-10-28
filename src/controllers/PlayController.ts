@@ -1,13 +1,13 @@
 import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
-import { type AcceptorController } from './AcceptorController.ts'
 import { Controller } from './Controller.ts'
+import { type LogicController } from './LogicController.ts'
 import { PlayCommandFactory, type PlayCommand } from './PlayCommand.ts'
 import { PutController } from './PutController.ts'
 import { RedoController } from './RedoController.ts'
 import { UndoController } from './UndoController.ts'
 
-export class PlayController extends Controller implements AcceptorController {
+export class PlayController extends Controller implements LogicController {
   private readonly putController: PutController =
     new PutController(this.viewFactory, this.session, this.state)
 
