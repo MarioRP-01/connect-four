@@ -1,8 +1,8 @@
 import { Err, Ok, type Result } from 'neverthrow'
-import { type PlayController } from '../controllers/PlayController.ts'
 import { invalidPlay, type BoardError } from '../errors.ts'
 import { isValidColumn } from '../models/Coordinate.ts'
 import { isNumeric } from '../utils/utils.ts'
+import { type PlayController } from './PlayController.ts'
 
 export interface PlayCommand {
   execute: () => Result<null, BoardError>
