@@ -1,7 +1,3 @@
-import { type ControllersVisitor } from '../controllers/ControllersVisitor.ts'
-import { type PlayController } from '../controllers/PlayController.ts'
-import { type ResultController } from '../controllers/ResultController.ts'
-import { type StartController } from '../controllers/StartController.ts'
 import { type BoardError } from '../errors.ts'
 import { AskPlayView } from './AskPlayView.ts'
 import { BoardView } from './BoardView.ts'
@@ -10,33 +6,23 @@ import { PlayView } from './PlayView.ts'
 import { ResultView } from './ResultView.ts'
 import { StartView } from './StartView.ts'
 
-export class View implements ControllersVisitor {
-  private readonly startView = new StartView()
-  private readonly playView = new PlayView()
-  private readonly resultView = new ResultView()
-
-  visitStartController (controller: StartController): void {
-    this.startView.interact()
-  }
-
-  async visitPlayController (controller: PlayController): Promise<void> {
-    await this.playView.interact(controller)
-  }
-
-  visitResultController (controller: ResultController): void {
-    this.resultView.interact(controller)
-  }
-}
-
 export class ViewFactory {
   private readonly errorViewFactory = new ErrorViewFactory()
 
+  private readonly views = {
+    askPlayView: new AskPlayView(),
+    boardView: new BoardView(),
+    playView: new PlayView(),
+    resultView: new ResultView(),
+    startView: new StartView()
+  }
+
   createAskPlayView (): AskPlayView {
-    return new AskPlayView()
+    return this.views.askPlayView
   }
 
   createBoardView (): BoardView {
-    return new BoardView()
+    return this.views.boardView
   }
 
   createErrorView (error: BoardError): ErrorView {
@@ -44,14 +30,14 @@ export class ViewFactory {
   }
 
   createPlayView (): PlayView {
-    return new PlayView()
+    return this.views.playView
   }
 
   createResultView (): ResultView {
-    return new ResultView()
+    return this.views.resultView
   }
 
   createStartView (): StartView {
-    return new StartView()
+    return this.views.startView
   }
 }
