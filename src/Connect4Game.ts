@@ -1,6 +1,6 @@
 import { Logic } from './controllers/Logic.ts'
 import { Session } from './models/Session.ts'
-import { ViewFactory } from './views/View.ts'
+import { ViewFactory } from './views/ViewFactory.ts'
 
 export class Connect4Game {
   private readonly session: Session = new Session()

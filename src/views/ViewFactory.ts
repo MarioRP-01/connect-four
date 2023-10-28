@@ -8,19 +8,12 @@ import { StartView } from './StartView.ts'
 export class ViewFactory {
   private readonly errorViewFactory = new ErrorViewFactory()
 
-  private readonly views = {
-    askPlayView: new AskPlayView(),
-    boardView: new BoardView(),
-    resultView: new ResultView(),
-    startView: new StartView()
-  }
-
   createAskPlayView (): AskPlayView {
-    return this.views.askPlayView
+    return new AskPlayView()
   }
 
   createBoardView (): BoardView {
-    return this.views.boardView
+    return new BoardView()
   }
 
   createErrorView (error: BoardError): ErrorView {
@@ -28,10 +21,10 @@ export class ViewFactory {
   }
 
   createResultView (): ResultView {
-    return this.views.resultView
+    return new ResultView()
   }
 
   createStartView (): StartView {
-    return this.views.startView
+    return new StartView()
   }
 }

@@ -1,6 +1,6 @@
 import { type Session } from '../models/Session.ts'
 import { type State } from '../models/State.ts'
-import { type ViewFactory } from '../views/View.ts'
+import { type ViewFactory } from '../views/ViewFactory.ts'
 
 export abstract class Controller {
   constructor (

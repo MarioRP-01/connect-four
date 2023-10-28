@@ -1,6 +1,6 @@
 import { type Session } from '../models/Session.ts'
 import { State } from '../models/State.ts'
-import { type ViewFactory } from '../views/View.ts'
+import { type ViewFactory } from '../views/ViewFactory.ts'
 import { type AcceptorController } from './AcceptorController.ts'
 import { PlayController } from './PlayController.ts'
 import { ResultController } from './ResultController.ts'
