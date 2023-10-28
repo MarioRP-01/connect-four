@@ -17,7 +17,7 @@ export class Logic {
     new PlayController(this.viewFactory, this.session, this.state, this.controllersVisitor)
 
   private readonly resultController =
-    new ResultController(this.viewFactory, this.session, this.state, this.controllersVisitor)
+    new ResultController(this.viewFactory, this.session, this.state)
 
   constructor (
     private readonly session: Session,
