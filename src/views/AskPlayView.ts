@@ -1,19 +1,19 @@
 import { fromPromise, type ResultAsync } from 'neverthrow'
-import { type PlayController } from '../controllers/PlayController.ts'
 import * as Errors from '../errors.ts'
 import { type BoardError } from '../errors.ts'
 import { type BotPlayer } from '../models/BotPlayer.ts'
+import { isValidColumn } from '../models/Coordinate.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
+import { type Player } from '../models/Player.ts'
 import { type AskPlayerVisitor } from '../models/PlayerVisitor.ts'
 import { InquirerCli } from './InquirerCli.ts'
-import { isValidColumn } from '../models/Coordinate.ts'
 
 export class AskPlayView implements AskPlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
   private lastAction: string | null = null
 
-  interact (playController: PlayController): ResultAsync<{ selectAction: string }, BoardError> {
-    return playController.getCurrentPlayer().acceptAskAction(this)
+  interact (player: Player): ResultAsync<{ selectAction: string }, BoardError> {
+    return player.acceptAskAction(this)
   }
 
   visitHuman (human: HumanPlayer): ResultAsync<{ selectAction: string }, BoardError> {

@@ -1,8 +1,5 @@
 import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
-import { type Coordinate } from '../models/Coordinate.ts'
-import { type Player } from '../models/Player.ts'
-import { type Token } from '../models/Token.ts'
 import { PlayCommandFactory, type PlayCommand } from '../views/PlayCommand.ts'
 import { type AcceptorController } from './AcceptorController.ts'
 import { Controller } from './Controller.ts'
@@ -20,20 +17,8 @@ export class PlayController extends Controller implements AcceptorController {
   private readonly redoController: RedoController =
     new RedoController(this.viewFactory, this.session, this.state)
 
-  getCurrentPlayer (): Player {
-    return this.putController.getCurrentPlayer()
-  }
-
   performTurn (column: number): Result<null, BoardError> {
     return this.putController.performTurn(column)
-  }
-
-  getToken (coordinate: Coordinate): Token {
-    return this.putController.getToken(coordinate)
-  }
-
-  canContinue (): boolean {
-    return this.putController.canContinue()
   }
 
   redo (): Result<null, BoardError> {
@@ -46,7 +31,7 @@ export class PlayController extends Controller implements AcceptorController {
 
   private async turnPhase (): Promise<void> {
     const playCommandFactory = new PlayCommandFactory(this)
-    await this.viewFactory.createAskPlayView().interact(this)
+    await this.viewFactory.createAskPlayView().interact(this.session.getCurrentPlayer())
       .andThen(({ selectAction }: { selectAction: string }): Result<PlayCommand, BoardError> => {
         return playCommandFactory.getCommand(selectAction)
       })
@@ -55,7 +40,7 @@ export class PlayController extends Controller implements AcceptorController {
       })
       .match(
         () => {
-          this.viewFactory.createBoardView().interact(this)
+          this.viewFactory.createBoardView().interact(this.session.getBoard())
         },
         (error) => {
           this.viewFactory.createErrorView(error).interact()
@@ -66,7 +51,7 @@ export class PlayController extends Controller implements AcceptorController {
   async control (): Promise<void> {
     do {
       await this.turnPhase()
-    } while (this.canContinue())
+    } while (this.session.canContinue())
     this.nextState()
   }
 }

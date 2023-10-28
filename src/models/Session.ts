@@ -3,6 +3,7 @@ import { cannotRedo, cannotUndo, type BoardError } from '../errors.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Game } from './Game.ts'
 import { type Player } from './Player.ts'
+import { type PublicBoard } from './PublicBoard.ts'
 import { Registry } from './Registry.ts'
 import { type Token } from './Token.ts'
 
@@ -20,6 +21,10 @@ export class Session {
         this.registry.register()
         return null
       })
+  }
+
+  getBoard (): PublicBoard {
+    return this.game.getBoard()
   }
 
   getToken (coordinate: Coordinate): Token {

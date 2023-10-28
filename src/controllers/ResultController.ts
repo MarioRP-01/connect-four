@@ -3,7 +3,7 @@ import { type AcceptorController } from './AcceptorController.ts'
 import { Controller } from './Controller.ts'
 
 export class ResultController extends Controller implements AcceptorController {
-  getWinner (): Player | null {
+  private getWinner (): Player | null {
     return this.session.getWinner()
   }
 

@@ -4,6 +4,7 @@ import { Board } from './Board.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Memento } from './Memento.ts'
 import { type Player } from './Player.ts'
+import { type PublicBoard } from './PublicBoard.ts'
 import { type Token } from './Token.ts'
 import { Turn } from './Turn.ts'
 
@@ -28,6 +29,10 @@ export class Game {
         }
         return null
       })
+  }
+
+  getBoard (): PublicBoard {
+    return this.board
   }
 
   getToken (coordinate: Coordinate): Token {
