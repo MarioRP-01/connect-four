@@ -1,9 +1,9 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import { cannotRedo, cannotUndo, type BoardError } from '../errors.ts'
+import { type Board } from '../utils/Board.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Game } from './Game.ts'
 import { type Player } from './Player.ts'
-import { type PublicBoard } from './PublicBoard.ts'
 import { Registry } from './Registry.ts'
 import { type SessionState } from './SessionState.ts'
 import { type Token } from './Token.ts'
@@ -32,7 +32,7 @@ export class Session implements SessionState {
     return this.lastAction
   }
 
-  getBoard (): PublicBoard {
+  getBoard (): Board {
     return this.game.getBoard()
   }
 

@@ -1,10 +1,10 @@
 import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
+import { type Board as IBoard } from '../utils/Board.ts'
 import { Board } from './Board.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Memento } from './Memento.ts'
 import { type Player } from './Player.ts'
-import { type PublicBoard } from './PublicBoard.ts'
 import { type SessionState } from './SessionState.ts'
 import { type Token } from './Token.ts'
 import { Turn } from './Turn.ts'
@@ -34,7 +34,7 @@ export class Game {
       })
   }
 
-  getBoard (): PublicBoard {
+  getBoard (): IBoard {
     return this.board
   }
 

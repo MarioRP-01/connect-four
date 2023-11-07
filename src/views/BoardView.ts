@@ -1,13 +1,13 @@
 import { Coordinate } from '../models/Coordinate.ts'
 import { LineFactory } from '../models/Line.ts'
-import { type PublicBoard } from '../models/PublicBoard.ts'
+import { type Board } from '../utils/Board.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class BoardView {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
   private readonly lineFactory: LineFactory = new LineFactory()
 
-  interact (board: PublicBoard): void {
+  interact (board: Board): void {
     const rows = this.lineFactory.createFromCoordinateAndDirection(
       new Coordinate(0, 0),
       'VERTICAL'
