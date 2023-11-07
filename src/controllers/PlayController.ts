@@ -19,8 +19,8 @@ export class PlayController extends Controller implements LogicController {
   private readonly redoController: RedoController =
     new RedoController(this.viewFactory, this.session, this.state)
 
-  performTurn (column: number): Result<null, BoardError> {
-    return this.putController.performTurn(column)
+  put (column: number): Result<null, BoardError> {
+    return this.putController.put(column)
   }
 
   redo (): Result<null, BoardError> {

@@ -15,7 +15,7 @@ class PutCommand implements PlayCommand {
   ) {}
 
   execute (): Result<null, BoardError> {
-    return this.playController.performTurn(this.response)
+    return this.playController.put(this.response)
   }
 }
 
