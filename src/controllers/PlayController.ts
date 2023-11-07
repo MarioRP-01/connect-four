@@ -8,6 +8,8 @@ import { RedoController } from './RedoController.ts'
 import { UndoController } from './UndoController.ts'
 
 export class PlayController extends Controller implements LogicController {
+  private readonly playCommandFactory = new PlayCommandFactory(this)
+
   private readonly putController: PutController =
     new PutController(this.viewFactory, this.session, this.state)
 
@@ -29,11 +31,10 @@ export class PlayController extends Controller implements LogicController {
     return this.undoController.undo()
   }
 
-  private async turnPhase (): Promise<void> {
-    const playCommandFactory = new PlayCommandFactory(this)
+  private async play (): Promise<void> {
     await this.viewFactory.createAskPlayView().interact(this.session.getCurrentPlayer())
       .andThen(({ selectAction }: { selectAction: string }): Result<PlayCommand, BoardError> => {
-        return playCommandFactory.getCommand(selectAction)
+        return this.playCommandFactory.getCommand(selectAction)
       })
       .andThen((playCommand: PlayCommand): Result<null, BoardError> => {
         return playCommand.execute()
@@ -50,7 +51,7 @@ export class PlayController extends Controller implements LogicController {
 
   async control (): Promise<void> {
     do {
-      await this.turnPhase()
+      await this.play()
     } while (this.session.canContinue())
     this.nextState()
   }
