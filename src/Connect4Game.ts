@@ -1,11 +1,9 @@
 import { Logic } from './controllers/Logic.ts'
-import { Session } from './models/Session.ts'
 import { ViewFactory } from './views/ViewFactory.ts'
 
 export class Connect4Game {
-  private readonly session: Session = new Session()
   private readonly viewFactory: ViewFactory = new ViewFactory()
-  private readonly logic: Logic = new Logic(this.session, this.viewFactory)
+  private readonly logic: Logic = new Logic(this.viewFactory)
 
   async play (): Promise<void> {
     let acceptorController

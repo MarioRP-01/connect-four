@@ -1,4 +1,4 @@
-import { type Session } from '../models/Session.ts'
+import { Session } from '../models/Session.ts'
 import { State } from '../models/State.ts'
 import { type ViewFactory } from '../views/ViewFactory.ts'
 import { type LogicController } from './LogicController.ts'
@@ -8,6 +8,7 @@ import { StartController } from './StartController.ts'
 
 export class Logic {
   private readonly state: State = new State()
+  private readonly session: Session = new Session()
 
   private readonly startController =
     new StartController(this.viewFactory, this.session, this.state)
@@ -19,7 +20,6 @@ export class Logic {
     new ResultController(this.viewFactory, this.session, this.state)
 
   constructor (
-    private readonly session: Session,
     private readonly viewFactory: ViewFactory
   ) { }
 
