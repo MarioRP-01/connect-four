@@ -8,27 +8,29 @@ export class BoardView {
   private readonly lineFactory: LineFactory = new LineFactory()
 
   interact (board: Board): void {
-    const rows = this.lineFactory.createFromCoordinateAndDirection(
+    const verticalLine = this.lineFactory.createFromCoordinateAndDirection(
       new Coordinate(0, 0),
       'VERTICAL'
     )
-      .map((coordinate) => {
-        return this.lineFactory.createFromCoordinateAndDirection(
-          coordinate,
-          'HORIZONTAL'
-        )
-      })
-      .map((lineCoordinates) => {
-        return lineCoordinates
-          .map((coordinate) => {
-            return board.getToken(coordinate)
-          })
-          .map((token) => token.symbol)
-          .join('')
-      })
-      .reverse()
-      .join('\n')
 
-    this.inquirerCli.render(rows)
+    const horizontalLines = verticalLine.map((coordinate) => {
+      return this.lineFactory.createFromCoordinateAndDirection(
+        coordinate,
+        'HORIZONTAL'
+      )
+    })
+
+    const horizontalSymbolLines = horizontalLines.map((lineCoordinates) => {
+      return lineCoordinates
+        .map((coordinate) => {
+          return board.getToken(coordinate)
+        })
+        .map((token) => token.symbol)
+        .join('')
+    })
+
+    const symbolBoard = horizontalSymbolLines.reverse().join('\n')
+
+    this.inquirerCli.render(symbolBoard)
   }
 }
