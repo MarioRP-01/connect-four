@@ -6,12 +6,12 @@ export class Connect4Game {
   private readonly logic: Logic = new Logic(this.viewFactory)
 
   async play (): Promise<void> {
-    let acceptorController
+    let controller
     do {
-      acceptorController = this.logic.getController()
-      if (acceptorController != null) {
-        await acceptorController.control()
+      controller = this.logic.getController()
+      if (controller != null) {
+        await controller.control()
       }
-    } while (acceptorController != null)
+    } while (controller != null)
   }
 }
