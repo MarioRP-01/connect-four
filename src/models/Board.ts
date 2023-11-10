@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import * as Errors from '../errors.ts'
-import { type Board as IBoard } from '../utils/Board.ts'
+import { type Board as BoardInterface } from '../utils/Board.ts'
 import { Coordinate, MAX_COORDINATES, isValidColumn } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token, type TokenSymbol } from './Token.ts'
@@ -10,7 +10,7 @@ export interface BoardPersistance {
   lastCoordinate: Coordinate | null
 }
 
-export class Board implements IBoard {
+export class Board implements BoardInterface {
   private board!: Token[][]
   private readonly lineFactory = new LineFactory()
   private lastCoordinate!: Coordinate | null

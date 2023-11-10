@@ -1,6 +1,6 @@
 import { type Result } from 'neverthrow'
 import { type BoardError } from '../errors.ts'
-import { type Board as IBoard } from '../utils/Board.ts'
+import { type Board as BoardInterface } from '../utils/Board.ts'
 import { Board } from './Board.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Memento } from './Memento.ts'
@@ -34,7 +34,7 @@ export class Game {
       })
   }
 
-  getBoard (): IBoard {
+  getBoard (): BoardInterface {
     return this.board
   }
 
