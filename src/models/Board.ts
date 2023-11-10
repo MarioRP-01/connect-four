@@ -35,13 +35,17 @@ export class Board implements BoardInterface {
   }
 
   isWinnable (): boolean {
+    return !this.isFull()
+  }
+
+  private isFull (): boolean {
     const lastRow = this.lineFactory.createFromCoordinateAndDirection(
       new Coordinate(MAX_COORDINATES.ROW - 1, 0),
       'HORIZONTAL'
     )
 
     return lastRow.some((coordinate) => {
-      return this.getToken(coordinate).isNull()
+      return !this.getToken(coordinate).isNull()
     })
   }
 
