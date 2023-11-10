@@ -8,13 +8,13 @@ export class BoardView {
   private readonly lineFactory: LineFactory = new LineFactory()
 
   interact (board: Board): void {
-    const verticalLine = this.lineFactory.createFromCoordinateAndDirection(
+    const verticalLine = this.lineFactory.createLineFromCoordinate(
       new Coordinate(0, 0),
       'VERTICAL'
     )
 
     const horizontalLines = verticalLine.map((coordinate) => {
-      return this.lineFactory.createFromCoordinateAndDirection(
+      return this.lineFactory.createLineFromCoordinate(
         coordinate,
         'HORIZONTAL'
       )

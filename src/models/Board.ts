@@ -39,7 +39,7 @@ export class Board implements BoardInterface {
   }
 
   private isFull (): boolean {
-    const lastRow = this.lineFactory.createFromCoordinateAndDirection(
+    const lastRow = this.lineFactory.createLineFromCoordinate(
       new Coordinate(MAX_COORDINATES.ROW - 1, 0),
       'HORIZONTAL'
     )
@@ -64,7 +64,7 @@ export class Board implements BoardInterface {
       return new Err(Errors.invalidColumn())
     }
 
-    const columnCoordinates = this.lineFactory.createFromCoordinateAndDirection(
+    const columnCoordinates = this.lineFactory.createLineFromCoordinate(
       new Coordinate(0, columnIndex),
       'VERTICAL'
     )

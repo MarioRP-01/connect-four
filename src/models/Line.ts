@@ -28,7 +28,7 @@ const directionFactory = {
 }
 
 export class LineFactory {
-  createFromCoordinateAndDirection (
+  createLineFromCoordinate (
     initialCoordinate: Coordinate,
     directionType: DirectionType
   ): Line {
@@ -52,10 +52,10 @@ export class LineFactory {
 
   createAllLinesFromCoordinate (coordinate: Coordinate): Line[] {
     return [
-      this.createFromCoordinateAndDirection(coordinate, 'HORIZONTAL'),
-      this.createFromCoordinateAndDirection(coordinate, 'VERTICAL'),
-      this.createFromCoordinateAndDirection(coordinate, 'ASCENDING_DIAGONAL'),
-      this.createFromCoordinateAndDirection(coordinate, 'DESCENDING_DIAGONAL')
+      this.createLineFromCoordinate(coordinate, 'HORIZONTAL'),
+      this.createLineFromCoordinate(coordinate, 'VERTICAL'),
+      this.createLineFromCoordinate(coordinate, 'ASCENDING_DIAGONAL'),
+      this.createLineFromCoordinate(coordinate, 'DESCENDING_DIAGONAL')
     ]
   }
 }
