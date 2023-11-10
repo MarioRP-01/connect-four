@@ -31,6 +31,7 @@
   },
   "include": [
     "src/**/*.ts",
-    ".eslintrc.cjs"
+    ".eslintrc.cjs",
+    "jest.config.cjs"
   ],
 }
