@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
-import { cannotRedo, cannotUndo, type BoardError } from '../errors.ts'
 import { type Board } from '../utils/Board.ts'
+import { cannotRedo, cannotUndo, type BoardError } from '../utils/errors.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Game } from './Game.ts'
 import { type Player } from './Player.ts'

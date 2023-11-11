@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { type Result } from 'neverthrow'
-import { type BoardError } from '../errors.ts'
+import { type BoardError } from '../utils/errors.ts'
 import { type Board } from './Board.ts'
 import { BotPlayer } from './BotPlayer.ts'
 import { HumanPlayer } from './HumanPlayer.ts'

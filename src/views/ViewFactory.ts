@@ -1,4 +1,4 @@
-import { type BoardError } from '../errors.ts'
+import { type BoardError } from '../utils/errors.ts'
 import { AskPlayView } from './AskPlayView.ts'
 import { BoardView } from './BoardView.ts'
 import { ErrorViewFactory, type ErrorView } from './ErrorView.ts'

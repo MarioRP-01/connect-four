@@ -1,4 +1,4 @@
-import { type BoardError } from '../errors.ts'
+import { type BoardError } from '../utils/errors.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export abstract class ErrorView {

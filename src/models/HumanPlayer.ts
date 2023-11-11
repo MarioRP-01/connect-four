@@ -1,5 +1,5 @@
 import { type Result, type ResultAsync } from 'neverthrow'
-import { type BoardError } from '../errors.ts'
+import { type BoardError } from '../utils/errors.ts'
 import { type Board } from './Board.ts'
 import { type Player } from './Player.ts'
 import { type AskPlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'

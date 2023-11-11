@@ -1,10 +1,10 @@
 import { fromPromise, type ResultAsync } from 'neverthrow'
-import * as Errors from '../errors.ts'
-import { type BoardError } from '../errors.ts'
 import { type BotPlayer } from '../models/BotPlayer.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
 import { type Player } from '../models/Player.ts'
 import { type AskPlayerVisitor } from '../models/PlayerVisitor.ts'
+import * as Errors from '../utils/errors.ts'
+import { type BoardError } from '../utils/errors.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class AskPlayView implements AskPlayerVisitor {

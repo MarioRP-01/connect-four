@@ -1,7 +1,7 @@
 import { Err, Ok, type Result } from 'neverthrow'
-import * as Errors from '../errors.ts'
 import { type Board as BoardInterface } from '../utils/Board.ts'
 import { MAX_COORDINATES, isValidColumn } from '../utils/Coordinate.ts'
+import * as Errors from '../utils/errors.ts'
 import { Coordinate } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
 import { TOKEN_SYMBOLS, Token, type TokenSymbol } from './Token.ts'

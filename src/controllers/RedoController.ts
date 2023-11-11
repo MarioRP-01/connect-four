@@ -1,5 +1,5 @@
 import { type Result } from 'neverthrow'
-import { type BoardError } from '../errors.ts'
+import { type BoardError } from '../utils/errors.ts'
 import { Controller } from './Controller.ts'
 
 export class RedoController extends Controller {
