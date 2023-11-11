@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import { invalidPlay, type BoardError } from '../errors.ts'
-import { isValidColumn } from '../models/Coordinate.ts'
+import { isValidColumn } from '../utils/Coordinate.ts'
 import { isNumeric } from '../utils/utils.ts'
 import { type PlayController } from './PlayController.ts'
 

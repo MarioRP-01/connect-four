@@ -1,4 +1,5 @@
-import { isValidCoordinate, type Coordinate } from './Coordinate.ts'
+import { isValidCoordinate } from '../utils/Coordinate.ts'
+import { type Coordinate } from './Coordinate.ts'
 
 export type Direction =
   | { type: 'HORIZONTAL', vector: { row: 0, column: 1 } }
