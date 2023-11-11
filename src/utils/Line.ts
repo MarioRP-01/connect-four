@@ -1,4 +1,4 @@
-import { type Coordinate } from './Coordinate'
+import { type Coordinate } from './Coordinate.ts'
 
 export type Direction =
   | { type: 'HORIZONTAL', vector: { row: 0, column: 1 } }
