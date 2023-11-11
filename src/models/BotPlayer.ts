@@ -32,7 +32,7 @@ export class BotPlayer implements Player {
   }
 
   simulateAction (): string {
-    const lastAction = this.gameSessionState.getLastAction()
+    const lastAction = this.gameSessionState.lastAction
 
     if (lastAction === null || lastAction === 'Put') {
       return this.randomColumn().toString()

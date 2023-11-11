@@ -1,5 +1,5 @@
 import { type ActionType } from './Session'
 
-export interface SessionState {
-  getLastAction: () => ActionType | null
+export class SessionState {
+  lastAction: ActionType | null = null
 }
