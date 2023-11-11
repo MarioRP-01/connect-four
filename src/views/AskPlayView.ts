@@ -42,8 +42,10 @@ export class AskPlayView implements AskPlayerVisitor {
     let action = bot.simulateAction()
     if (action === 'Redo') {
       action = 'r'
+      this.inquirerCli.render('')
     } else if (action === 'Undo') {
       action = 'u'
+      this.inquirerCli.render('')
     } else {
       this.inquirerCli.render(bot.getPromptMessage() + ` ${action}`)
     }
