@@ -1,4 +1,4 @@
-export type BoardError =
+export type Connect4Error =
   | { type: 'InvalidColumn' }
   | { type: 'InvalidPlay' }
   | { type: 'FullColumn' }
@@ -6,12 +6,12 @@ export type BoardError =
   | { type: 'CannotRedo' }
   | { type: 'Other', error?: Error, context?: string }
 
-export const invalidColumn = (): BoardError => ({ type: 'InvalidColumn' })
-export const invalidPlay = (): BoardError => ({ type: 'InvalidPlay' })
-export const fullColumn = (): BoardError => ({ type: 'FullColumn' })
-export const cannotUndo = (): BoardError => ({ type: 'CannotUndo' })
-export const cannotRedo = (): BoardError => ({ type: 'CannotRedo' })
-export const other = (context: string, error?: Error): BoardError => ({
+export const invalidColumn = (): Connect4Error => ({ type: 'InvalidColumn' })
+export const invalidPlay = (): Connect4Error => ({ type: 'InvalidPlay' })
+export const fullColumn = (): Connect4Error => ({ type: 'FullColumn' })
+export const cannotUndo = (): Connect4Error => ({ type: 'CannotUndo' })
+export const cannotRedo = (): Connect4Error => ({ type: 'CannotRedo' })
+export const other = (context: string, error?: Error): Connect4Error => ({
   type: 'Other',
   context,
   error

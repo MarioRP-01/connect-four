@@ -4,17 +4,17 @@ import { type HumanPlayer } from '../models/HumanPlayer.ts'
 import { type Player } from '../models/Player.ts'
 import { type AskPlayerVisitor } from '../models/PlayerVisitor.ts'
 import * as Errors from '../utils/errors.ts'
-import { type BoardError } from '../utils/errors.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class AskPlayView implements AskPlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
 
-  interact (player: Player): ResultAsync<{ selectAction: string }, BoardError> {
+  interact (player: Player): ResultAsync<{ selectAction: string }, Connect4Error> {
     return player.acceptAskAction(this)
   }
 
-  visitHuman (human: HumanPlayer): ResultAsync<{ selectAction: string }, BoardError> {
+  visitHuman (human: HumanPlayer): ResultAsync<{ selectAction: string }, Connect4Error> {
     return fromPromise(
       this.inquirerCli
         .prompt([{
@@ -27,7 +27,7 @@ export class AskPlayView implements AskPlayerVisitor {
     })
   }
 
-  visitBot (bot: BotPlayer): ResultAsync<{ selectAction: string }, BoardError> {
+  visitBot (bot: BotPlayer): ResultAsync<{ selectAction: string }, Connect4Error> {
     return fromPromise(new Promise((resolve) => {
       setTimeout(() => {
         resolve({

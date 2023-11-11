@@ -1,11 +1,11 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import { isValidColumn } from '../utils/Coordinate.ts'
-import { invalidPlay, type BoardError } from '../utils/errors.ts'
+import { invalidPlay, type Connect4Error } from '../utils/errors.ts'
 import { isNumeric } from '../utils/utils.ts'
 import { type PlayController } from './PlayController.ts'
 
 export interface PlayCommand {
-  execute: () => Result<null, BoardError>
+  execute: () => Result<null, Connect4Error>
 }
 
 class PutCommand implements PlayCommand {
@@ -14,7 +14,7 @@ class PutCommand implements PlayCommand {
     private readonly response: number
   ) {}
 
-  execute (): Result<null, BoardError> {
+  execute (): Result<null, Connect4Error> {
     return this.playController.put(this.response)
   }
 }
@@ -24,7 +24,7 @@ class UndoCommand implements PlayCommand {
     private readonly playController: PlayController
   ) {}
 
-  execute (): Result<null, BoardError> {
+  execute (): Result<null, Connect4Error> {
     return this.playController.undo()
   }
 }
@@ -34,7 +34,7 @@ class RedoCommand implements PlayCommand {
     private readonly playController: PlayController
   ) {}
 
-  execute (): Result<null, BoardError> {
+  execute (): Result<null, Connect4Error> {
     return this.playController.redo()
   }
 }
@@ -44,7 +44,7 @@ export class PlayCommandFactory {
     private readonly playController: PlayController
   ) {}
 
-  public getCommand (action: string): Result<PlayCommand, BoardError> {
+  public getCommand (action: string): Result<PlayCommand, Connect4Error> {
     if (action === 'r') return new Ok(new RedoCommand(this.playController))
     if (action === 'u') return new Ok(new UndoCommand(this.playController))
     if (isNumeric(action) && isValidColumn(Number(action))) {

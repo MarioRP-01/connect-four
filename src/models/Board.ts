@@ -58,7 +58,7 @@ export class Board implements BoardInterface {
     return this.isCoordinateInWinnerCombination(this.lastCoordinate)
   }
 
-  put (column: number, token: Token): Result<null, Errors.BoardError> {
+  put (column: number, token: Token): Result<null, Errors.Connect4Error> {
     const columnIndex = column - 1
 
     if (!isValidColumn(columnIndex)) {

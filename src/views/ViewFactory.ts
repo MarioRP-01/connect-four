@@ -1,4 +1,4 @@
-import { type BoardError } from '../utils/errors.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { AskPlayView } from './AskPlayView.ts'
 import { BoardView } from './BoardView.ts'
 import { ErrorViewFactory, type ErrorView } from './ErrorView.ts'
@@ -16,7 +16,7 @@ export class ViewFactory {
     return new BoardView()
   }
 
-  createErrorView (error: BoardError): ErrorView {
+  createErrorView (error: Connect4Error): ErrorView {
     return this.errorViewFactory.createFromErrorType(error)
   }
 

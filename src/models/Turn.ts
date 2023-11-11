@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { type Result } from 'neverthrow'
-import { type BoardError } from '../utils/errors.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { type Board } from './Board.ts'
 import { BotPlayer } from './BotPlayer.ts'
 import { HumanPlayer } from './HumanPlayer.ts'
@@ -37,7 +37,7 @@ export class Turn {
     this.currentTurn = (this.currentTurn + 1) % this.turns.length
   }
 
-  putToken (column: number): Result<null, BoardError> {
+  putToken (column: number): Result<null, Connect4Error> {
     return this.getCurrentPlayer().putToken(column, this.board)
   }
 

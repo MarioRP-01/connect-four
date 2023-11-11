@@ -1,6 +1,6 @@
 import { type Result } from 'neverthrow'
 import { type Board as BoardInterface } from '../utils/Board.ts'
-import { type BoardError } from '../utils/errors.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { Board } from './Board.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Memento } from './Memento.ts'
@@ -24,7 +24,7 @@ export class Game {
     return this.turn.getCurrentPlayer()
   }
 
-  putToken (column: number): Result<null, BoardError> {
+  putToken (column: number): Result<null, Connect4Error> {
     return this.turn.putToken(column)
       .map(() => {
         if (!this.board.hasWinner()) {

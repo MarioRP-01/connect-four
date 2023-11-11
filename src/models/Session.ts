@@ -1,6 +1,6 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import { type Board } from '../utils/Board.ts'
-import { cannotRedo, cannotUndo, type BoardError } from '../utils/errors.ts'
+import { cannotRedo, cannotUndo, type Connect4Error } from '../utils/errors.ts'
 import { type Coordinate } from './Coordinate.ts'
 import { Game } from './Game.ts'
 import { type Player } from './Player.ts'
@@ -19,7 +19,7 @@ export class Session implements SessionState {
     return this.game.getCurrentPlayer()
   }
 
-  putToken (column: number): Result<null, BoardError> {
+  putToken (column: number): Result<null, Connect4Error> {
     return this.game.putToken(column)
       .map(() => {
         this.lastAction = 'Put'
@@ -48,7 +48,7 @@ export class Session implements SessionState {
     return this.game.getWinner()
   }
 
-  redo (): Result<null, BoardError> {
+  redo (): Result<null, Connect4Error> {
     if (!this.registry.canRedo()) {
       return new Err(cannotRedo())
     }
@@ -58,7 +58,7 @@ export class Session implements SessionState {
     return new Ok(null)
   }
 
-  undo (): Result<null, BoardError> {
+  undo (): Result<null, Connect4Error> {
     if (!this.registry.canUndo()) {
       return new Err(cannotUndo())
     }
