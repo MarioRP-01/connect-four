@@ -1,5 +1,5 @@
-import { type Direction } from '../models/Line'
 import { type IntRange } from './IntRange'
+import { type Direction } from './Line'
 
 export const MAX_COORDINATES = {
   ROW: 6,

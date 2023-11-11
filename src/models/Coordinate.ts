@@ -3,7 +3,7 @@ import {
   type Coordinate as CoordinateInterface,
   type CoordinateRow
 } from '../utils/Coordinate.ts'
-import { type Direction } from './Line.ts'
+import { type Direction } from '../utils/Line.ts'
 
 export class Coordinate implements CoordinateInterface {
   readonly row: CoordinateRow
