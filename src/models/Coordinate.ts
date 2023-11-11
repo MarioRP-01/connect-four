@@ -1,12 +1,11 @@
-import { type IntRange } from '../utils/IntRange.ts'
+import {
+  MAX_COORDINATES,
+  type CoordinateColumn,
+  type Coordinate as CoordinateInterface,
+  type CoordinateRow
+} from '../utils/Coordinate.ts'
 import { type Direction } from './Line.ts'
 
-export const MAX_COORDINATES = {
-  ROW: 6,
-  COLUMN: 7
-} as const
-
-export type CoordinateRow = IntRange<0, typeof MAX_COORDINATES.ROW>
 export function coordinateRow (number: number): CoordinateRow {
   if (!isValidRow(number)) {
     throw new Error('row is not valid')
@@ -15,7 +14,6 @@ export function coordinateRow (number: number): CoordinateRow {
   return number as any
 }
 
-export type CoordinateColumn = IntRange<0, typeof MAX_COORDINATES.COLUMN>
 export function coordinateColumn (number: number): CoordinateColumn {
   if (!isValidColumn(number)) {
     throw new Error('column is not valid')
@@ -38,7 +36,7 @@ export function isValidCoordinate (item: Coordinate | undefined): item is Coordi
     isValidRow(item.row)
 }
 
-export class Coordinate {
+export class Coordinate implements CoordinateInterface {
   readonly row: CoordinateRow
   readonly column: CoordinateColumn
 
