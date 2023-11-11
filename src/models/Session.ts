@@ -1,12 +1,12 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import { type Board } from '../utils/Board.ts'
+import { type Coordinate } from '../utils/Coordinate.ts'
+import { type Token } from '../utils/Token.ts'
 import { cannotRedo, cannotUndo, type Connect4Error } from '../utils/errors.ts'
-import { type Coordinate } from './Coordinate.ts'
 import { Game } from './Game.ts'
 import { type Player } from './Player.ts'
 import { Registry } from './Registry.ts'
 import { type SessionState } from './SessionState.ts'
-import { type Token } from './Token.ts'
 
 export type ActionType = 'Put' | 'Undo' | 'Redo'
 

@@ -1,6 +1,6 @@
+import { type Coordinate } from '../utils/Coordinate'
+import { type TokenSymbol } from '../utils/Token'
 import { type Board, type BoardPersistance } from './Board'
-import { type Coordinate } from './Coordinate'
-import { type TokenSymbol } from './Token'
 
 export class Memento {
   private readonly boardPersisted: TokenSymbol[][]

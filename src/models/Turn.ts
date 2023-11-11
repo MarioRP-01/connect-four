@@ -1,12 +1,12 @@
 import assert from 'assert'
 import { type Result } from 'neverthrow'
+import { TOKEN_SYMBOLS, Token } from '../utils/Token.ts'
 import { type Connect4Error } from '../utils/errors.ts'
 import { type Board } from './Board.ts'
 import { BotPlayer } from './BotPlayer.ts'
 import { HumanPlayer } from './HumanPlayer.ts'
 import { type Player } from './Player.ts'
 import { type SessionState } from './SessionState.ts'
-import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 type Players = [ player1: Player, player2: Player ]
 

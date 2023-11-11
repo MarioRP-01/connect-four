@@ -1,12 +1,12 @@
 import { assert } from 'console'
 import { type Result, type ResultAsync } from 'neverthrow'
 import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from '../utils/Coordinate.ts'
+import { type Token } from '../utils/Token.ts'
 import { type Connect4Error } from '../utils/errors.ts'
 import { type Board } from './Board.ts'
 import { type Player } from './Player.ts'
 import { type AskPlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
 import { type SessionState } from './SessionState.ts'
-import { type Token } from './Token.ts'
 
 export class BotPlayer implements Player {
   constructor (

@@ -1,5 +1,5 @@
-import { type Coordinate } from '../models/Coordinate.ts'
-import { type Token } from '../models/Token.ts'
+import { type Coordinate } from './Coordinate.ts'
+import { type Token } from './Token.ts'
 
 export interface Board {
   getToken: (coordinate: Coordinate) => Token

@@ -39,9 +39,37 @@ export function isValidCoordinate (item: Coordinate | undefined): item is Coordi
     isValidRow(item.row)
 }
 
-export interface Coordinate {
-  row: CoordinateRow
-  column: CoordinateColumn
-  getNext: (direction: Direction) => Coordinate | undefined
-  getPrevious: (direction: Direction) => Coordinate | undefined
+export class Coordinate {
+  readonly row: CoordinateRow
+  readonly column: CoordinateColumn
+
+  constructor (
+    row: number,
+    column: number
+  ) {
+    this.row = coordinateRow(row)
+    this.column = coordinateColumn(column)
+  }
+
+  getNext ({ vector: { row, column } }: Direction): Coordinate | undefined {
+    const newRow = this.row + row
+    const newColumn = this.column + column
+
+    if (!isValidRow(newRow) || !isValidColumn(newColumn)) {
+      return undefined
+    }
+
+    return new Coordinate(newRow, newColumn)
+  }
+
+  getPrevious ({ vector: { row, column } }: Direction): Coordinate | undefined {
+    const newRow = this.row - row
+    const newColumn = this.column - column
+
+    if (!isValidRow(newRow) || !isValidColumn(newColumn)) {
+      return undefined
+    }
+
+    return new Coordinate(newRow, newColumn)
+  }
 }

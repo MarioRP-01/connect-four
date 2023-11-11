@@ -1,4 +1,4 @@
-import { isValidCoordinate } from '../utils/Coordinate.ts'
+import { isValidCoordinate, type Coordinate } from '../utils/Coordinate.ts'
 import {
   ascendingDiagonalDirection,
   descendingDiagonalDirection,
@@ -7,7 +7,6 @@ import {
   type DirectionType,
   type Line
 } from '../utils/Line.ts'
-import { type Coordinate } from './Coordinate.ts'
 
 const directionFactory = {
   HORIZONTAL: horizontalDirection,

@@ -1,6 +1,6 @@
-import { Coordinate } from '../models/Coordinate.ts'
 import { LineFactory } from '../models/Line.ts'
 import { type Board } from '../utils/Board.ts'
+import { Coordinate } from '../utils/Coordinate.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class BoardView {

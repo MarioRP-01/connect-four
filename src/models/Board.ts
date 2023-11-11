@@ -1,10 +1,9 @@
 import { Err, Ok, type Result } from 'neverthrow'
 import { type Board as BoardInterface } from '../utils/Board.ts'
-import { MAX_COORDINATES, isValidColumn } from '../utils/Coordinate.ts'
+import { Coordinate, MAX_COORDINATES, isValidColumn } from '../utils/Coordinate.ts'
+import { TOKEN_SYMBOLS, Token, type TokenSymbol } from '../utils/Token.ts'
 import * as Errors from '../utils/errors.ts'
-import { Coordinate } from './Coordinate.ts'
 import { LineFactory } from './Line.ts'
-import { TOKEN_SYMBOLS, Token, type TokenSymbol } from './Token.ts'
 
 export interface BoardPersistance {
   boardPersisted: TokenSymbol[][]
