@@ -12,7 +12,7 @@ export class BotPlayer implements Player {
   constructor (
     readonly name: string,
     readonly token: Token,
-    private readonly gameSessionState: SessionState
+    private readonly sessionState: SessionState
   ) { }
 
   getPromptMessage (): string {
@@ -32,7 +32,7 @@ export class BotPlayer implements Player {
   }
 
   simulateAction (): string {
-    const lastAction = this.gameSessionState.lastAction
+    const lastAction = this.sessionState.lastAction
 
     if (lastAction === null || lastAction === 'Put') {
       return this.randomColumn().toString()

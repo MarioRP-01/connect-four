@@ -16,12 +16,12 @@ export class Turn {
 
   constructor (
     private readonly board: Board,
-    private readonly gameSessionState: SessionState
+    private readonly sessionState: SessionState
   ) {
     this.currentTurn = 0
     this.turns = [
       new HumanPlayer('Player 1', new Token(TOKEN_SYMBOLS.RED_TOKEN)),
-      new BotPlayer('Player 2', new Token(TOKEN_SYMBOLS.BLUE_TOKEN), this.gameSessionState)
+      new BotPlayer('Player 2', new Token(TOKEN_SYMBOLS.BLUE_TOKEN), this.sessionState)
     ]
   }
 
