@@ -47,6 +47,10 @@ export class Coordinate {
     row: number,
     column: number
   ) {
+    if (!isValidRow(row) && !isValidColumn(column)) {
+      throw new Error('row and column are not valid')
+    }
+
     this.row = coordinateRow(row)
     this.column = coordinateColumn(column)
   }
