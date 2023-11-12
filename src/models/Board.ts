@@ -1,9 +1,9 @@
 import { Err, Ok, type Result } from 'neverthrow'
-import * as Errors from '../errors.ts'
 import { type Board as BoardInterface } from '../utils/Board.ts'
-import { Coordinate, MAX_COORDINATES, isValidColumn } from './Coordinate.ts'
+import { Coordinate, MAX_COORDINATES, isValidColumn } from '../utils/Coordinate.ts'
+import { TOKEN_SYMBOLS, Token, type TokenSymbol } from '../utils/Token.ts'
+import * as Errors from '../utils/errors.ts'
 import { LineFactory } from './Line.ts'
-import { TOKEN_SYMBOLS, Token, type TokenSymbol } from './Token.ts'
 
 export interface BoardPersistance {
   boardPersisted: TokenSymbol[][]
@@ -57,7 +57,7 @@ export class Board implements BoardInterface {
     return this.isCoordinateInWinnerCombination(this.lastCoordinate)
   }
 
-  put (column: number, token: Token): Result<null, Errors.BoardError> {
+  put (column: number, token: Token): Result<null, Errors.Connect4Error> {
     const columnIndex = column - 1
 
     if (!isValidColumn(columnIndex)) {

@@ -1,5 +1,5 @@
 import { type Result } from 'neverthrow'
-import { type BoardError } from '../errors.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { Controller } from './Controller.ts'
 import { type LogicController } from './LogicController.ts'
 import { PlayCommandFactory, type PlayCommand } from './PlayCommand.ts'
@@ -19,24 +19,24 @@ export class PlayController extends Controller implements LogicController {
   private readonly redoController: RedoController =
     new RedoController(this.viewFactory, this.session, this.state)
 
-  put (column: number): Result<null, BoardError> {
+  put (column: number): Result<null, Connect4Error> {
     return this.putController.put(column)
   }
 
-  redo (): Result<null, BoardError> {
+  redo (): Result<null, Connect4Error> {
     return this.redoController.redo()
   }
 
-  undo (): Result<null, BoardError> {
+  undo (): Result<null, Connect4Error> {
     return this.undoController.undo()
   }
 
   private async play (): Promise<void> {
     await this.viewFactory.createAskPlayView().interact(this.session.getCurrentPlayer())
-      .andThen(({ selectAction }: { selectAction: string }): Result<PlayCommand, BoardError> => {
+      .andThen(({ selectAction }: { selectAction: string }): Result<PlayCommand, Connect4Error> => {
         return this.playCommandFactory.getCommand(selectAction)
       })
-      .andThen((playCommand: PlayCommand): Result<null, BoardError> => {
+      .andThen((playCommand: PlayCommand): Result<null, Connect4Error> => {
         return playCommand.execute()
       })
       .match(

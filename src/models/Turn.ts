@@ -1,12 +1,12 @@
 import assert from 'assert'
 import { type Result } from 'neverthrow'
-import { type BoardError } from '../errors.ts'
+import { TOKEN_SYMBOLS, Token } from '../utils/Token.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { type Board } from './Board.ts'
 import { BotPlayer } from './BotPlayer.ts'
 import { HumanPlayer } from './HumanPlayer.ts'
 import { type Player } from './Player.ts'
 import { type SessionState } from './SessionState.ts'
-import { TOKEN_SYMBOLS, Token } from './Token.ts'
 
 type Players = [ player1: Player, player2: Player ]
 
@@ -16,12 +16,12 @@ export class Turn {
 
   constructor (
     private readonly board: Board,
-    private readonly gameSessionState: SessionState
+    private readonly sessionState: SessionState
   ) {
     this.currentTurn = 0
     this.turns = [
       new HumanPlayer('Player 1', new Token(TOKEN_SYMBOLS.RED_TOKEN)),
-      new BotPlayer('Player 2', new Token(TOKEN_SYMBOLS.BLUE_TOKEN), this.gameSessionState)
+      new BotPlayer('Player 2', new Token(TOKEN_SYMBOLS.BLUE_TOKEN), this.sessionState)
     ]
   }
 
@@ -37,7 +37,7 @@ export class Turn {
     this.currentTurn = (this.currentTurn + 1) % this.turns.length
   }
 
-  putToken (column: number): Result<null, BoardError> {
+  putToken (column: number): Result<null, Connect4Error> {
     return this.getCurrentPlayer().putToken(column, this.board)
   }
 

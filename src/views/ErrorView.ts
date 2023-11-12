@@ -1,4 +1,4 @@
-import { type BoardError } from '../errors.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export abstract class ErrorView {
@@ -38,7 +38,7 @@ class CannotRedoErrorView extends ErrorView {
 
 class OtherErrorView extends ErrorView {
   constructor (
-    private readonly errorContent: BoardError
+    private readonly errorContent: Connect4Error
   ) {
     super()
   }
@@ -54,11 +54,11 @@ const errorViewFactory = {
   FullColumn: () => new FullColumnErrorView(),
   CannotUndo: () => new CannotUndoErrorView(),
   CannotRedo: () => new CannotRedoErrorView(),
-  Other: (error: BoardError) => new OtherErrorView(error)
+  Other: (error: Connect4Error) => new OtherErrorView(error)
 }
 
 export class ErrorViewFactory {
-  createFromErrorType (error: BoardError): ErrorView {
+  createFromErrorType (error: Connect4Error): ErrorView {
     return errorViewFactory[error.type](error)
   }
 }

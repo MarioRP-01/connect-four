@@ -1,35 +1,31 @@
 import { Err, Ok, type Result } from 'neverthrow'
-import { cannotRedo, cannotUndo, type BoardError } from '../errors.ts'
 import { type Board } from '../utils/Board.ts'
-import { type Coordinate } from './Coordinate.ts'
+import { type Coordinate } from '../utils/Coordinate.ts'
+import { type Token } from '../utils/Token.ts'
+import { cannotRedo, cannotUndo, type Connect4Error } from '../utils/errors.ts'
 import { Game } from './Game.ts'
 import { type Player } from './Player.ts'
 import { Registry } from './Registry.ts'
-import { type SessionState } from './SessionState.ts'
-import { type Token } from './Token.ts'
+import { SessionState } from './SessionState.ts'
 
 export type ActionType = 'Put' | 'Undo' | 'Redo'
 
-export class Session implements SessionState {
-  private readonly game: Game = new Game(this)
+export class Session {
+  private readonly sessionState = new SessionState()
+  private readonly game: Game = new Game(this.sessionState)
   private readonly registry: Registry = new Registry(this.game)
-  private lastAction: ActionType | null = null
 
   getCurrentPlayer (): Player {
     return this.game.getCurrentPlayer()
   }
 
-  putToken (column: number): Result<null, BoardError> {
+  putToken (column: number): Result<null, Connect4Error> {
     return this.game.putToken(column)
       .map(() => {
-        this.lastAction = 'Put'
+        this.sessionState.lastAction = 'Put'
         this.registry.register()
         return null
       })
-  }
-
-  getLastAction (): ActionType | null {
-    return this.lastAction
   }
 
   getBoard (): Board {
@@ -48,22 +44,22 @@ export class Session implements SessionState {
     return this.game.getWinner()
   }
 
-  redo (): Result<null, BoardError> {
+  redo (): Result<null, Connect4Error> {
     if (!this.registry.canRedo()) {
       return new Err(cannotRedo())
     }
 
-    this.lastAction = 'Redo'
+    this.sessionState.lastAction = 'Redo'
     this.registry.redo()
     return new Ok(null)
   }
 
-  undo (): Result<null, BoardError> {
+  undo (): Result<null, Connect4Error> {
     if (!this.registry.canUndo()) {
       return new Err(cannotUndo())
     }
 
-    this.lastAction = 'Undo'
+    this.sessionState.lastAction = 'Undo'
     this.registry.undo()
     return new Ok(null)
   }

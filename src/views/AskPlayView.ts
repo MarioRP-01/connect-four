@@ -1,20 +1,20 @@
 import { fromPromise, type ResultAsync } from 'neverthrow'
-import * as Errors from '../errors.ts'
-import { type BoardError } from '../errors.ts'
 import { type BotPlayer } from '../models/BotPlayer.ts'
 import { type HumanPlayer } from '../models/HumanPlayer.ts'
 import { type Player } from '../models/Player.ts'
 import { type AskPlayerVisitor } from '../models/PlayerVisitor.ts'
+import * as Errors from '../utils/errors.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { InquirerCli } from './InquirerCli.ts'
 
 export class AskPlayView implements AskPlayerVisitor {
   private readonly inquirerCli: InquirerCli = new InquirerCli()
 
-  interact (player: Player): ResultAsync<{ selectAction: string }, BoardError> {
+  interact (player: Player): ResultAsync<{ selectAction: string }, Connect4Error> {
     return player.acceptAskAction(this)
   }
 
-  visitHuman (human: HumanPlayer): ResultAsync<{ selectAction: string }, BoardError> {
+  visitHuman (human: HumanPlayer): ResultAsync<{ selectAction: string }, Connect4Error> {
     return fromPromise(
       this.inquirerCli
         .prompt([{
@@ -27,7 +27,7 @@ export class AskPlayView implements AskPlayerVisitor {
     })
   }
 
-  visitBot (bot: BotPlayer): ResultAsync<{ selectAction: string }, BoardError> {
+  visitBot (bot: BotPlayer): ResultAsync<{ selectAction: string }, Connect4Error> {
     return fromPromise(new Promise((resolve) => {
       setTimeout(() => {
         resolve({
@@ -42,8 +42,10 @@ export class AskPlayView implements AskPlayerVisitor {
     let action = bot.simulateAction()
     if (action === 'Redo') {
       action = 'r'
+      this.inquirerCli.render('')
     } else if (action === 'Undo') {
       action = 'u'
+      this.inquirerCli.render('')
     } else {
       this.inquirerCli.render(bot.getPromptMessage() + ` ${action}`)
     }

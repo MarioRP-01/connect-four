@@ -1,18 +1,18 @@
 import { assert } from 'console'
 import { type Result, type ResultAsync } from 'neverthrow'
-import { type BoardError } from '../errors.ts'
+import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from '../utils/Coordinate.ts'
+import { type Token } from '../utils/Token.ts'
+import { type Connect4Error } from '../utils/errors.ts'
 import { type Board } from './Board.ts'
-import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from './Coordinate.ts'
 import { type Player } from './Player.ts'
 import { type AskPlayerVisitor, type PlayerVisitor } from './PlayerVisitor.ts'
 import { type SessionState } from './SessionState.ts'
-import { type Token } from './Token.ts'
 
 export class BotPlayer implements Player {
   constructor (
     readonly name: string,
     readonly token: Token,
-    private readonly gameSessionState: SessionState
+    private readonly sessionState: SessionState
   ) { }
 
   getPromptMessage (): string {
@@ -23,7 +23,7 @@ export class BotPlayer implements Player {
     playerVisitor.visitBot(this)
   }
 
-  acceptAskAction (playerVisitor: AskPlayerVisitor): ResultAsync<{ selectAction: string }, BoardError> {
+  acceptAskAction (playerVisitor: AskPlayerVisitor): ResultAsync<{ selectAction: string }, Connect4Error> {
     return playerVisitor.visitBot(this)
   }
 
@@ -32,7 +32,7 @@ export class BotPlayer implements Player {
   }
 
   simulateAction (): string {
-    const lastAction = this.gameSessionState.getLastAction()
+    const lastAction = this.sessionState.lastAction
 
     if (lastAction === null || lastAction === 'Put') {
       return this.randomColumn().toString()
@@ -41,7 +41,7 @@ export class BotPlayer implements Player {
     return lastAction
   }
 
-  putToken (column: number, board: Board): Result<null, BoardError> {
+  putToken (column: number, board: Board): Result<null, Connect4Error> {
     return board.put(column, this.token)
       .orElse((e) => {
         if (e.type !== 'FullColumn') {

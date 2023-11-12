@@ -1,4 +1,4 @@
-import { type ObjectValues } from '../utils/ObjectValues.ts'
+import { type ObjectValues } from './ObjectValues.ts'
 
 export const TOKEN_SYMBOLS = {
   RED_TOKEN: '🔴',
