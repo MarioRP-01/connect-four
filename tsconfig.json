@@ -22,16 +22,18 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    
+    "experimentalDecorators": true,
+
     /* Output */
     "noEmit": true,
   },
   "include": [
     "src/**/*.ts",
     ".eslintrc.cjs",
-    "jest.config.cjs"
+    "jest.config.cjs",
+    "test/**/*.ts"
   ],
 }

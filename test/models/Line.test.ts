@@ -1,6 +1,6 @@
-import { Coordinate } from '../utils/Coordinate'
-import { type DirectionType, type Line } from '../utils/Line'
-import { LineFactory } from './Line'
+import { Coordinate } from '../../src/utils/Coordinate'
+import { type DirectionType, type Line } from '../../src/utils/Line'
+import { LineFactory } from '../../src/models/Line'
 
 describe('LineFactory', () => {
   const sut: LineFactory = new LineFactory()
