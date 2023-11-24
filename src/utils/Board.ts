@@ -1,6 +1,7 @@
-import { type Coordinate } from './Coordinate.ts'
-import { type Token } from './Token.ts'
+// import { type Coordinate } from './Coordinate.ts'
+// import { type Token } from './Token.ts'
 
-export interface Board {
-  getToken: (coordinate: Coordinate) => Token
-}
+// export interface Board {
+//   reset: () => void
+//   getToken: (coordinate: Coordinate) => Token
+// }

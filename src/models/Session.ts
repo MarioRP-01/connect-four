@@ -1,5 +1,5 @@
 import { Err, Ok, type Result } from 'neverthrow'
-import { type Board } from '../utils/Board.ts'
+import { type Board } from './Board.ts'
 import { type Coordinate } from '../utils/Coordinate.ts'
 import { type Token } from '../utils/Token.ts'
 import { cannotRedo, cannotUndo, type Connect4Error } from '../utils/errors.ts'
