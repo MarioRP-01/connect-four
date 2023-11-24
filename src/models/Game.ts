@@ -1,4 +1,5 @@
 import { type Result } from 'neverthrow'
+import { type Board as BoardInterface } from '../utils/Board.ts'
 import { type Coordinate } from '../utils/Coordinate.ts'
 import { type Token } from '../utils/Token.ts'
 import { type Connect4Error } from '../utils/errors.ts'
