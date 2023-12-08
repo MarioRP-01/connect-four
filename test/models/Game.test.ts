@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { suite, test } from '@testdeck/jest'
@@ -25,7 +26,7 @@ describe('Game', () => {
 
     @test
     when_there_is_winner (): void {
-      const board = this.sut.getBoard()
+      const board = this.sut['board']
       board.hasWinner = jest.fn().mockReturnValue(true)
 
       this.sut.putToken(1)
@@ -35,7 +36,7 @@ describe('Game', () => {
 
     @test
     confirms_game_can_continue_when_board_is_not_full_and_there_is_no_winner (): void {
-      const board = this.sut.getBoard()
+      const board = this.sut['board']
       board.isWinnable = jest.fn().mockReturnValue(true)
       board.hasWinner = jest.fn().mockReturnValue(false)
 
@@ -44,7 +45,7 @@ describe('Game', () => {
 
     @test
     confirms_game_cannot_continue_when_board_is_full_and_there_is_no_winner (): void {
-      const board = this.sut.getBoard()
+      const board = this.sut['board']
       board.isWinnable = jest.fn().mockReturnValue(false)
       board.hasWinner = jest.fn().mockReturnValue(false)
 
@@ -53,7 +54,7 @@ describe('Game', () => {
 
     @test
     confirms_game_cannot_continue_when_board_is_not_full_and_there_is_winner (): void {
-      const board = this.sut.getBoard()
+      const board = this.sut['board']
       board.isWinnable = jest.fn().mockReturnValue(true)
       board.hasWinner = jest.fn().mockReturnValue(true)
 
@@ -83,7 +84,7 @@ describe('Game', () => {
       this.sut.putToken(4)
       this.sut.setMemento(memento)
 
-      expect(this.sut.getBoard()).toEqual(new Board())
+      expect(this.sut['board']).toEqual(new Board())
     }
 
     @test
@@ -92,7 +93,7 @@ describe('Game', () => {
       const memento = new Memento(nonFullBoard)
       this.sut.setMemento(memento)
 
-      expect(this.sut.getBoard()).toEqual(nonFullBoard)
+      expect(this.sut['board']).toEqual(nonFullBoard)
     }
   }
 })

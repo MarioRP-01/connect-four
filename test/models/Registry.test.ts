@@ -43,7 +43,7 @@ describe('Registry', () => {
       const previousFirstPrevious = this.sut['firstPrevious']
       this.sut.undo()
 
-      const expectedBoard = this.game.getBoard().takeSnapshot()
+      const expectedBoard = this.game['board'].takeSnapshot()
       const memento = this.sut['mementos'][previousFirstPrevious + 1].getState()
 
       expect(this.sut['firstPrevious']).toBe(previousFirstPrevious + 1)
@@ -58,7 +58,7 @@ describe('Registry', () => {
 
       this.sut.redo()
 
-      const expectedBoard = this.game.getBoard().takeSnapshot()
+      const expectedBoard = this.game['board'].takeSnapshot()
       const memento = this.sut['mementos'][previousFirstPrevious - 1].getState()
 
       expect(this.sut['firstPrevious']).toBe(previousFirstPrevious - 1)
