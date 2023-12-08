@@ -10,11 +10,11 @@ import { Memento } from '../../src/models/Memento'
 describe('Game', () => {
   @suite
   class GameTest {
-    private readonly gameSessionState = new SessionState()
+    private readonly sessionState = new SessionState()
     private sut!: Game
 
     before (): void {
-      this.sut = new Game(this.gameSessionState)
+      this.sut = new Game(this.sessionState)
     }
 
     @test
