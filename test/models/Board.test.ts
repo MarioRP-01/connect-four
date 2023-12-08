@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { suite, test } from '@testdeck/jest'
@@ -6,7 +7,7 @@ import { Board } from '../../src/models/Board'
 import * as Errors from '../../src/utils/errors.ts'
 import { createBoardWithAscendingDiagonalWinner, createBoardWithDescendingDiagonalWinner, createBoardWithHorizontalWinner, createBoardWithVerticalWinner, createBoardWithoutWinner, createEmptyBoard, createFullBoard, createNonFullBoard } from '../builder/boardBuilder'
 import { createCoordinate } from '../builder/coordinateBuilder.ts'
-import { createPlayer1Token } from '../builder/tokenBulder'
+import { createNullToken, createPlayer1Token, createPlayer2Token } from '../builder/tokenBulder'
 
 const invalidColumn = 0
 const validColumn = 1
@@ -14,81 +15,81 @@ const validColumn = 1
 @suite
 class BoardTest {
   @test
-  resetsEmptyBoardToInitialState (): void {
+  resets_empty_board_to_initial_state (): void {
     const sut = createEmptyBoard()
     sut.reset()
     expect(sut).toEqual(new Board())
   }
 
   @test
-  resetsFullBoardToInitialState (): void {
+  resets_full_board_to_initial_state (): void {
     const sut = createFullBoard()
     sut.reset()
     expect(sut).toEqual(new Board())
   }
 
   @test
-  resetsNonFullBoardToInitialState (): void {
+  resets_non_full_board_to_initial_state (): void {
     const sut = createNonFullBoard()
     sut.reset()
     expect(sut).toEqual(new Board())
   }
 
   @test
-  confirmsThatGameIsWinnableIfBoardIsNotFull (): void {
+  confirms_that_game_is_winnable_if_board_is_not_full (): void {
     const sut = createNonFullBoard()
     expect(sut.isWinnable()).toBe(true)
   }
 
   @test
-  confirmsThatGameIsWinnableIfBoardIsEmpty (): void {
+  confirms_that_game_is_winnable_if_board_is_empty (): void {
     const sut = createEmptyBoard()
     expect(sut.isWinnable()).toBe(true)
   }
 
   @test
-  confirmsThatGameIsNotWinnableIfBoardIsFull (): void {
+  confirms_that_game_is_not_winnable_if_board_is_full (): void {
     const sut = createFullBoard()
     expect(sut.isWinnable()).toBe(false)
   }
 
   @test
-  hasWinnerWhenLastTokenCreatesHorizontalLineOfSameToken (): void {
+  has_winner_when_last_token_creates_horizontal_line_of_same_token (): void {
     const sut = createBoardWithHorizontalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasWinnerWhenLastTokenCreatesVerticalLineOfSameToken (): void {
+  has_winner_when_last_token_creates_vertical_line_of_same_token (): void {
     const sut = createBoardWithVerticalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasWinnerWhenLastTokenCreatesAscendingDiagonalLineOfSameToken (): void {
+  has_winner_when_last_token_creates_ascending_diagonal_line_of_same_token (): void {
     const sut = createBoardWithAscendingDiagonalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasWinnerWhenLastTokenCreatesDescendingDiagonalLineOfSameToken (): void {
+  has_winner_when_last_token_creates_descending_diagonal_line_of_same_token (): void {
     const sut = createBoardWithDescendingDiagonalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasNoWinnerWhenLastTokenCreatesNoLinesOfSameToken (): void {
+  has_no_winner_when_last_token_creates_no_lines_of_same_token (): void {
     const sut = createBoardWithoutWinner()
 
     expect(sut.hasWinner()).toBe(false)
   }
 
   @test
-  putsTokenInEmptyColumn (): void {
+  puts_token_in_empty_column (): void {
     const sut = createEmptyBoard()
     const playAction = sut.put(validColumn, createPlayer1Token())
 
@@ -97,7 +98,7 @@ class BoardTest {
   }
 
   @test
-  putsTokenInFullColumn (): void {
+  puts_token_in_full_column (): void {
     const sut = createFullBoard()
     const playAction = sut.put(validColumn, createPlayer1Token())
 
@@ -105,7 +106,7 @@ class BoardTest {
   }
 
   @test
-  putsTokenInNonFullColumn (): void {
+  puts_token_in_non_full_column (): void {
     const sut = createNonFullBoard()
     const playAction = sut.put(validColumn, createPlayer1Token())
 
@@ -114,18 +115,24 @@ class BoardTest {
   }
 
   @test
-  failsToPutTokenWhenColumnIsInvalid (): void {
+  fails_to_put_token_when_column_is_invalid (): void {
     const sut = createNonFullBoard()
     const playAction = sut.put(invalidColumn, createPlayer1Token())
 
     expect(playAction).toEqual(err(Errors.invalidColumn()))
   }
 
-  // loadState: (> loadSnapshot)
-  // - returns the board to the given state
-  // - sets the last cordinate to given coordinate
+  @test
+  loads_a_previously_saved_state_snapshot (): void {
+    const mockedBoard = createNonFullBoard()
+    const boardSnapshot = mockedBoard.takeSnapshot()
 
-  // saveState: (Saves? > takeSnapshot)
-  // - returns the current state of the board
-  // - returns the last coordinate played
+    const sut = createEmptyBoard()
+    sut.loadSnapshot(boardSnapshot)
+
+    expect(sut.getToken(createCoordinate(0, 0))).toEqual(createPlayer1Token())
+    expect(sut.getToken(createCoordinate(0, 6))).toEqual(createPlayer2Token())
+    expect(sut.getToken(createCoordinate(0, 5))).toEqual(createNullToken())
+    expect(sut['lastCoordinate']).toEqual(createCoordinate(2, 6))
+  }
 }

@@ -11,7 +11,7 @@ const sut: LineFactory = new LineFactory()
 @suite
 class LineFactoryTest {
   @test
-  createsHorizontalLineWithCorrectLengthAndValues (): void {
+  creates_horizontal_line_with_correct_length_and_values (): void {
     const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'HORIZONTAL'
     const expectedLine: Line = createHorizontalLine()
@@ -22,7 +22,7 @@ class LineFactoryTest {
   }
 
   @test
-  createsVerticalLineWithCorrectLengthAndValues (): void {
+  creates_vertical_line_with_correct_length_and_values (): void {
     const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'VERTICAL'
     const expectedLine: Line = createVerticalLine()
@@ -33,7 +33,7 @@ class LineFactoryTest {
   }
 
   @test
-  createsAscendingDiagonalLineWithCorrectLengthAndValues (): void {
+  creates_ascending_diagonal_line_with_correct_length_and_values (): void {
     const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'ASCENDING_DIAGONAL'
     const expectedLine: Line = createAscendingDiagonalLine()
@@ -44,7 +44,7 @@ class LineFactoryTest {
   }
 
   @test
-  createsDescendingDiagonalLineWithCorrectLengthAndValues (): void {
+  creates_descending_diagonal_line_with_correct_length_and_values (): void {
     const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'DESCENDING_DIAGONAL'
     const expectedLine: Line = createDescendingDiagonalLine()
@@ -55,7 +55,7 @@ class LineFactoryTest {
   }
 
   @test
-  createsAllLinesFromCoordinate (): void {
+  creates_all_lines_from_coordinate (): void {
     const coordinate = createCoordinate(0, 0)
     const expectedLines: Line[] = [
       createHorizontalLine(),

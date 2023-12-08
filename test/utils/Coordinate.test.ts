@@ -13,25 +13,25 @@ describe('Coordinate', () => {
   @suite
   class Creation {
     @test
-    throwsErrorWhenRowAndColumnAreInvalid (): void {
+    throws_error_when_row_and_column_are_invalid (): void {
       expect(() => new Sut(minRow - offset, minRow - offset)).toThrow('row and column are not valid')
       expect(() => new Sut(maxRow + offset, maxColumn + offset)).toThrow('row and column are not valid')
     }
 
     @test
-    throwsErrorWhenOnlyRowIsInvalid (): void {
+    throws_error_when_only_row_is_invalid (): void {
       expect(() => new Sut(maxRow + offset, validColumn)).toThrow('row is not valid')
       expect(() => new Sut(minRow - offset, validColumn)).toThrow('row is not valid')
     }
 
     @test
-    throwsErrorWhenOnlyColumnIsInvalid (): void {
+    throws_error_when_only_column_is_invalid (): void {
       expect(() => new Sut(validRow, maxColumn + offset)).toThrow('column is not valid')
       expect(() => new Sut(validRow, minColumn - offset)).toThrow('column is not valid')
     }
 
     @test
-    instantiatesCoordinatWhenRowAndColumnAreValid (): void {
+    instantiates_coordinat_when_row_and_column_are_valid (): void {
       expect(() => new Sut(validRow, validColumn)).not.toThrow()
     }
   }
@@ -39,7 +39,7 @@ describe('Coordinate', () => {
   @suite
   class Navigation {
     @test
-    returnsNextCoordinateOfGivenDirectionWhenItExist (): void {
+    returns_next_coordinate_of_given_direction_when_it_exist (): void {
       const sut = createCenterCoordinate()
 
       expect(sut.getNext(horizontalDirection())).toEqual(createRightNeighbour())
@@ -49,7 +49,7 @@ describe('Coordinate', () => {
     }
 
     @test
-    returnsUndefinedWhenNextCoordinateOfGivenDirectionDoesNotExist (): void {
+    returns_undefined_when_next_coordinate_of_given_direction_does_not_exist (): void {
       const sut = createTopRightCoordinate()
 
       expect(sut.getNext(horizontalDirection())).toBeUndefined()
@@ -59,7 +59,7 @@ describe('Coordinate', () => {
     }
 
     @test
-    returnsPreviousCoordinateOfGivenDirectionDoesNotExist (): void {
+    returns_previous_coordinate_of_given_direction_does_not_exist (): void {
       const sut = createCenterCoordinate()
 
       expect(sut.getPrevious(horizontalDirection())).toEqual(createLeftNeighbour())
@@ -69,7 +69,7 @@ describe('Coordinate', () => {
     }
 
     @test
-    returnsUndefinedWhenPreviousCoordinateOfGivenDirectionDoesNotExist (): void {
+    returns_undefined_when_previous_coordinate_of_given_direction_does_not_exist (): void {
       const sut = createBottomLeftCoordinate()
 
       expect(sut.getPrevious(horizontalDirection())).toBeUndefined()

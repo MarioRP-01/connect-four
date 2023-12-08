@@ -18,20 +18,20 @@ describe('Turn', () => {
     }
 
     @test
-    getCurrentPlayer_returns_player1_when_game_starts (): void {
+    returns_player1_when_game_starts (): void {
       const initialPlayer = this.sut.getCurrentPlayer()
       expect(initialPlayer.name).toBe('Player 1')
     }
 
     @test
-    switchPlayer_changes_turn_to_other_player (): void {
+    changes_turn_to_other_player (): void {
       this.sut.switchPlayer()
       const secondPlayer = this.sut.getCurrentPlayer()
       expect(secondPlayer.name).toBe('Player 2')
     }
 
     @test
-    putToken_adds_token_of_current_player_type_to_given_column (): void {
+    adds_token_of_current_player_type_to_given_column (): void {
       const currentPlayer = this.sut.getCurrentPlayer()
       const putToken = jest.spyOn(currentPlayer, 'putToken')
 
@@ -41,7 +41,7 @@ describe('Turn', () => {
     }
 
     @test
-    setTurnByToken_updates_current_player_by_token (): void {
+    updates_current_player_by_token (): void {
       this.sut.setTurnByToken(createPlayer2Token())
       expect(this.sut.getCurrentPlayer().name).toBe('Player 2')
 

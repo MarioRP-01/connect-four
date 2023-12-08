@@ -13,7 +13,7 @@ describe('State', () => {
     }
 
     @test
-    next_changes_state_to_next_state (): void {
+    changes_state_to_next_state (): void {
       this.sut.next()
       expect(this.sut.getStateValue()).toBe(STATE_VALUE.PLAYING)
       this.sut.next()
@@ -21,7 +21,7 @@ describe('State', () => {
     }
 
     @test
-    next_does_not_changes_state_when_state_is_exit (): void {
+    does_not_changes_state_when_state_is_exit (): void {
       this.sut.next()
       this.sut.next()
       this.sut.next()

@@ -18,13 +18,13 @@ describe('Game', () => {
     }
 
     @test
-    putToken_changes_player_when_there_is_no_winner (): void {
+    changes_player_when_there_is_no_winner (): void {
       this.sut.putToken(1)
       expect(this.sut.getCurrentPlayer().name).toBe('Player 2')
     }
 
     @test
-    putToken_when_there_is_winner (): void {
+    when_there_is_winner (): void {
       const board = this.sut.getBoard()
       board.hasWinner = jest.fn().mockReturnValue(true)
 
@@ -34,7 +34,7 @@ describe('Game', () => {
     }
 
     @test
-    canContinue_when_board_is_not_full_and_there_is_no_winner (): void {
+    confirms_game_can_continue_when_board_is_not_full_and_there_is_no_winner (): void {
       const board = this.sut.getBoard()
       board.isWinnable = jest.fn().mockReturnValue(true)
       board.hasWinner = jest.fn().mockReturnValue(false)
@@ -43,7 +43,7 @@ describe('Game', () => {
     }
 
     @test
-    canContinue_returns_false_when_board_is_full_and_there_is_no_winner (): void {
+    confirms_game_cannot_continue_when_board_is_full_and_there_is_no_winner (): void {
       const board = this.sut.getBoard()
       board.isWinnable = jest.fn().mockReturnValue(false)
       board.hasWinner = jest.fn().mockReturnValue(false)
@@ -52,7 +52,7 @@ describe('Game', () => {
     }
 
     @test
-    canContinue_returns_false_when_board_is_not_full_and_there_is_winner (): void {
+    confirms_game_cannot_continue_when_board_is_not_full_and_there_is_winner (): void {
       const board = this.sut.getBoard()
       board.isWinnable = jest.fn().mockReturnValue(true)
       board.hasWinner = jest.fn().mockReturnValue(true)
@@ -61,7 +61,7 @@ describe('Game', () => {
     }
 
     @test
-    getWinner_returns_winner_player (): void {
+    returns_winner_player_when_exists (): void {
       const board = createWinnableBoard()
       const memento = new Memento(board)
       this.sut.setMemento(memento)
@@ -72,13 +72,13 @@ describe('Game', () => {
     }
 
     @test
-    getWinner_returns_null_when_there_is_no_winner (): void {
+    returns_null_when_there_is_no_winner (): void {
       const expecterWinner = this.sut.getWinner()
       expect(expecterWinner).toBeNull()
     }
 
     @test
-    setMemento_resets_board_when_there_is_no_last_coordinate (): void {
+    resets_board_when_there_is_no_last_coordinate (): void {
       const memento = new Memento(createEmptyBoard())
       this.sut.putToken(4)
       this.sut.setMemento(memento)
@@ -87,7 +87,7 @@ describe('Game', () => {
     }
 
     @test
-    setMemento_sets_board_to_passed_memento (): void {
+    sets_board_to_passed_memento (): void {
       const nonFullBoard = createNonFullBoard()
       const memento = new Memento(nonFullBoard)
       this.sut.setMemento(memento)

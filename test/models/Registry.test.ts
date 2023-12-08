@@ -18,7 +18,7 @@ describe('Registry', () => {
     }
 
     @test
-    reset (): void {
+    resets_board_to_initial_state (): void {
       this.sut.register()
       this.sut.reset()
 
@@ -27,7 +27,7 @@ describe('Registry', () => {
     }
 
     @test
-    register_adds_new_memento_to_list (): void {
+    adds_new_memento_to_list (): void {
       const initialMementosLength = this.sut['mementos'].length
 
       this.sut.register()
@@ -38,7 +38,7 @@ describe('Registry', () => {
     }
 
     @test
-    undo_returns_board_to_last_memento (): void {
+    returns_board_to_last_memento (): void {
       this.sut.register()
       const previousFirstPrevious = this.sut['firstPrevious']
       this.sut.undo()
@@ -51,7 +51,7 @@ describe('Registry', () => {
     }
 
     @test
-    redo_returns_board_to_following_memento (): void {
+    returns_board_to_following_memento (): void {
       this.sut.register()
       this.sut.undo()
       const previousFirstPrevious = this.sut['firstPrevious']
@@ -66,20 +66,20 @@ describe('Registry', () => {
     }
 
     @test
-    canUndo_returns_true_when_there_are_registered_mementos (): void {
+    confirms_undo_is_possible_when_there_are_registered_mementos (): void {
       this.sut.register()
       expect(this.sut.canUndo()).toBe(true)
     }
 
     @test
-    canUndo_returns_false_when_there_are_no_registered_mementos (): void {
+    confirms_undo_is_not_possible_when_there_are_no_registered_mementos (): void {
       this.sut.register()
       this.sut.undo()
       expect(this.sut.canUndo()).toBe(false)
     }
 
     @test
-    canRedo_returns_true_when_there_are_registered_mementos (): void {
+    confirms_redo_is_possible_when_there_are_registered_mementos (): void {
       this.sut.register()
       this.sut.undo()
 
@@ -87,7 +87,7 @@ describe('Registry', () => {
     }
 
     @test
-    canRedo_returns_false_when_there_are_no_registered_mementos (): void {
+    confirms_redo_is_not_possible_when_there_are_no_registered_mementos (): void {
       this.sut.register()
       expect(this.sut.canRedo()).toBe(false)
 
