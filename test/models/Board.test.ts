@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { suite, test } from '@testdeck/jest'
+import { Ok, err } from 'neverthrow'
 import { Board } from '../../src/models/Board'
-import { TOKEN_SYMBOLS, Token, TokenSymbol } from '../../src/utils/Token'
-import { createPlayer1Token } from '../builder/tokenBulder'
-import { createBoardWithAscendingDiagonalWinner, createBoardWithDescendingDiagonalWinner, createBoardWithHorizontalWinner, createBoardWithVerticalWinner, createBoardWithoutWinner, createEmptyBoard, createFullBoard, createNonFullBoard } from '../builder/boardBuilder'
-import { Coordinate } from '../../src/utils/Coordinate'
-import { Err, Ok, err } from 'neverthrow'
 import * as Errors from '../../src/utils/errors.ts'
+import { createBoardWithAscendingDiagonalWinner, createBoardWithDescendingDiagonalWinner, createBoardWithHorizontalWinner, createBoardWithVerticalWinner, createBoardWithoutWinner, createEmptyBoard, createFullBoard, createNonFullBoard } from '../builder/boardBuilder'
+import { createCoordinate } from '../builder/coordinateBuilder.ts'
+import { createPlayer1Token } from '../builder/tokenBulder'
+
+const invalidColumn = 0
+const validColumn = 1
 
 @suite
 class BoardTest {
@@ -51,70 +53,70 @@ class BoardTest {
   }
 
   @test
-  hasWinnerWhenLastTockenCreatesHorizontalLineOfSameToken (): void {
+  hasWinnerWhenLastTokenCreatesHorizontalLineOfSameToken (): void {
     const sut = createBoardWithHorizontalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasWinnerWhenLastTockenCreatesVerticalLineOfSameToken (): void {
+  hasWinnerWhenLastTokenCreatesVerticalLineOfSameToken (): void {
     const sut = createBoardWithVerticalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasWinnerWhenLastTockenCreatesAscendingDiagonalLineOfSameToken (): void {
+  hasWinnerWhenLastTokenCreatesAscendingDiagonalLineOfSameToken (): void {
     const sut = createBoardWithAscendingDiagonalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasWinnerWhenLastTockenCreatesDescendingDiagonalLineOfSameToken (): void {
+  hasWinnerWhenLastTokenCreatesDescendingDiagonalLineOfSameToken (): void {
     const sut = createBoardWithDescendingDiagonalWinner()
 
     expect(sut.hasWinner()).toBe(true)
   }
 
   @test
-  hasNoWinnerWhenLastTockenCreatesNoLinesOfSameToken (): void {
+  hasNoWinnerWhenLastTokenCreatesNoLinesOfSameToken (): void {
     const sut = createBoardWithoutWinner()
 
     expect(sut.hasWinner()).toBe(false)
   }
 
   @test
-  putsTockenInEmptyColumn (): void {
+  putsTokenInEmptyColumn (): void {
     const sut = createEmptyBoard()
-    const playAction = sut.put(1, createPlayer1Token())
+    const playAction = sut.put(validColumn, createPlayer1Token())
 
     expect(playAction).toBeInstanceOf(Ok)
-    expect(sut.getToken(new Coordinate(0, 0))).toEqual(createPlayer1Token())
+    expect(sut.getToken(createCoordinate(0, 0))).toEqual(createPlayer1Token())
   }
 
   @test
-  putsTockenInFullColumn (): void {
+  putsTokenInFullColumn (): void {
     const sut = createFullBoard()
-    const playAction = sut.put(1, createPlayer1Token())
+    const playAction = sut.put(validColumn, createPlayer1Token())
 
     expect(playAction).toEqual(err(Errors.fullColumn()))
   }
 
   @test
-  putsTockenInNonFullColumn (): void {
+  putsTokenInNonFullColumn (): void {
     const sut = createNonFullBoard()
-    const playAction = sut.put(1, createPlayer1Token())
+    const playAction = sut.put(validColumn, createPlayer1Token())
 
     expect(playAction).toBeInstanceOf(Ok)
-    expect(sut.getToken(new Coordinate(0, 1))).toEqual(createPlayer1Token())
+    expect(sut.getToken(createCoordinate(0, 1))).toEqual(createPlayer1Token())
   }
 
   @test
   failsToPutTokenWhenColumnIsInvalid (): void {
     const sut = createNonFullBoard()
-    const playAction = sut.put(0, createPlayer1Token())
+    const playAction = sut.put(invalidColumn, createPlayer1Token())
 
     expect(playAction).toEqual(err(Errors.invalidColumn()))
   }

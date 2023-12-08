@@ -11,7 +11,7 @@ export function createNonFullBoard (): Board {
   const board = new Board()
   const lastCoordinate = new Coordinate(2, 6)
 
-  board.loadState({ boardPersisted: nonFullWinnableBoard, lastCoordinate })
+  board.loadSnapshot({ boardPersisted: nonFullWinnableBoard, lastCoordinate })
 
   return board
 }
@@ -24,7 +24,7 @@ export function createFullBoard (): Board {
   const board = new Board()
   const lastCoordinate = new Coordinate(5, 6)
 
-  board.loadState({ boardPersisted: fullBoard, lastCoordinate })
+  board.loadSnapshot({ boardPersisted: fullBoard, lastCoordinate })
 
   return board
 }
@@ -33,7 +33,7 @@ export function createBoardWithHorizontalWinner (): Board {
   const board = new Board()
   const lastCoordinate = new Coordinate(0, 5)
 
-  board.loadState({ boardPersisted: boardWithWinner, lastCoordinate })
+  board.loadSnapshot({ boardPersisted: boardWithWinner, lastCoordinate })
 
   return board
 }
@@ -42,7 +42,7 @@ export function createBoardWithVerticalWinner (): Board {
   const board = new Board()
   const lastCoordinate = new Coordinate(0, 1)
 
-  board.loadState({ boardPersisted: boardWithWinner, lastCoordinate })
+  board.loadSnapshot({ boardPersisted: boardWithWinner, lastCoordinate })
 
   return board
 }
@@ -51,7 +51,7 @@ export function createBoardWithAscendingDiagonalWinner (): Board {
   const board = new Board()
   const lastCoordinate = new Coordinate(3, 3)
 
-  board.loadState({ boardPersisted: boardWithWinner, lastCoordinate })
+  board.loadSnapshot({ boardPersisted: boardWithWinner, lastCoordinate })
 
   return board
 }
@@ -60,7 +60,7 @@ export function createBoardWithDescendingDiagonalWinner (): Board {
   const board = new Board()
   const lastCoordinate = new Coordinate(3, 2)
 
-  board.loadState({ boardPersisted: boardWithWinner, lastCoordinate })
+  board.loadSnapshot({ boardPersisted: boardWithWinner, lastCoordinate })
 
   return board
 }

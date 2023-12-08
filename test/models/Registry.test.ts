@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { suite, test } from '@testdeck/jest'
+import { Game } from '../../src/models/Game'
 import { Registry } from '../../src/models/Registry'
 import { SessionState } from '../../src/models/SessionState'
-import { Game } from '../../src/models/Game'
 
 describe('Registry', () => {
   @suite
@@ -43,7 +43,7 @@ describe('Registry', () => {
       const previousFirstPrevious = this.sut['firstPrevious']
       this.sut.undo()
 
-      const expectedBoard = this.game.getBoard().saveState()
+      const expectedBoard = this.game.getBoard().takeSnapshot()
       const memento = this.sut['mementos'][previousFirstPrevious + 1].getState()
 
       expect(this.sut['firstPrevious']).toBe(previousFirstPrevious + 1)
@@ -58,7 +58,7 @@ describe('Registry', () => {
 
       this.sut.redo()
 
-      const expectedBoard = this.game.getBoard().saveState()
+      const expectedBoard = this.game.getBoard().takeSnapshot()
       const memento = this.sut['mementos'][previousFirstPrevious - 1].getState()
 
       expect(this.sut['firstPrevious']).toBe(previousFirstPrevious - 1)

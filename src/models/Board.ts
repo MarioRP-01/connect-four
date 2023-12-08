@@ -5,7 +5,7 @@ import { TOKEN_SYMBOLS, Token, type TokenSymbol } from '../utils/Token.ts'
 import * as Errors from '../utils/errors.ts'
 import { LineFactory } from './Line.ts'
 
-export interface BoardState {
+export interface BoardSnapshot {
   boardPersisted: TokenSymbol[][]
   lastCoordinate: Coordinate | null
 }
@@ -105,14 +105,14 @@ export class Board implements BoardInterface {
     return count > 3
   }
 
-  loadState (
-    { boardPersisted, lastCoordinate }: BoardState
+  loadSnapshot (
+    { boardPersisted, lastCoordinate }: BoardSnapshot
   ): void {
     this.board = boardPersisted.map((row) => row.map((symbol) => new Token(symbol)))
     this.lastCoordinate = lastCoordinate
   }
 
-  saveState (): BoardState {
+  takeSnapshot (): BoardSnapshot {
     const boardPersisted = this.board.map((row) => row.map((token) => token.symbol))
 
     return {

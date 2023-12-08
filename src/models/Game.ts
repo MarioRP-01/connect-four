@@ -1,5 +1,4 @@
 import { type Result } from 'neverthrow'
-import { type Board as BoardInterface } from '../utils/Board.ts'
 import { type Coordinate } from '../utils/Coordinate.ts'
 import { type Token } from '../utils/Token.ts'
 import { type Connect4Error } from '../utils/errors.ts'
@@ -66,7 +65,7 @@ export class Game {
       return
     }
 
-    this.board.loadState({ boardPersisted, lastCoordinate })
+    this.board.loadSnapshot({ boardPersisted, lastCoordinate })
     const lastToken = this.board.getToken(lastCoordinate)
     this.turn.setTurnByToken(lastToken)
     this.turn.switchPlayer()

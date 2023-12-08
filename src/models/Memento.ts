@@ -1,6 +1,6 @@
 import { type Coordinate } from '../utils/Coordinate'
 import { type TokenSymbol } from '../utils/Token'
-import { type Board, type BoardState } from './Board'
+import { type Board, type BoardSnapshot } from './Board'
 
 export class Memento {
   private readonly boardPersisted: TokenSymbol[][]
@@ -9,12 +9,12 @@ export class Memento {
   constructor (
     board: Board
   ) {
-    const { boardPersisted, lastCoordinate } = board.saveState()
+    const { boardPersisted, lastCoordinate } = board.takeSnapshot()
     this.boardPersisted = boardPersisted
     this.lastCoordinate = lastCoordinate
   }
 
-  getState (): BoardState {
+  getState (): BoardSnapshot {
     return {
       boardPersisted: this.boardPersisted,
       lastCoordinate: this.lastCoordinate
