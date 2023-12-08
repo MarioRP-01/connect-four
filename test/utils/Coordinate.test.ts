@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { suite, test } from '@testdeck/jest'
-import { type Coordinate, MAX_COORDINATES, Coordinate as Sut } from '../../src/utils/Coordinate'
+import { Coordinate as Sut } from '../../src/utils/Coordinate'
 import { ascendingDiagonalDirection, descendingDiagonalDirection, horizontalDirection, verticalDirection } from '../../src/utils/Line'
-
-const maxColumn = MAX_COORDINATES.COLUMN - 1
-const maxRow = MAX_COORDINATES.ROW - 1
-const minColumn = 0
-const minRow = 0
-const offset = 1
-const validRow = 1
-const validColumn = 1
+import { createBottomLeftCoordinate, createBottomLeftNeighbour, createBottomNeighbour, createBottomRightNeighbour, createCenterCoordinate, createLeftNeighbour, createRightNeighbour, createTopLeftNeighbour, createTopNeighbour, createTopRightCoordinate, createTopRightNeighbour, maxColumn, maxRow, minColumn, minRow } from '../builder/coordinateBuilder'
 
 describe('Coordinate', () => {
+  const offset = 1
+  const validRow = 1
+  const validColumn = 1
+
   @suite
   class Creation {
     @test
@@ -82,37 +79,3 @@ describe('Coordinate', () => {
     }
   }
 })
-
-function createCenterCoordinate (): Coordinate {
-  return new Sut(1, 1)
-}
-function createTopRightCoordinate (): Coordinate {
-  return new Sut(maxRow, maxColumn)
-}
-function createBottomLeftCoordinate (): Coordinate {
-  return new Sut(minRow, minColumn)
-}
-function createTopNeighbour (): Coordinate {
-  return new Sut(2, 1)
-}
-function createTopRightNeighbour (): Coordinate {
-  return new Sut(2, 2)
-}
-function createRightNeighbour (): Coordinate {
-  return new Sut(1, 2)
-}
-function createBottomRightNeighbour (): Coordinate {
-  return new Sut(0, 2)
-}
-function createBottomNeighbour (): Coordinate {
-  return new Sut(0, 1)
-}
-function createBottomLeftNeighbour (): Coordinate {
-  return new Sut(0, 0)
-}
-function createLeftNeighbour (): Coordinate {
-  return new Sut(1, 0)
-}
-function createTopLeftNeighbour (): Coordinate {
-  return new Sut(2, 0)
-}
