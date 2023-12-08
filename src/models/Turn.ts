@@ -1,4 +1,3 @@
-import assert from 'assert'
 import { type Result } from 'neverthrow'
 import { TOKEN_SYMBOLS, Token } from '../utils/Token.ts'
 import { type Connect4Error } from '../utils/errors.ts'
@@ -43,7 +42,9 @@ export class Turn {
 
   setTurnByToken (token: Token): void {
     const newTurn = this.turns.findIndex((player) => player.token.equals(token))
-    assert(newTurn > -1)
+    if (newTurn < 0) {
+      throw new Error('Token cannot be null')
+    }
     this.currentTurn = newTurn
   }
 }

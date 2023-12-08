@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { suite, test } from '@testdeck/jest'
 import { Turn } from '../../src/models/Turn'
 import { SessionState } from '../../src/models/SessionState'
 import { Board } from '../../src/models/Board'
-import { createPlayer1Token, createPlayer2Token } from '../builder/tokenBulder'
+import { createNullToken, createPlayer1Token, createPlayer2Token } from '../builder/tokenBulder'
 
 describe('Turn', () => {
   @suite
@@ -15,6 +16,13 @@ describe('Turn', () => {
 
     before (): void {
       this.sut = new Turn(this.board, this.sessionState)
+    }
+
+    @test
+    resets_turn_to_cero (): void {
+      this.sut.switchPlayer()
+      this.sut.reset()
+      expect(this.sut.getCurrentPlayer().name).toBe('Player 1')
     }
 
     @test
@@ -32,12 +40,16 @@ describe('Turn', () => {
 
     @test
     adds_token_of_current_player_type_to_given_column (): void {
-      const currentPlayer = this.sut.getCurrentPlayer()
-      const putToken = jest.spyOn(currentPlayer, 'putToken')
-
+      const firstPlayer = this.sut.getCurrentPlayer()
+      const putTokenP1 = jest.spyOn(firstPlayer, 'putToken')
       this.sut.putToken(1)
 
-      expect(putToken).toHaveBeenCalledWith(1, this.board)
+      this.sut.switchPlayer()
+      const secondPlayer = this.sut.getCurrentPlayer()
+      const putTokenP2 = jest.spyOn(secondPlayer, 'putToken')
+
+      expect(putTokenP1).toHaveBeenCalledWith(1, this.board)
+      expect(putTokenP2).not.toHaveBeenCalled()
     }
 
     @test
@@ -47,6 +59,13 @@ describe('Turn', () => {
 
       this.sut.setTurnByToken(createPlayer1Token())
       expect(this.sut.getCurrentPlayer().name).toBe('Player 1')
+    }
+
+    @test
+    thows_error_when_token_is_invalid (): void {
+      expect(() => {
+        this.sut.setTurnByToken(createNullToken())
+      }).toThrow('Token cannot be null')
     }
   }
 })
