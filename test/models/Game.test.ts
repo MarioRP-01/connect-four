@@ -19,13 +19,13 @@ describe('Game', () => {
     }
 
     @test
-    changes_player_when_there_is_no_winner (): void {
+    changes_player_when_putting_token_and_there_is_no_winner (): void {
       this.sut.putToken(1)
       expect(this.sut.getCurrentPlayer().name).toBe('Player 2')
     }
 
     @test
-    when_there_is_winner (): void {
+    does_not_change_player_when_putting_token_and_there_is_winner (): void {
       const board = this.sut['board']
       board.hasWinner = jest.fn().mockReturnValue(true)
 
