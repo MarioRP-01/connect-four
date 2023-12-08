@@ -4,6 +4,7 @@ import { suite, test } from '@testdeck/jest'
 import { Coordinate } from '../../src/utils/Coordinate'
 import { type DirectionType, type Line } from '../../src/utils/Line'
 import { LineFactory } from '../../src/models/Line'
+import { createCoordinate } from '../builder/coordinateBuilder'
 
 const sut: LineFactory = new LineFactory()
 
@@ -11,7 +12,7 @@ const sut: LineFactory = new LineFactory()
 class LineFactoryTest {
   @test
   createsHorizontalLineWithCorrectLengthAndValues (): void {
-    const initialCoordinate = new Coordinate(0, 0)
+    const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'HORIZONTAL'
     const expectedLine: Line = createHorizontalLine()
 
@@ -22,7 +23,7 @@ class LineFactoryTest {
 
   @test
   createsVerticalLineWithCorrectLengthAndValues (): void {
-    const initialCoordinate = new Coordinate(0, 0)
+    const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'VERTICAL'
     const expectedLine: Line = createVerticalLine()
 
@@ -33,7 +34,7 @@ class LineFactoryTest {
 
   @test
   createsAscendingDiagonalLineWithCorrectLengthAndValues (): void {
-    const initialCoordinate = new Coordinate(0, 0)
+    const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'ASCENDING_DIAGONAL'
     const expectedLine: Line = createAscendingDiagonalLine()
 
@@ -44,7 +45,7 @@ class LineFactoryTest {
 
   @test
   createsDescendingDiagonalLineWithCorrectLengthAndValues (): void {
-    const initialCoordinate = new Coordinate(0, 0)
+    const initialCoordinate = createCoordinate(0, 0)
     const directionType: DirectionType = 'DESCENDING_DIAGONAL'
     const expectedLine: Line = createDescendingDiagonalLine()
 
@@ -55,7 +56,7 @@ class LineFactoryTest {
 
   @test
   createsAllLinesFromCoordinate (): void {
-    const coordinate = new Coordinate(0, 0)
+    const coordinate = createCoordinate(0, 0)
     const expectedLines: Line[] = [
       createHorizontalLine(),
       createVerticalLine(),
@@ -71,40 +72,40 @@ class LineFactoryTest {
 
 function createHorizontalLine (): Line {
   return [
-    new Coordinate(0, 0),
-    new Coordinate(0, 1),
-    new Coordinate(0, 2),
-    new Coordinate(0, 3),
-    new Coordinate(0, 4),
-    new Coordinate(0, 5),
-    new Coordinate(0, 6)
+    createCoordinate(0, 0),
+    createCoordinate(0, 1),
+    createCoordinate(0, 2),
+    createCoordinate(0, 3),
+    createCoordinate(0, 4),
+    createCoordinate(0, 5),
+    createCoordinate(0, 6)
   ]
 }
 
 function createVerticalLine (): Line {
   return [
-    new Coordinate(0, 0),
-    new Coordinate(1, 0),
-    new Coordinate(2, 0),
-    new Coordinate(3, 0),
-    new Coordinate(4, 0),
-    new Coordinate(5, 0)
+    createCoordinate(0, 0),
+    createCoordinate(1, 0),
+    createCoordinate(2, 0),
+    createCoordinate(3, 0),
+    createCoordinate(4, 0),
+    createCoordinate(5, 0)
   ]
 }
 
 function createAscendingDiagonalLine (): Line {
   return [
-    new Coordinate(0, 0),
-    new Coordinate(1, 1),
-    new Coordinate(2, 2),
-    new Coordinate(3, 3),
-    new Coordinate(4, 4),
-    new Coordinate(5, 5)
+    createCoordinate(0, 0),
+    createCoordinate(1, 1),
+    createCoordinate(2, 2),
+    createCoordinate(3, 3),
+    createCoordinate(4, 4),
+    createCoordinate(5, 5)
   ]
 }
 
 function createDescendingDiagonalLine (): Line {
   return [
-    new Coordinate(0, 0)
+    createCoordinate(0, 0)
   ]
 }
