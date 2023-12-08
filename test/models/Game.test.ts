@@ -79,21 +79,21 @@ describe('Game', () => {
     }
 
     @test
-    resets_board_when_there_is_no_last_coordinate (): void {
-      const memento = new Memento(createEmptyBoard())
-      this.sut.putToken(4)
-      this.sut.setMemento(memento)
-
-      expect(this.sut['board']).toEqual(new Board())
-    }
-
-    @test
     sets_board_to_passed_memento (): void {
       const nonFullBoard = createNonFullBoard()
       const memento = new Memento(nonFullBoard)
       this.sut.setMemento(memento)
 
       expect(this.sut['board']).toEqual(nonFullBoard)
+    }
+
+    @test
+    sets_board_to_passed_memento_of_empty_board (): void {
+      const memento = new Memento(createEmptyBoard())
+      this.sut.putToken(4)
+      this.sut.setMemento(memento)
+
+      expect(this.sut['board']).toEqual(new Board())
     }
   }
 })
