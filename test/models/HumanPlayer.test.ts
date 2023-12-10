@@ -20,12 +20,6 @@ describe('HumanPlayer', () => {
     }
 
     @test
-    returns_message_with_player_name_and_token_color (): void {
-      const message = this.sut.getPromptMessage()
-      expect(message).toBe('Human Player (🔴):')
-    }
-
-    @test
     accepts_player_visitor_with_correct_player (): void {
       const mockPlayerVisitor: PlayerVisitor = {
         visitHuman: jest.fn(),

@@ -1,4 +1,3 @@
-import { assert } from 'console'
 import { type Result, type ResultAsync } from 'neverthrow'
 import { MAX_COORDINATES, coordinateColumn, type CoordinateColumn } from '../utils/Coordinate.ts'
 import { type Token } from '../utils/Token.ts'
@@ -45,7 +44,7 @@ export class BotPlayer implements Player {
     return board.put(column, this.token)
       .orElse((e) => {
         if (e.type !== 'FullColumn') {
-          assert(false, 'Unexpected error')
+          throw new Error(`Unexpected error: ${e.type}`)
         }
         return this.putToken(this.randomColumn(), board)
       })

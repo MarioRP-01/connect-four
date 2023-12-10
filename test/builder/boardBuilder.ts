@@ -69,6 +69,15 @@ export function createBoardWithoutWinner (): Board {
   return createNonFullBoard()
 }
 
+export function createBoardWithLastColumnFull (): Board {
+  const board = new Board()
+  const lastCoordinate = new Coordinate(6, 5)
+
+  board.loadSnapshot({ boardPersisted: boardWithLastColumnFull, lastCoordinate })
+
+  return board
+}
+
 const fullBoard: TokenSymbol[][] = [
   [
     createPlayer1Token().symbol,
@@ -237,5 +246,62 @@ const boardWithWinner: TokenSymbol[][] = [
     createNullToken().symbol,
     createNullToken().symbol,
     createNullToken().symbol
+  ]
+]
+
+const boardWithLastColumnFull: TokenSymbol[][] = [
+  [
+    createPlayer1Token().symbol,
+    createPlayer1Token().symbol,
+    createPlayer1Token().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createPlayer2Token().symbol
+  ],
+  [
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createPlayer2Token().symbol
+  ],
+  [
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createPlayer2Token().symbol
+  ],
+  [
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createPlayer1Token().symbol
+  ],
+  [
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createPlayer2Token().symbol
+  ],
+  [
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createNullToken().symbol,
+    createPlayer1Token().symbol
   ]
 ]
