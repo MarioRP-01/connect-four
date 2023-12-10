@@ -3,6 +3,9 @@ import { Coordinate } from '../../src/utils/Coordinate'
 import { type TokenSymbol } from '../../src/utils/Token'
 import { createNullToken, createPlayer1Token, createPlayer2Token } from './tokenBulder'
 
+export const invalidViewColumn = 0
+export const validViewColumn = 1
+
 export function createEmptyBoard (): Board {
   return new Board()
 }

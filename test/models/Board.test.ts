@@ -5,12 +5,9 @@ import { suite, test } from '@testdeck/jest'
 import { Ok, err } from 'neverthrow'
 import { Board } from '../../src/models/Board'
 import * as Errors from '../../src/utils/errors.ts'
-import { createBoardWithAscendingDiagonalWinner, createBoardWithDescendingDiagonalWinner, createBoardWithHorizontalWinner, createBoardWithVerticalWinner, createBoardWithoutWinner, createEmptyBoard, createFullBoard, createNonFullBoard } from '../builder/boardBuilder'
+import { createBoardWithAscendingDiagonalWinner, createBoardWithDescendingDiagonalWinner, createBoardWithHorizontalWinner, createBoardWithVerticalWinner, createBoardWithoutWinner, createEmptyBoard, createFullBoard, createNonFullBoard, invalidViewColumn, validViewColumn } from '../builder/boardBuilder'
 import { createCoordinate } from '../builder/coordinateBuilder.ts'
 import { createNullToken, createPlayer1Token, createPlayer2Token } from '../builder/tokenBulder'
-
-const invalidColumn = 0
-const validColumn = 1
 
 @suite
 class BoardTest {
@@ -91,7 +88,7 @@ class BoardTest {
   @test
   puts_token_in_empty_column (): void {
     const sut = createEmptyBoard()
-    const playAction = sut.put(validColumn, createPlayer1Token())
+    const playAction = sut.put(validViewColumn, createPlayer1Token())
 
     expect(playAction).toBeInstanceOf(Ok)
     expect(sut.getToken(createCoordinate(0, 0))).toEqual(createPlayer1Token())
@@ -100,7 +97,7 @@ class BoardTest {
   @test
   puts_token_in_full_column (): void {
     const sut = createFullBoard()
-    const playAction = sut.put(validColumn, createPlayer1Token())
+    const playAction = sut.put(validViewColumn, createPlayer1Token())
 
     expect(playAction).toEqual(err(Errors.fullColumn()))
   }
@@ -108,7 +105,7 @@ class BoardTest {
   @test
   puts_token_in_non_full_column (): void {
     const sut = createNonFullBoard()
-    const playAction = sut.put(validColumn, createPlayer1Token())
+    const playAction = sut.put(validViewColumn, createPlayer1Token())
 
     expect(playAction).toBeInstanceOf(Ok)
     expect(sut.getToken(createCoordinate(0, 1))).toEqual(createPlayer1Token())
@@ -117,7 +114,7 @@ class BoardTest {
   @test
   fails_to_put_token_when_column_is_invalid (): void {
     const sut = createNonFullBoard()
-    const playAction = sut.put(invalidColumn, createPlayer1Token())
+    const playAction = sut.put(invalidViewColumn, createPlayer1Token())
 
     expect(playAction).toEqual(err(Errors.invalidColumn()))
   }
