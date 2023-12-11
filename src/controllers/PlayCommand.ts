@@ -8,7 +8,7 @@ export interface PlayCommand {
   execute: () => Result<null, Connect4Error>
 }
 
-class PutCommand implements PlayCommand {
+export class PutCommand implements PlayCommand {
   constructor (
     private readonly playController: PlayController,
     private readonly response: number
@@ -19,7 +19,7 @@ class PutCommand implements PlayCommand {
   }
 }
 
-class UndoCommand implements PlayCommand {
+export class UndoCommand implements PlayCommand {
   constructor (
     private readonly playController: PlayController
   ) {}
@@ -29,7 +29,7 @@ class UndoCommand implements PlayCommand {
   }
 }
 
-class RedoCommand implements PlayCommand {
+export class RedoCommand implements PlayCommand {
   constructor (
     private readonly playController: PlayController
   ) {}
